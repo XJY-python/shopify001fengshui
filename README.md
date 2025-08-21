@@ -1,102 +1,152 @@
 # 五行元素产品展示 Shopify 插件
 
-这是一个为Shopify商店设计的五行元素产品展示插件，基于中国传统文化中的五行理论（金、木、水、火、土）来组织和展示产品。
+一个基于中国传统五行哲学的产品展示系统，为Shopify商店提供智能的产品分类和筛选功能。
 
-## 功能特点
+## 🌟 特色功能
 
-- **五行元素分类**：将产品按五行元素进行分类展示
-- **实际产品数据**：使用Shopify实际产品集合，显示真实产品图片、名称和价格
-- **交互式界面**：鼠标悬停即可查看对应元素的产品
-- **响应式设计**：适配桌面和移动设备
-- **产品筛选**：支持按类别进一步筛选产品
-- **美观动画**：平滑的过渡效果和悬停动画
+### 五行元素分类
+- **金 (Metal)**: 珠宝首饰、金属工艺品、贵金属投资、手表钟表
+- **木 (Wood)**: 木制家具、绿植盆栽、环保用品、文房四宝  
+- **水 (Water)**: 玻璃器皿、水族用品、清洁用品、香薰精油
+- **火 (Fire)**: 辣椒制品、香薰蜡烛、红色服饰、热饮茶品
+- **土 (Earth)**: 陶瓷器皿、有机食品、家居装饰、养生保健
 
-## 安装说明
+### 智能交互
+- 🖱️ **悬停显示**: 鼠标悬停在元素卡片上显示产品类别下拉菜单
+- 🎯 **精准筛选**: 点击类别快速筛选对应产品
+- 🔄 **重置功能**: 一键重置筛选，恢复显示所有产品
+- 📱 **响应式设计**: 完美适配桌面和移动设备
+- ✨ **动画效果**: 平滑的过渡动画，提升用户体验
 
-1. 将以下文件上传到您的Shopify主题中：
-   - `sections/five-elements-display.liquid`
-   - `assets/font-awesome.css`
-   - `assets/tailwind-utils.js`
-   - `templates/page.five-elements-demo.liquid`
+## 🚀 快速开始
 
-2. 在主题编辑器中，您可以在页面模板中添加"五行元素产品展示"区块
+### 安装步骤
 
-## 使用方法
+1. **上传文件到主题**
+   ```bash
+   # 上传到 Shopify 主题文件
+   sections/five-elements-display.liquid
+   templates/page.five-elements-demo.liquid
+   assets/font-awesome.css
+   ```
 
-### 1. 在页面中添加区块
+2. **创建演示页面**
+   - 在Shopify后台创建新页面
+   - 选择模板: `page.five-elements-demo`
 
-在Shopify主题编辑器中，编辑任意页面并添加"五行元素产品展示"区块。
+3. **配置产品集合**
+   - 按五行元素分类创建产品集合
+   - 在区块设置中选择对应的集合
 
-### 2. 配置设置
+### 详细安装指南
 
-在区块设置中，您可以配置：
+请参阅 [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md) 获取完整的安装说明。
 
-- **标题**：区块的标题文字
-- **标题大小**：选择标题的尺寸
-- **颜色方案**：选择与主题匹配的颜色方案
-- **产品集合**：为每个五行元素指定对应的产品集合
-- **边距设置**：调整区块的上下边距
+## 🎨 自定义配置
 
-### 3. 产品集合配置
+### 区块设置
+在Shopify主题编辑器中可以配置：
 
-为每个五行元素指定对应的产品集合：
-- 金元素产品集合
-- 木元素产品集合  
-- 水元素产品集合
-- 火元素产品集合
-- 土元素产品集合
+- **标题设置**: 自定义区块标题和大小
+- **颜色方案**: 选择适合的主题颜色
+- **产品集合**: 为每个元素的4个类别选择对应的产品集合
+- **边距设置**: 调整上下边距
 
-## 自定义选项
-
-### 颜色自定义
-
-您可以在CSS中修改五行元素的颜色：
+### 样式自定义
 ```css
-.bg-metal { background-color: #您的颜色; }
-.text-metal { color: #您的颜色; }
+/* 自定义元素颜色 */
+.bg-metal { background-color: your-color; }
+.text-metal { color: your-color; }
 ```
 
-### 图标自定义
+## 📁 项目结构
 
-修改Font Awesome图标：
-```html
-<i class="fas fa-您的图标"></i>
+```
+theme_export__m0f4ga-y0-myshopify-com-dawn__20AUG2025-0505pm/
+├── sections/
+│   └── five-elements-display.liquid      # 主插件文件
+├── templates/
+│   └── page.five-elements-demo.liquid    # 演示页面模板
+├── assets/
+│   └── font-awesome.css                  # Font Awesome 图标
+├── INSTALLATION_GUIDE.md                 # 安装指南
+└── README.md                             # 项目说明
 ```
 
-### 布局调整
+## 🛠️ 技术栈
 
-通过修改CSS类来调整布局：
-- 修改 `.main-container` 调整整体布局
-- 修改 `.element-box` 调整元素卡片样式
-- 修改 `.product-card` 调整产品卡片样式
+- **Liquid**: Shopify模板语言
+- **CSS3**: 现代CSS特性，包括Flexbox和Grid布局
+- **JavaScript**: 原生JavaScript，无外部依赖
+- **Font Awesome**: 图标字体库
+- **响应式设计**: 移动优先的设计理念
 
-## 浏览器兼容性
+## 🌐 浏览器支持
 
-- Chrome (推荐)
-- Firefox
-- Safari
-- Edge
+- Chrome 60+
+- Firefox 60+ 
+- Safari 12+
+- Edge 79+
+- iOS Safari 12+
+- Chrome Android 60+
 
-## 技术支持
+## 📝 使用示例
 
-如果您在使用过程中遇到任何问题，请检查：
-1. 所有必需文件是否已正确上传
-2. Font Awesome CSS是否正常加载
-3. JavaScript控制台是否有错误信息
+### 在任意页面中使用
+```liquid
+{% section 'five-elements-display' %}
+```
 
-## 更新日志
+### 自定义元素配置
+```javascript
+// 在主题设置中配置产品集合
+{
+  "metal_collection_1": "jewelry-collection",
+  "metal_collection_2": "metal-crafts-collection",
+  // ... 其他配置
+}
+```
 
-### v1.1.0
-- **使用实际产品数据**：从模拟数据改为使用Shopify实际产品集合
-- **显示真实产品信息**：产品图片、名称、价格和供应商信息
-- **支持产品分类**：通过元字段或标签进行产品分类
+## 🔧 开发说明
 
-### v1.0.0
-- 初始版本发布
-- 五行元素产品展示功能
-- 响应式设计
-- 产品筛选功能
+### 文件说明
 
-## 许可证
+- **five-elements-display.liquid**: 主插件文件，包含所有HTML、CSS、JavaScript和Liquid代码
+- **page.five-elements-demo.liquid**: 演示页面模板，展示插件功能
+- **font-awesome.css**: Font Awesome图标样式（需单独安装）
 
-MIT License - 可自由使用和修改
+### 扩展开发
+
+要添加新的元素或类别，需要：
+
+1. 在Liquid模板中添加新的元素区块
+2. 在JavaScript中添加对应的交互逻辑  
+3. 在schema设置中添加新的配置选项
+
+## 🤝 贡献指南
+
+欢迎提交Issue和Pull Request来改进这个项目。
+
+## 📄 许可证
+
+MIT License - 详见 [LICENSE](LICENSE) 文件
+
+## 📞 技术支持
+
+如果遇到问题，请检查：
+
+1. 所有文件是否正确上传
+2. 产品集合配置是否正确
+3. Font Awesome是否正常加载
+4. 浏览器控制台是否有错误信息
+
+## 🎯 适用场景
+
+- 传统文化相关产品商店
+- 多品类产品展示
+- 需要智能分类筛选的电商网站
+- 希望提升用户体验的Shopify商店
+
+---
+
+**体验中国传统文化与现代电商的完美结合！** 🎋

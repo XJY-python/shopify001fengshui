@@ -361,18 +361,19 @@
               <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">手表钟表</span>
             </div>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {%- if section.settings.metal_collection != blank -%}
-              {%- assign metal_collection = collections[section.settings.metal_collection] -%}
-              {%- for product in metal_collection.products limit: 3 -%}
-                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '珠宝首饰' }}">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="metal-products-container">
+            <!-- 珠宝首饰系列 -->
+            {%- if section.settings.metal_collection_1 != blank -%}
+              {%- assign metal_collection_1 = collections[section.settings.metal_collection_1] -%}
+              {%- for product in metal_collection_1.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="珠宝首饰">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
                            class="w-full h-full object-cover">
                     {%- else -%}
-                      <i class="fas fa-bracelet text-5xl text-metal"></i>
+                      <i class="fas fa-gem text-5xl text-metal"></i>
                     {%- endif -%}
                   </div>
                   <div class="p-4">
@@ -382,7 +383,78 @@
                   </div>
                 </a>
               {%- endfor -%}
-            {%- else -%}
+            {%- endif -%}
+
+            <!-- 金属工艺品系列 -->
+            {%- if section.settings.metal_collection_2 != blank -%}
+              {%- assign metal_collection_2 = collections[section.settings.metal_collection_2] -%}
+              {%- for product in metal_collection_2.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="金属工艺品">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-hammer text-5xl text-metal"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-metal font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 贵金属投资系列 -->
+            {%- if section.settings.metal_collection_3 != blank -%}
+              {%- assign metal_collection_3 = collections[section.settings.metal_collection_3] -%}
+              {%- for product in metal_collection_3.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="贵金属投资">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-coins text-5xl text-metal"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-metal font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 手表钟表系列 -->
+            {%- if section.settings.metal_collection_4 != blank -%}
+              {%- assign metal_collection_4 = collections[section.settings.metal_collection_4] -%}
+              {%- for product in metal_collection_4.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="手表钟表">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-clock text-5xl text-metal"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-metal font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if section.settings.metal_collection_1 == blank and section.settings.metal_collection_2 == blank and section.settings.metal_collection_3 == blank and section.settings.metal_collection_4 == blank -%}
               <p class="text-gray-500">请配置金元素产品集合</p>
             {%- endif -%}
           </div>
@@ -405,18 +477,19 @@
               <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">文房四宝</span>
             </div>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {%- if section.settings.wood_collection != blank -%}
-              {%- assign wood_collection = collections[section.settings.wood_collection] -%}
-              {%- for product in wood_collection.products limit: 3 -%}
-                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '木制家具' }}">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="wood-products-container">
+            <!-- 木制家具系列 -->
+            {%- if section.settings.wood_collection_1 != blank -%}
+              {%- assign wood_collection_1 = collections[section.settings.wood_collection_1] -%}
+              {%- for product in wood_collection_1.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="木制家具">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
                            class="w-full h-full object-cover">
                     {%- else -%}
-                      <i class="fas fa-tree text-5xl text-wood"></i>
+                      <i class="fas fa-couch text-5xl text-wood"></i>
                     {%- endif -%}
                   </div>
                   <div class="p-4">
@@ -426,7 +499,78 @@
                   </div>
                 </a>
               {%- endfor -%}
-            {%- else -%}
+            {%- endif -%}
+
+            <!-- 绿植盆栽系列 -->
+            {%- if section.settings.wood_collection_2 != blank -%}
+              {%- assign wood_collection_2 = collections[section.settings.wood_collection_2] -%}
+              {%- for product in wood_collection_2.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="绿植盆栽">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-leaf text-5xl text-wood"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-wood font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 环保用品系列 -->
+            {%- if section.settings.wood_collection_3 != blank -%}
+              {%- assign wood_collection_3 = collections[section.settings.wood_collection_3] -%}
+              {%- for product in wood_collection_3.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="环保用品">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-recycle text-5xl text-wood"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-wood font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 文房四宝系列 -->
+            {%- if section.settings.wood_collection_4 != blank -%}
+              {%- assign wood_collection_4 = collections[section.settings.wood_collection_4] -%}
+              {%- for product in wood_collection_4.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="文房四宝">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-pen-fancy text-5xl text-wood"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-wood font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if section.settings.wood_collection_1 == blank and section.settings.wood_collection_2 == blank and section.settings.wood_collection_3 == blank and section.settings.wood_collection_4 == blank -%}
               <p class="text-gray-500">请配置木元素产品集合</p>
             {%- endif -%}
           </div>
@@ -449,11 +593,12 @@
               <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">香薰精油</span>
             </div>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {%- if section.settings.water_collection != blank -%}
-              {%- assign water_collection = collections[section.settings.water_collection] -%}
-              {%- for product in water_collection.products limit: 3 -%}
-                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '玻璃器皿' }}">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="water-products-container">
+            <!-- 玻璃器皿系列 -->
+            {%- if section.settings.water_collection_1 != blank -%}
+              {%- assign water_collection_1 = collections[section.settings.water_collection_1] -%}
+              {%- for product in water_collection_1.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="玻璃器皿">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
@@ -470,7 +615,78 @@
                   </div>
                 </a>
               {%- endfor -%}
-            {%- else -%}
+            {%- endif -%}
+
+            <!-- 水族用品系列 -->
+            {%- if section.settings.water_collection_2 != blank -%}
+              {%- assign water_collection_2 = collections[section.settings.water_collection_2] -%}
+              {%- for product in water_collection_2.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="水族用品">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-fish text-5xl text-water"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-water font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 清洁用品系列 -->
+            {%- if section.settings.water_collection_3 != blank -%}
+              {%- assign water_collection_3 = collections[section.settings.water_collection_3] -%}
+              {%- for product in water_collection_3.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="清洁用品">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-broom text-5xl text-water"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-water font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 香薰精油系列 -->
+            {%- if section.settings.water_collection_4 != blank -%}
+              {%- assign water_collection_4 = collections[section.settings.water_collection_4] -%}
+              {%- for product in water_collection_4.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="香薰精油">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-spa text-5xl text-water"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-water font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if section.settings.water_collection_1 == blank and section.settings.water_collection_2 == blank and section.settings.water_collection_3 == blank and section.settings.water_collection_4 == blank -%}
               <p class="text-gray-500">请配置水元素产品集合</p>
             {%- endif -%}
           </div>
@@ -493,11 +709,81 @@
               <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">热饮茶品</span>
             </div>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {%- if section.settings.fire_collection != blank -%}
-              {%- assign fire_collection = collections[section.settings.fire_collection] -%}
-              {%- for product in fire_collection.products limit: 3 -%}
-                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '辣椒制品' }}">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="fire-products-container">
+            <!-- 辣椒制品系列 -->
+            {%- if section.settings.fire_collection_1 != blank -%}
+              {%- assign fire_collection_1 = collections[section.settings.fire_collection_1] -%}
+              {%- for product in fire_collection_1.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="辣椒制品">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-pepper-hot text-5xl text-fire"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-fire font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 香薰蜡烛系列 -->
+            {%- if section.settings.fire_collection_2 != blank -%}
+              {%- assign fire_collection_2 = collections[section.settings.fire_collection_2] -%}
+              {%- for product in fire_collection_2.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="香薰蜡烛">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-candle-holder text-5xl text-fire"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-fire font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 红色服饰系列 -->
+            {%- if section.settings.fire_collection_3 != blank -%}
+              {%- assign fire_collection_3 = collections[section.settings.fire_collection_3] -%}
+              {%- for product in fire_collection_3.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="红色服饰">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-tshirt text-5xl text-fire"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-fire font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 热饮茶品系列 -->
+            {%- if section.settings.fire_collection_4 != blank -%}
+              {%- assign fire_collection_4 = collections[section.settings.fire_collection_4] -%}
+              {%- for product in fire_collection_4.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="热饮茶品">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
@@ -514,7 +800,9 @@
                   </div>
                 </a>
               {%- endfor -%}
-            {%- else -%}
+            {%- endif -%}
+
+            {%- if section.settings.fire_collection_1 == blank and section.settings.fire_collection_2 == blank and section.settings.fire_collection_3 == blank and section.settings.fire_collection_4 == blank -%}
               <p class="text-gray-500">请配置火元素产品集合</p>
             {%- endif -%}
           </div>
@@ -537,11 +825,12 @@
               <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">养生保健</span>
             </div>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {%- if section.settings.earth_collection != blank -%}
-              {%- assign earth_collection = collections[section.settings.earth_collection] -%}
-              {%- for product in earth_collection.products limit: 3 -%}
-                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '陶瓷器皿' }}">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="earth-products-container">
+            <!-- 陶瓷器皿系列 -->
+            {%- if section.settings.earth_collection_1 != blank -%}
+              {%- assign earth_collection_1 = collections[section.settings.earth_collection_1] -%}
+              {%- for product in earth_collection_1.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="陶瓷器皿">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
@@ -558,7 +847,78 @@
                   </div>
                 </a>
               {%- endfor -%}
-            {%- else -%}
+            {%- endif -%}
+
+            <!-- 有机食品系列 -->
+            {%- if section.settings.earth_collection_2 != blank -%}
+              {%- assign earth_collection_2 = collections[section.settings.earth_collection_2] -%}
+              {%- for product in earth_collection_2.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="有机食品">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-apple-alt text-5xl text-earth"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-earth font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 家居装饰系列 -->
+            {%- if section.settings.earth_collection_3 != blank -%}
+              {%- assign earth_collection_3 = collections[section.settings.earth_collection_3] -%}
+              {%- for product in earth_collection_3.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="家居装饰">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-couch text-5xl text-earth"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-earth font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 养生保健系列 -->
+            {%- if section.settings.earth_collection_4 != blank -%}
+              {%- assign earth_collection_4 = collections[section.settings.earth_collection_4] -%}
+              {%- for product in earth_collection_4.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="养生保健">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-heart text-5xl text-earth"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-earth font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if section.settings.earth_collection_1 == blank and section.settings.earth_collection_2 == blank and section.settings.earth_collection_3 == blank and section.settings.earth_collection_4 == blank -%}
               <p class="text-gray-500">请配置土元素产品集合</p>
             {%- endif -%}
           </div>
@@ -627,15 +987,26 @@
       const productCards = document.querySelectorAll(`#${element}-products .product-card`);
       
       // Filter and show only matching category using data-category attribute
+      let hasVisibleProducts = false;
       productCards.forEach(card => {
         const cardCategory = card.getAttribute('data-category');
         if (cardCategory === category) {
           card.style.display = 'block';
+          hasVisibleProducts = true;
           console.log('Showing card:', card.querySelector('h3').textContent);
         } else {
           card.style.display = 'none';
         }
       });
+      
+      // If no products found for this category, show a message
+      if (!hasVisibleProducts) {
+        const container = document.getElementById(`${element}-products-container`);
+        const noProductsMsg = document.createElement('p');
+        noProductsMsg.className = 'text-gray-500 col-span-full text-center py-8';
+        noProductsMsg.textContent = `暂无${category}类产品`;
+        container.appendChild(noProductsMsg);
+      }
       
       // Update the category display in the header
       const categorySpans = document.querySelectorAll(`#${element}-products .product-categories span`);
@@ -648,6 +1019,47 @@
           span.classList.remove('font-semibold');
         }
       });
+      
+      // Add reset filter button if not already present
+      const productPanel = document.getElementById(`${element}-products`);
+      let resetButton = productPanel.querySelector('.reset-filter');
+      if (!resetButton) {
+        resetButton = document.createElement('button');
+        resetButton.className = 'reset-filter px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors mt-4';
+        resetButton.textContent = '重置筛选';
+        productPanel.querySelector('.mb-6').appendChild(resetButton);
+        
+        resetButton.addEventListener('click', function() {
+          resetFilter(element);
+        });
+      }
+    }
+    
+    function resetFilter(element) {
+      // Show all product cards
+      const productCards = document.querySelectorAll(`#${element}-products .product-card`);
+      productCards.forEach(card => {
+        card.style.display = 'block';
+      });
+      
+      // Remove any "no products" messages
+      const noProductsMsg = document.querySelector(`#${element}-products-container p.text-gray-500`);
+      if (noProductsMsg) {
+        noProductsMsg.remove();
+      }
+      
+      // Reset category spans styling
+      const categorySpans = document.querySelectorAll(`#${element}-products .product-categories span`);
+      categorySpans.forEach(span => {
+        span.classList.remove('bg-opacity-30');
+        span.classList.remove('font-semibold');
+      });
+      
+      // Remove reset button
+      const resetButton = document.querySelector(`#${element}-products .reset-filter`);
+      if (resetButton) {
+        resetButton.remove();
+      }
     }
 
     // Add event listeners for reset buttons
@@ -718,29 +1130,124 @@
       "content": "元素设置"
     },
     {
-      "type": "collection",
-      "id": "metal_collection",
-      "label": "金元素产品集合"
+      "type": "header",
+      "content": "金元素产品集合"
     },
     {
       "type": "collection",
-      "id": "wood_collection",
-      "label": "木元素产品集合"
+      "id": "metal_collection_1",
+      "label": "珠宝首饰系列"
     },
     {
       "type": "collection",
-      "id": "water_collection",
-      "label": "水元素产品集合"
+      "id": "metal_collection_2",
+      "label": "金属工艺品系列"
     },
     {
       "type": "collection",
-      "id": "fire_collection",
-      "label": "火元素产品集合"
+      "id": "metal_collection_3",
+      "label": "贵金属投资系列"
     },
     {
       "type": "collection",
-      "id": "earth_collection",
-      "label": "土元素产品集合"
+      "id": "metal_collection_4",
+      "label": "手表钟表系列"
+    },
+    {
+      "type": "header",
+      "content": "木元素产品集合"
+    },
+    {
+      "type": "collection",
+      "id": "wood_collection_1",
+      "label": "木制家具系列"
+    },
+    {
+      "type": "collection",
+      "id": "wood_collection_2",
+      "label": "绿植盆栽系列"
+    },
+    {
+      "type": "collection",
+      "id": "wood_collection_3",
+      "label": "环保用品系列"
+    },
+    {
+      "type": "collection",
+      "id": "wood_collection_4",
+      "label": "文房四宝系列"
+    },
+    {
+      "type": "header",
+      "content": "水元素产品集合"
+    },
+    {
+      "type": "collection",
+      "id": "water_collection_1",
+      "label": "玻璃器皿系列"
+    },
+    {
+      "type": "collection",
+      "id": "water_collection_2",
+      "label": "水族用品系列"
+    },
+    {
+      "type": "collection",
+      "id": "water_collection_3",
+      "label": "清洁用品系列"
+    },
+    {
+      "type": "collection",
+      "id": "water_collection_4",
+      "label": "香薰精油系列"
+    },
+    {
+      "type": "header",
+      "content": "火元素产品集合"
+    },
+    {
+      "type": "collection",
+      "id": "fire_collection_1",
+      "label": "辣椒制品系列"
+    },
+    {
+      "type": "collection",
+      "id": "fire_collection_2",
+      "label": "香薰蜡烛系列"
+    },
+    {
+      "type": "collection",
+      "id": "fire_collection_3",
+      "label": "红色服饰系列"
+    },
+    {
+      "type": "collection",
+      "id": "fire_collection_4",
+      "label": "热饮茶品系列"
+    },
+    {
+      "type": "header",
+      "content": "土元素产品集合"
+    },
+    {
+      "type": "collection",
+      "id": "earth_collection_1",
+      "label": "陶瓷器皿系列"
+    },
+    {
+      "type": "collection",
+      "id": "earth_collection_2",
+      "label": "有机食品系列"
+    },
+    {
+      "type": "collection",
+      "id": "earth_collection_3",
+      "label": "家居装饰系列"
+    },
+    {
+      "type": "collection",
+      "id": "earth_collection_4",
+      "label": "养生保健系列"
     },
     {
       "type": "header",

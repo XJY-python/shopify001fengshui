@@ -1,29 +1,111 @@
 {% layout 'theme' %}
 
-{% section 'main-page' %}
+<div class="container mx-auto px-4 py-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-800 mb-4">五行元素产品展示插件演示</h1>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+      这是一个基于中国传统五行哲学的产品展示系统，支持按元素和类别筛选产品。
+    </p>
+  </div>
 
-<div class="page-width">
-  <h1 class="main-page-title page-title h0">
-    {{ page.title | escape }}
-  </h1>
-  <div class="rte">
-    {{ page.content }}
+  <!-- 插件演示 -->
+  {% section 'five-elements-display' %}
+
+  <!-- 使用说明 -->
+  <div class="mt-16 bg-gray-50 rounded-xl p-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">使用说明</h2>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-3">功能特点</h3>
+        <ul class="space-y-2 text-gray-600">
+          <li>• 支持五行元素（金、木、水、火、土）分类</li>
+          <li>• 每个元素支持4个产品类别</li>
+          <li>• 悬停显示产品类别下拉菜单</li>
+          <li>• 点击类别筛选对应产品</li>
+          <li>• 响应式设计，支持移动端</li>
+          <li>• 平滑的动画过渡效果</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-3">配置方法</h3>
+        <ul class="space-y-2 text-gray-600">
+          <li>• 在Shopify后台创建产品集合</li>
+          <li>• 在区块设置中选择对应的集合</li>
+          <li>• 每个元素可以配置4个不同的产品系列</li>
+          <li>• 支持自定义标题和边距设置</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+      <h4 class="font-semibold text-blue-800 mb-2">提示</h4>
+      <p class="text-blue-700 text-sm">
+        将鼠标悬停在左侧的元素卡片上可以查看产品类别，点击类别可以筛选对应产品。
+        点击"重置筛选"按钮可以恢复显示所有产品。
+      </p>
+    </div>
+  </div>
+
+  <!-- 五行哲学介绍 -->
+  <div class="mt-16">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">五行哲学简介</h2>
+    
+    <div class="grid md:grid-cols-5 gap-4">
+      <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-metal">
+        <h3 class="font-bold text-metal mb-2">金 (Metal)</h3>
+        <p class="text-sm text-gray-600">代表财富、坚固和精确，象征收获和成果。</p>
+      </div>
+      
+      <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-wood">
+        <h3 class="font-bold text-wood mb-2">木 (Wood)</h3>
+        <p class="text-sm text-gray-600">象征生长、创造和活力，代表发展和扩张。</p>
+      </div>
+      
+      <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-water">
+        <h3 class="font-bold text-water mb-2">水 (Water)</h3>
+        <p class="text-sm text-gray-600">代表流动、智慧和适应，象征变化和灵活性。</p>
+      </div>
+      
+      <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-fire">
+        <h3 class="font-bold text-fire mb-2">火 (Fire)</h3>
+        <p class="text-sm text-gray-600">象征热情、能量和变革，代表活力和动力。</p>
+      </div>
+      
+      <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-earth">
+        <h3 class="font-bold text-earth mb-2">土 (Earth)</h3>
+        <p class="text-sm text-gray-600">代表稳定、滋养和基础，象征安全和可靠。</p>
+      </div>
+    </div>
   </div>
 </div>
 
-{% section 'five-elements-display' %}
-
 <style>
-  .main-page-title {
-    margin-bottom: 3rem;
-    text-align: center;
-  }
-  
-  .rte {
-    margin-bottom: 4rem;
-    text-align: center;
-    max-width: 800px;
+  /* 确保样式一致性 */
+  .container {
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
   }
+  
+  .bg-metal { background-color: #a8a8a8; }
+  .text-metal { color: #a8a8a8; }
+  .border-metal { border-color: #a8a8a8; }
+  
+  .bg-wood { background-color: #8B5A2B; }
+  .text-wood { color: #8B5A2B; }
+  .border-wood { border-color: #8B5A2B; }
+  
+  .bg-water { background-color: #3B82F6; }
+  .text-water { color: #3B82F6; }
+  .border-water { border-color: #3B82F6; }
+  
+  .bg-fire { background-color: #EF4444; }
+  .text-fire { color: #EF4444; }
+  .border-fire { border-color: #EF4444; }
+  
+  .bg-earth { background-color: #B7791F; }
+  .text-earth { color: #B7791F; }
+  .border-earth { border-color: #B7791F; }
 </style>

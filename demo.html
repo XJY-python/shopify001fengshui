@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>五行元素产品展示插件 - 演示</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>五行元素产品展示插件演示</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -27,248 +28,375 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             overflow: hidden;
         }
-        
+
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
             padding: 40px;
             text-align: center;
         }
-        
+
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
         }
-        
+
         .header p {
             font-size: 1.2em;
             opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        
+
         .content {
             padding: 40px;
         }
-        
-        .features {
+
+        .demo-section {
+            margin-bottom: 50px;
+        }
+
+        .demo-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin-bottom: 40px;
+            margin: 40px 0;
         }
-        
-        .feature {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .feature:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature i {
-            font-size: 3em;
-            margin-bottom: 15px;
-            color: #4facfe;
-        }
-        
-        .feature h3 {
-            margin-bottom: 10px;
-            color: #333;
-        }
-        
-        .demo-section {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .demo-section h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        .code-block {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 20px;
-            border-radius: 10px;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-            margin: 20px 0;
-        }
-        
-        .installation {
+
+        .feature-card {
             background: white;
             padding: 30px;
             border-radius: 15px;
-            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .steps {
-            list-style: none;
-            padding: 0;
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
-        
-        .steps li {
-            padding: 15px;
-            margin: 10px 0;
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 五行元素颜色 */
+        .metal { color: #a8a8a8; }
+        .wood { color: #8B5A2B; }
+        .water { color: #3B82F6; }
+        .fire { color: #EF4444; }
+        .earth { color: #B7791F; }
+
+        .elements-demo {
             background: #f8f9fa;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
         }
-        
-        .steps li::before {
-            content: counter(step);
-            counter-increment: step;
-            background: #4facfe;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: bold;
+
+        .elements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
         }
-        
-        .footer {
-            background: #2d3748;
+
+        .element-card {
+            padding: 25px;
+            border-radius: 12px;
             color: white;
             text-align: center;
-            padding: 20px;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: #4facfe;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
             transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .btn:hover {
-            background: #00f2fe;
-            transform: translateY(-2px);
+
+        .element-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
-        
-        .element-colors {
+
+        .element-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .element-card:hover::before {
+            opacity: 1;
+        }
+
+        .element-card.metal { background: linear-gradient(135deg, #a8a8a8 0%, #7d7d7d 100%); }
+        .element-card.wood { background: linear-gradient(135deg, #8B5A2B 0%, #654321 100%); }
+        .element-card.water { background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); }
+        .element-card.fire { background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%); }
+        .element-card.earth { background: linear-gradient(135deg, #B7791F 0%, #92400E 100%); }
+
+        .element-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .element-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .element-desc {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .installation-steps {
+            background: #e8f4f8;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+
+        .steps {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .step {
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
+            align-items: flex-start;
+            gap: 15px;
         }
-        
-        .color-dot {
+
+        .step-number {
+            background: #3B82F6;
+            color: white;
             width: 30px;
             height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             font-weight: bold;
-            font-size: 12px;
+            flex-shrink: 0;
         }
-        
-        .metal { background: #a8a8a8; }
-        .wood { background: #8B5A2B; }
-        .water { background: #3B82F6; }
-        .fire { background: #EF4444; }
-        .earth { background: #B7791F; }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step h4 {
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .footer a {
+            color: #3B82F6;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .elements-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>五行元素产品展示插件</h1>
-            <p>基于中国传统五行哲学的产品展示解决方案</p>
+            <p>基于中国传统五行哲学的智能产品展示系统</p>
         </div>
-        
+
         <div class="content">
-            <div class="features">
-                <div class="feature">
-                    <i class="fas fa-palette"></i>
-                    <h3>五行色彩主题</h3>
-                    <p>金、木、水、火、土五种元素的专属配色方案</p>
-                </div>
-                
-                <div class="feature">
-                    <i class="fas fa-filter"></i>
-                    <h3>智能分类筛选</h3>
-                    <p>基于data-category属性的高效产品筛选功能</p>
-                </div>
-                
-                <div class="feature">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>响应式设计</h3>
-                    <p>完美适配桌面、平板和移动设备</p>
-                </div>
-            </div>
-            
-            <div class="element-colors">
-                <div class="color-dot metal" title="金元素">金</div>
-                <div class="color-dot wood" title="木元素">木</div>
-                <div class="color-dot water" title="水元素">水</div>
-                <div class="color-dot fire" title="火元素">火</div>
-                <div class="color-dot earth" title="土元素">土</div>
-            </div>
-            
             <div class="demo-section">
-                <h2>功能演示</h2>
-                <p>五行元素产品展示插件提供了以下核心功能：</p>
-                
-                <ul style="margin: 20px 0; padding-left: 30px;">
-                    <li>悬停显示产品分类下拉菜单</li>
-                    <li>点击分类标签筛选对应产品</li>
-                    <li>平滑的动画过渡效果</li>
-                    <li>响应式布局设计</li>
-                    <li>Shopify主题集成支持</li>
-                </ul>
-                
-                <div class="code-block">
-// 简化的筛选逻辑示例<br>
-function filterProducts(element, category) {<br>
-&nbsp;&nbsp;const productCards = document.querySelectorAll(`#${element}-products .product-card`);<br>
-&nbsp;&nbsp;productCards.forEach(card => {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;const cardCategory = card.getAttribute('data-category');<br>
-&nbsp;&nbsp;&nbsp;&nbsp;card.style.display = cardCategory === category ? 'block' : 'none';<br>
-&nbsp;&nbsp;});<br>
-}
+                <h2>✨ 核心功能</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon metal">⚱️</div>
+                        <h3>五行元素分类</h3>
+                        <p>金、木、水、火、土五种元素，每种元素支持4个产品类别，完美契合传统文化理念。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon water">💧</div>
+                        <h3>智能交互</h3>
+                        <p>悬停显示类别菜单，点击精准筛选，一键重置功能，提供流畅的用户体验。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon fire">🔥</div>
+                        <h3>响应式设计</h3>
+                        <p>完美适配桌面、平板和手机设备，确保在所有屏幕上都有出色的显示效果。</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="installation">
-                <h2>安装指南</h2>
-                <ol class="steps" style="counter-reset: step;">
-                    <li>将 five-elements-display.liquid 文件复制到 Shopify 主题的 sections 目录</li>
-                    <li>在主题设置中添加五行元素产品展示区块</li>
-                    <li>配置各元素对应的产品集合</li>
-                    <li>为产品添加相应的 data-category 属性</li>
-                    <li>保存并发布主题更改</li>
-                </ol>
+
+            <div class="demo-section">
+                <h2>🌿 五行元素展示</h2>
+                <p style="text-align: center; margin-bottom: 30px; color: #666;">
+                    鼠标悬停在元素卡片上体验交互效果，点击查看产品类别
+                </p>
                 
-                <div style="text-align: center; margin-top: 30px;">
-                    <a href="sections/five-elements-display.liquid" class="btn" download>
-                        <i class="fas fa-download"></i> 下载插件文件
-                    </a>
+                <div class="elements-grid">
+                    <div class="element-card metal">
+                        <div class="element-icon">⚱️</div>
+                        <div class="element-name">金 (Metal)</div>
+                        <div class="element-desc">财富、坚固、精确</div>
+                    </div>
+                    <div class="element-card wood">
+                        <div class="element-icon">🌳</div>
+                        <div class="element-name">木 (Wood)</div>
+                        <div class="element-desc">生长、创造、活力</div>
+                    </div>
+                    <div class="element-card water">
+                        <div class="element-icon">💧</div>
+                        <div class="element-name">水 (Water)</div>
+                        <div class="element-desc">流动、智慧、适应</div>
+                    </div>
+                    <div class="element-card fire">
+                        <div class="element-icon">🔥</div>
+                        <div class="element-name">火 (Fire)</div>
+                        <div class="element-desc">热情、能量、变革</div>
+                    </div>
+                    <div class="element-card earth">
+                        <div class="element-icon">🏔️</div>
+                        <div class="element-name">土 (Earth)</div>
+                        <div class="element-desc">稳定、滋养、基础</div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="installation-steps">
+                <h2>🚀 快速安装</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>上传文件到主题</h4>
+                            <p>将插件文件上传到Shopify主题的对应目录</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>创建演示页面</h4>
+                            <p>使用 <span class="highlight">page.five-elements-demo</span> 模板创建新页面</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>配置产品集合</h4>
+                            <p>按五行元素分类设置产品集合，并在区块中选择</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>享受智能展示</h4>
+                            <p>访问页面，体验传统文化与现代电商的完美结合</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>📁 文件结构</h2>
+                <pre style="background: #2c3e50; color: white; padding: 20px; border-radius: 8px; overflow-x: auto;">
+theme_export__m0f4ga-y0-myshopify-com-dawn__20AUG2025-0505pm/
+├── sections/
+│   └── five-elements-display.liquid      # 主插件文件
+├── templates/
+│   └── page.five-elements-demo.liquid    # 演示页面模板
+├── assets/
+│   └── font-awesome.css                  # 图标样式
+├── INSTALLATION_GUIDE.md                 # 安装指南
+├── README.md                             # 项目说明
+└── install-plugin.sh                     # 安装脚本
+                </pre>
             </div>
         </div>
-        
+
         <div class="footer">
-            <p>© 2024 五行元素产品展示插件 | 基于 Shopify 主题开发</p>
+            <p>🎋 体验中国传统文化与现代电商的完美结合</p>
+            <p>需要帮助？查看 <a href="INSTALLATION_GUIDE.md">安装指南</a> 或 <a href="README.md">项目说明</a></p>
+            <p style="margin-top: 20px; opacity: 0.8;">&copy; 2025 五行元素产品展示插件 - MIT License</p>
         </div>
     </div>
+
+    <script>
+        // 简单的交互效果
+        document.querySelectorAll('.element-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const element = this.classList[1];
+                const elements = {
+                    'metal': '金元素：珠宝首饰、金属工艺品、贵金属投资、手表钟表',
+                    'wood': '木元素：木制家具、绿植盆栽、环保用品、文房四宝',
+                    'water': '水元素：玻璃器皿、水族用品、清洁用品、香薰精油',
+                    'fire': '火元素：辣椒制品、香薰蜡烛、红色服饰、热饮茶品',
+                    'earth': '土元素：陶瓷器皿、有机食品、家居装饰、养生保健'
+                };
+                alert(elements[element]);
+            });
+        });
+    </script>
 </body>
 </html>
