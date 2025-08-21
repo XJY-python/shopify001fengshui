@@ -366,7 +366,7 @@
               {%- assign metal_collection = collections[section.settings.metal_collection] -%}
               {%- for product in metal_collection.products limit: 3 -%}
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '珠宝首饰' }}">
-                  <div class="h-48 bg-metal bg-opacity-10 flex items-center justify-center overflow-hidden">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
@@ -410,7 +410,7 @@
               {%- assign wood_collection = collections[section.settings.wood_collection] -%}
               {%- for product in wood_collection.products limit: 3 -%}
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '木制家具' }}">
-                  <div class="h-48 bg-wood bg-opacity-10 flex items-center justify-center overflow-hidden">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
@@ -454,7 +454,7 @@
               {%- assign water_collection = collections[section.settings.water_collection] -%}
               {%- for product in water_collection.products limit: 3 -%}
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '玻璃器皿' }}">
-                  <div class="h-48 bg-water bg-opacity-10 flex items-center justify-center overflow-hidden">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
@@ -498,7 +498,7 @@
               {%- assign fire_collection = collections[section.settings.fire_collection] -%}
               {%- for product in fire_collection.products limit: 3 -%}
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '辣椒制品' }}">
-                  <div class="h-48 bg-fire bg-opacity-10 flex items-center justify-center overflow-hidden">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
@@ -542,7 +542,7 @@
               {%- assign earth_collection = collections[section.settings.earth_collection] -%}
               {%- for product in earth_collection.products limit: 3 -%}
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '陶瓷器皿' }}">
-                  <div class="h-48 bg-earth bg-opacity-10 flex items-center justify-center overflow-hidden">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
