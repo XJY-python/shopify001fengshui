@@ -365,7 +365,7 @@
             {%- if section.settings.metal_collection != blank -%}
               {%- assign metal_collection = collections[section.settings.metal_collection] -%}
               {%- for product in metal_collection.products limit: 3 -%}
-                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="{{ product.metafields.custom.category | default: '珠宝首饰' }}">
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '珠宝首饰' }}">
                   <div class="h-48 bg-metal bg-opacity-10 flex items-center justify-center overflow-hidden">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
@@ -380,7 +380,7 @@
                     <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
                     <p class="text-metal font-bold">{{ product.price | money }}</p>
                   </div>
-                </div>
+                </a>
               {%- endfor -%}
             {%- else -%}
               <p class="text-gray-500">请配置金元素产品集合</p>
@@ -409,7 +409,7 @@
             {%- if section.settings.wood_collection != blank -%}
               {%- assign wood_collection = collections[section.settings.wood_collection] -%}
               {%- for product in wood_collection.products limit: 3 -%}
-                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="{{ product.metafields.custom.category | default: '木制家具' }}">
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '木制家具' }}">
                   <div class="h-48 bg-wood bg-opacity-10 flex items-center justify-center overflow-hidden">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
@@ -424,7 +424,7 @@
                     <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
                     <p class="text-wood font-bold">{{ product.price | money }}</p>
                   </div>
-                </div>
+                </a>
               {%- endfor -%}
             {%- else -%}
               <p class="text-gray-500">请配置木元素产品集合</p>
@@ -453,7 +453,7 @@
             {%- if section.settings.water_collection != blank -%}
               {%- assign water_collection = collections[section.settings.water_collection] -%}
               {%- for product in water_collection.products limit: 3 -%}
-                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="{{ product.metafields.custom.category | default: '玻璃器皿' }}">
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '玻璃器皿' }}">
                   <div class="h-48 bg-water bg-opacity-10 flex items-center justify-center overflow-hidden">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
@@ -468,7 +468,7 @@
                     <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
                     <p class="text-water font-bold">{{ product.price | money }}</p>
                   </div>
-                </div>
+                </a>
               {%- endfor -%}
             {%- else -%}
               <p class="text-gray-500">请配置水元素产品集合</p>
@@ -497,7 +497,7 @@
             {%- if section.settings.fire_collection != blank -%}
               {%- assign fire_collection = collections[section.settings.fire_collection] -%}
               {%- for product in fire_collection.products limit: 3 -%}
-                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="{{ product.metafields.custom.category | default: '辣椒制品' }}">
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '辣椒制品' }}">
                   <div class="h-48 bg-fire bg-opacity-10 flex items-center justify-center overflow-hidden">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
@@ -512,7 +512,7 @@
                     <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
                     <p class="text-fire font-bold">{{ product.price | money }}</p>
                   </div>
-                </div>
+                </a>
               {%- endfor -%}
             {%- else -%}
               <p class="text-gray-500">请配置火元素产品集合</p>
@@ -541,7 +541,7 @@
             {%- if section.settings.earth_collection != blank -%}
               {%- assign earth_collection = collections[section.settings.earth_collection] -%}
               {%- for product in earth_collection.products limit: 3 -%}
-                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="{{ product.metafields.custom.category | default: '陶瓷器皿' }}">
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="{{ product.metafields.custom.category | default: '陶瓷器皿' }}">
                   <div class="h-48 bg-earth bg-opacity-10 flex items-center justify-center overflow-hidden">
                     {%- if product.featured_image -%}
                       <img src="{{ product.featured_image | img_url: '300x300' }}" 
@@ -556,7 +556,7 @@
                     <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
                     <p class="text-earth font-bold">{{ product.price | money }}</p>
                   </div>
-                </div>
+                </a>
               {%- endfor -%}
             {%- else -%}
               <p class="text-gray-500">请配置土元素产品集合</p>
