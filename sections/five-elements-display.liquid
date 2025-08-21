@@ -20,10 +20,48 @@
   .element-box {
     transition: all 0.3s ease;
     transform-origin: left center;
+    position: relative;
   }
   .element-box:hover {
     transform: scale(1.03);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  .element-box:hover .category-tags {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .category-tags {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .category-tag {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+  }
+  .category-tag:hover {
+    transform: translateX(5px);
+  }
+  .category-tag:last-child {
+    margin-bottom: 0;
   }
   .product-panel {
     transition: opacity 0.5s ease;
@@ -193,13 +231,12 @@
               <p class="text-sm text-gray-600">代表财富、坚固和精确</p>
             </div>
           </div>
-          <!-- Metal categories (hidden by default) -->
-          <div id="metal-categories" class="mt-3 hidden">
-            <div class="flex flex-wrap gap-2 mt-2">
-              <span class="px-3 py-1 bg-metal bg-opacity-10 text-metal rounded-full text-sm cursor-pointer category-tag" data-category="手链">手链</span>
-              <span class="px-3 py-1 bg-metal bg-opacity-10 text-metal rounded-full text-sm cursor-pointer category-tag" data-category="吊坠">吊坠</span>
-              <span class="px-3 py-1 bg-metal bg-opacity-10 text-metal rounded-full text-sm cursor-pointer category-tag" data-category="木制品">木制品</span>
-            </div>
+          <!-- Metal categories dropdown -->
+          <div class="category-tags">
+            <span class="category-tag bg-metal bg-opacity-10 text-metal" data-category="珠宝首饰">珠宝首饰</span>
+            <span class="category-tag bg-metal bg-opacity-10 text-metal" data-category="金属工艺品">金属工艺品</span>
+            <span class="category-tag bg-metal bg-opacity-10 text-metal" data-category="贵金属投资">贵金属投资</span>
+            <span class="category-tag bg-metal bg-opacity-10 text-metal" data-category="手表钟表">手表钟表</span>
           </div>
         </div>
 
@@ -214,13 +251,12 @@
               <p class="text-sm text-gray-600">象征生长、创造和活力</p>
             </div>
           </div>
-          <!-- Wood categories (hidden by default) -->
-          <div id="wood-categories" class="mt-3 hidden">
-            <div class="flex flex-wrap gap-2 mt-2">
-              <span class="px-3 py-1 bg-wood bg-opacity-10 text-wood rounded-full text-sm cursor-pointer category-tag" data-category="手链">手链</span>
-              <span class="px-3 py-1 bg-wood bg-opacity-10 text-wood rounded-full text-sm cursor-pointer category-tag" data-category="吊坠">吊坠</span>
-              <span class="px-3 py-1 bg-wood bg-opacity-10 text-wood rounded-full text-sm cursor-pointer category-tag" data-category="木制品">木制品</span>
-            </div>
+          <!-- Wood categories dropdown -->
+          <div class="category-tags">
+            <span class="category-tag bg-wood bg-opacity-10 text-wood" data-category="木制家具">木制家具</span>
+            <span class="category-tag bg-wood bg-opacity-10 text-wood" data-category="绿植盆栽">绿植盆栽</span>
+            <span class="category-tag bg-wood bg-opacity-10 text-wood" data-category="环保用品">环保用品</span>
+            <span class="category-tag bg-wood bg-opacity-10 text-wood" data-category="文房四宝">文房四宝</span>
           </div>
         </div>
 
@@ -235,13 +271,12 @@
               <p class="text-sm text-gray-600">代表流动、智慧和适应</p>
             </div>
           </div>
-          <!-- Water categories (hidden by default) -->
-          <div id="water-categories" class="mt-3 hidden">
-            <div class="flex flex-wrap gap-2 mt-2">
-              <span class="px-3 py-1 bg-water bg-opacity-10 text-water rounded-full text-sm cursor-pointer category-tag" data-category="手链">手链</span>
-              <span class="px-3 py-1 bg-water bg-opacity-10 text-water rounded-full text-sm cursor-pointer category-tag" data-category="吊坠">吊坠</span>
-              <span class="px-3 py-1 bg-water bg-opacity-10 text-water rounded-full text-sm cursor-pointer category-tag" data-category="木制品">木制品</span>
-            </div>
+          <!-- Water categories dropdown -->
+          <div class="category-tags">
+            <span class="category-tag bg-water bg-opacity-10 text-water" data-category="玻璃器皿">玻璃器皿</span>
+            <span class="category-tag bg-water bg-opacity-10 text-water" data-category="水族用品">水族用品</span>
+            <span class="category-tag bg-water bg-opacity-10 text-water" data-category="清洁用品">清洁用品</span>
+            <span class="category-tag bg-water bg-opacity-10 text-water" data-category="香薰精油">香薰精油</span>
           </div>
         </div>
 
@@ -256,13 +291,12 @@
               <p class="text-sm text-gray-600">象征热情、能量和变革</p>
             </div>
           </div>
-          <!-- Fire categories (hidden by default) -->
-          <div id="fire-categories" class="mt-3 hidden">
-            <div class="flex flex-wrap gap-2 mt-2">
-              <span class="px-3 py-1 bg-fire bg-opacity-10 text-fire rounded-full text-sm cursor-pointer category-tag" data-category="手链">手链</span>
-              <span class="px-3 py-1 bg-fire bg-opacity-10 text-fire rounded-full text-sm cursor-pointer category-tag" data-category="吊坠">吊坠</span>
-              <span class="px-3 py-1 bg-fire bg-opacity-10 text-fire rounded-full text-sm cursor-pointer category-tag" data-category="木制品">木制品</span>
-            </div>
+          <!-- Fire categories dropdown -->
+          <div class="category-tags">
+            <span class="category-tag bg-fire bg-opacity-10 text-fire" data-category="辣椒制品">辣椒制品</span>
+            <span class="category-tag bg-fire bg-opacity-10 text-fire" data-category="香薰蜡烛">香薰蜡烛</span>
+            <span class="category-tag bg-fire bg-opacity-10 text-fire" data-category="红色服饰">红色服饰</span>
+            <span class="category-tag bg-fire bg-opacity-10 text-fire" data-category="热饮茶品">热饮茶品</span>
           </div>
         </div>
 
@@ -277,13 +311,12 @@
               <p class="text-sm text-gray-600">代表稳定、滋养和基础</p>
             </div>
           </div>
-          <!-- Earth categories (hidden by default) -->
-          <div id="earth-categories" class="mt-3 hidden">
-            <div class="flex flex-wrap gap-2 mt-2">
-              <span class="px-3 py-1 bg-earth bg-opacity-10 text-earth rounded-full text-sm cursor-pointer category-tag" data-category="手链">手链</span>
-              <span class="px-3 py-1 bg-earth bg-opacity-10 text-earth rounded-full text-sm cursor-pointer category-tag" data-category="吊坠">吊坠</span>
-              <span class="px-3 py-1 bg-earth bg-opacity-10 text-earth rounded-full text-sm cursor-pointer category-tag" data-category="木制品">木制品</span>
-            </div>
+          <!-- Earth categories dropdown -->
+          <div class="category-tags">
+            <span class="category-tag bg-earth bg-opacity-10 text-earth" data-category="陶瓷器皿">陶瓷器皿</span>
+            <span class="category-tag bg-earth bg-opacity-10 text-earth" data-category="有机食品">有机食品</span>
+            <span class="category-tag bg-earth bg-opacity-10 text-earth" data-category="家居装饰">家居装饰</span>
+            <span class="category-tag bg-earth bg-opacity-10 text-earth" data-category="养生保健">养生保健</span>
           </div>
         </div>
       </div>
@@ -310,9 +343,10 @@
           <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
             <div class="flex space-x-4 product-categories">
-              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">手链</span>
-              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">吊坠</span>
-              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">木制品</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">珠宝首饰</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">金属工艺品</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">贵金属投资</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">手表钟表</span>
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -360,9 +394,10 @@
           <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
             <div class="flex space-x-4 product-categories">
-              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">手链</span>
-              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">吊坠</span>
-              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">木制品</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">木制家具</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">绿植盆栽</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">环保用品</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">文房四宝</span>
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -410,9 +445,10 @@
           <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
             <div class="flex space-x-4 product-categories">
-              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">手链</span>
-              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">吊坠</span>
-              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">木制品</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">玻璃器皿</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">水族用品</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">清洁用品</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">香薰精油</span>
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -460,9 +496,10 @@
           <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
             <div class="flex space-x-4 product-categories">
-              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">手链</span>
-              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">吊坠</span>
-              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">木制品</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">辣椒制品</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">香薰蜡烛</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">红色服饰</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">热饮茶品</span>
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -510,9 +547,10 @@
           <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
             <div class="flex space-x-4 product-categories">
-              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">手链</span>
-              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">吊坠</span>
-              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">木制品</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">陶瓷器皿</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">有机食品</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">家居装饰</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">养生保健</span>
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -560,21 +598,6 @@
       box.addEventListener('mouseenter', function() {
         const element = this.dataset.element;
         showProducts(element);
-        
-        // Show categories on hover
-        const categories = document.getElementById(`${element}-categories`);
-        if (categories) {
-          categories.classList.remove('hidden');
-        }
-      });
-      
-      // Hide categories when mouse leaves
-      box.addEventListener('mouseleave', function() {
-        const element = this.dataset.element;
-        const categories = document.getElementById(`${element}-categories`);
-        if (categories) {
-          categories.classList.add('hidden');
-        }
       });
     });
 
@@ -598,9 +621,10 @@
       }
     }
 
-    // Add event listeners for category tags
+    // Add event listeners for category tags in dropdown
     document.querySelectorAll('.category-tag').forEach(tag => {
-      tag.addEventListener('click', function() {
+      tag.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent event bubbling
         const element = this.closest('.element-box').dataset.element;
         const category = this.dataset.category;
         filterProducts(element, category);
