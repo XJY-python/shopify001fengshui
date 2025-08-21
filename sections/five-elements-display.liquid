@@ -362,36 +362,29 @@
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="珠宝首饰">
-              <div class="h-48 bg-metal bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-bracelet text-5xl text-metal"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">纯金手链</h3>
-                <p class="text-gray-600 text-sm mb-2">18K金，精致工艺</p>
-                <p class="text-metal font-bold">¥1,288</p>
-              </div>
-            </div>
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="珠宝首饰">
-              <div class="h-48 bg-metal bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-pendant text-5xl text-metal"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">翡翠吊坠</h3>
-                <p class="text-gray-600 text-sm mb-2">天然A货翡翠，925银托</p>
-                <p class="text-metal font-bold">¥888</p>
-              </div>
-            </div>
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="金属工艺品">
-              <div class="h-48 bg-metal bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-chess-knight text-5xl text-metal"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">檀木象棋</h3>
-                <p class="text-gray-600 text-sm mb-2">手工雕刻，金属包边</p>
-                <p class="text-metal font-bold">¥328</p>
-              </div>
-            </div>
+            {%- if section.settings.metal_collection != blank -%}
+              {%- assign metal_collection = collections[section.settings.metal_collection] -%}
+              {%- for product in metal_collection.products limit: 3 -%}
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="{{ product.metafields.custom.category | default: '珠宝首饰' }}">
+                  <div class="h-48 bg-metal bg-opacity-10 flex items-center justify-center overflow-hidden">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-bracelet text-5xl text-metal"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-metal font-bold">{{ product.price | money }}</p>
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <p class="text-gray-500">请配置金元素产品集合</p>
+            {%- endif -%}
           </div>
         </div>
 
@@ -413,36 +406,29 @@
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="木制家具">
-              <div class="h-48 bg-wood bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-tree text-5xl text-wood"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">实木茶盘</h3>
-                <p class="text-gray-600 text-sm mb-2">天然黑胡桃木，手工雕刻</p>
-                <p class="text-wood font-bold">¥328</p>
-              </div>
-            </div>
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="绿植盆栽">
-              <div class="h-48 bg-wood bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-spa text-5xl text-wood"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">绿植盆栽</h3>
-                <p class="text-gray-600 text-sm mb-2">净化空气，美化环境</p>
-                <p class="text-wood font-bold">¥88</p>
-              </div>
-            </div>
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="环保用品">
-              <div class="h-48 bg-wood bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-book text-5xl text-wood"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">竹制笔记本</h3>
-                <p class="text-gray-600 text-sm mb-2">环保材质，书写顺滑</p>
-                <p class="text-wood font-bold">¥45</p>
-              </div>
-            </div>
+            {%- if section.settings.wood_collection != blank -%}
+              {%- assign wood_collection = collections[section.settings.wood_collection] -%}
+              {%- for product in wood_collection.products limit: 3 -%}
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="{{ product.metafields.custom.category | default: '木制家具' }}">
+                  <div class="h-48 bg-wood bg-opacity-10 flex items-center justify-center overflow-hidden">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-tree text-5xl text-wood"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-wood font-bold">{{ product.price | money }}</p>
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <p class="text-gray-500">请配置木元素产品集合</p>
+            {%- endif -%}
           </div>
         </div>
 
@@ -464,36 +450,29 @@
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="玻璃器皿">
-              <div class="h-48 bg-water bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-wine-glass-alt text-5xl text-water"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">玻璃茶具套装</h3>
-                <p class="text-gray-600 text-sm mb-2">高硼硅玻璃，耐热防爆</p>
-                <p class="text-water font-bold">¥198</p>
-              </div>
-            </div>
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="水族用品">
-              <div class="h-48 bg-water bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-fish text-5xl text-water"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">海水鱼缸</h3>
-                <p class="text-gray-600 text-sm mb-2">完整生态系统，观赏性强</p>
-                <p class="text-water font-bold">¥1,288</p>
-              </div>
-            </div>
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="香薰精油">
-              <div class="h-48 bg-water bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-spa text-5xl text-water"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">精油香薰</h3>
-                <p class="text-gray-600 text-sm mb-2">海洋香调，舒缓身心</p>
-                <p class="text-water font-bold">¥128</p>
-              </div>
-            </div>
+            {%- if section.settings.water_collection != blank -%}
+              {%- assign water_collection = collections[section.settings.water_collection] -%}
+              {%- for product in water_collection.products limit: 3 -%}
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="{{ product.metafields.custom.category | default: '玻璃器皿' }}">
+                  <div class="h-48 bg-water bg-opacity-10 flex items-center justify-center overflow-hidden">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-wine-glass-alt text-5xl text-water"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-water font-bold">{{ product.price | money }}</p>
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <p class="text-gray-500">请配置水元素产品集合</p>
+            {%- endif -%}
           </div>
         </div>
 
@@ -515,36 +494,29 @@
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="辣椒制品">
-              <div class="h-48 bg-fire bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-mug-hot text-5xl text-fire"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">辣椒酱礼盒</h3>
-                <p class="text-gray-600 text-sm mb-2">五种辣度，挑战味蕾</p>
-                <p class="text-fire font-bold">¥98</p>
-              </div>
-            </div>
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="香薰蜡烛">
-              <div class="h-48 bg-fire bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-candle-holder text-5xl text-fire"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">香薰蜡烛</h3>
-                <p class="text-gray-600 text-sm mb-2">天然大豆蜡，持久燃烧</p>
-                <p class="text-fire font-bold">¥68</p>
-              </div>
-            </div>
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="红色服饰">
-              <div class="h-48 bg-fire bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-tshirt text-5xl text-fire"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">红色丝绸围巾</h3>
-                <p class="text-gray-600 text-sm mb-2">100%桑蚕丝，喜庆吉祥</p>
-                <p class="text-fire font-bold">¥258</p>
-              </div>
-            </div>
+            {%- if section.settings.fire_collection != blank -%}
+              {%- assign fire_collection = collections[section.settings.fire_collection] -%}
+              {%- for product in fire_collection.products limit: 3 -%}
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="{{ product.metafields.custom.category | default: '辣椒制品' }}">
+                  <div class="h-48 bg-fire bg-opacity-10 flex items-center justify-center overflow-hidden">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-mug-hot text-5xl text-fire"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-fire font-bold">{{ product.price | money }}</p>
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <p class="text-gray-500">请配置火元素产品集合</p>
+            {%- endif -%}
           </div>
         </div>
 
@@ -566,36 +538,29 @@
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="陶瓷器皿">
-              <div class="h-48 bg-earth bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-mug text-5xl text-earth"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">紫砂茶壶</h3>
-                <p class="text-gray-600 text-sm mb-2">宜兴原矿，手工制作</p>
-                <p class="text-earth font-bold">¥388</p>
-              </div>
-            </div>
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="有机食品">
-              <div class="h-48 bg-earth bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-seedling text-5xl text-earth"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">有机五谷杂粮</h3>
-                <p class="text-gray-600 text-sm mb-2">无添加，营养丰富</p>
-                <p class="text-earth font-bold">¥58</p>
-              </div>
-            </div>
-            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="家居装饰">
-              <div class="h-48 bg-earth bg-opacity-10 flex items-center justify-center">
-                <i class="fas fa-chess-rook text-5xl text-earth"></i>
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1">陶瓷摆件</h3>
-                <p class="text-gray-600 text-sm mb-2">手工陶艺，家居装饰</p>
-                <p class="text-earth font-bold">¥168</p>
-              </div>
-            </div>
+            {%- if section.settings.earth_collection != blank -%}
+              {%- assign earth_collection = collections[section.settings.earth_collection] -%}
+              {%- for product in earth_collection.products limit: 3 -%}
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md" data-category="{{ product.metafields.custom.category | default: '陶瓷器皿' }}">
+                  <div class="h-48 bg-earth bg-opacity-10 flex items-center justify-center overflow-hidden">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover">
+                    {%- else -%}
+                      <i class="fas fa-mug text-5xl text-earth"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-lg mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-earth font-bold">{{ product.price | money }}</p>
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <p class="text-gray-500">请配置土元素产品集合</p>
+            {%- endif -%}
           </div>
         </div>
       </div>
