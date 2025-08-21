@@ -9,22 +9,6 @@
  */
 {
   "sections": {
-    "five_elements_display_ykwrCT": {
-      "type": "five-elements-display",
-      "name": "五行元素产品展示",
-      "settings": {
-        "heading": "五行元素产品展示",
-        "heading_size": "h1",
-        "color_scheme": "",
-        "metal_collection": "手链",
-        "wood_collection": "",
-        "water_collection": "",
-        "fire_collection": "",
-        "earth_collection": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "five_elements_display_RD6A9G": {
       "type": "five-elements-display",
       "name": "五行元素产品展示",
@@ -43,7 +27,6 @@
     }
   },
   "order": [
-    "five_elements_display_ykwrCT",
     "five_elements_display_RD6A9G"
   ]
 }
