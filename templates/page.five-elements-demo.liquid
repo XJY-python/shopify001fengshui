@@ -1,0 +1,29 @@
+{% layout 'theme' %}
+
+{% section 'main-page' %}
+
+<div class="page-width">
+  <h1 class="main-page-title page-title h0">
+    {{ page.title | escape }}
+  </h1>
+  <div class="rte">
+    {{ page.content }}
+  </div>
+</div>
+
+{% section 'five-elements-display' %}
+
+<style>
+  .main-page-title {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+  
+  .rte {
+    margin-bottom: 4rem;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

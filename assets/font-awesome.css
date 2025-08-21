@@ -1,0 +1,533 @@
+/*!
+ * Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ * Copyright 2023 Fonticons, Inc.
+ */
+.fa {
+  font-family: var(--fa-style-family, "Font Awesome 6 Free");
+  font-weight: var(--fa-style, 900);
+}
+
+.fa,
+.fas,
+.far,
+.fal,
+.fat,
+.fab {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: var(--fa-display, inline-block);
+  font-style: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-rendering: auto;
+}
+
+.fa-gem:before {
+  content: "\f3a5";
+}
+
+.fa-leaf:before {
+  content: "\f06c";
+}
+
+.fa-tint:before {
+  content: "\f043";
+}
+
+.fa-fire:before {
+  content: "\f06d";
+}
+
+.fa-mountain:before {
+  content: "\f6fc";
+}
+
+.fa-hand-pointer:before {
+  content: "\f25a";
+}
+
+.fa-bracelet:before {
+  content: "\f021";
+}
+
+.fa-pendant:before {
+  content: "\f021";
+}
+
+.fa-chess-knight:before {
+  content: "\f441";
+}
+
+.fa-tree:before {
+  content: "\f1bb";
+}
+
+.fa-spa:before {
+  content: "\f5bb";
+}
+
+.fa-book:before {
+  content: "\f02d";
+}
+
+.fa-wine-glass-alt:before {
+  content: "\f5ce";
+}
+
+.fa-fish:before {
+  content: "\f578";
+}
+
+.fa-mug-hot:before {
+  content: "\f7b6";
+}
+
+.fa-candle-holder:before {
+  content: "\f6bc";
+}
+
+.fa-tshirt:before {
+  content: "\f553";
+}
+
+.fa-mug:before {
+  content: "\f874";
+}
+
+.fa-seedling:before {
+  content: "\f4d8";
+}
+
+.fa-chess-rook:before {
+  content: "\f447";
+}
+
+/* Additional icons that might be used */
+.fa-search:before {
+  content: "\f002";
+}
+
+.fa-shopping-cart:before {
+  content: "\f07a";
+}
+
+.fa-user:before {
+  content: "\f007";
+}
+
+.fa-heart:before {
+  content: "\f004";
+}
+
+.fa-star:before {
+  content: "\f005";
+}
+
+.fa-arrow-right:before {
+  content: "\f061";
+}
+
+.fa-arrow-left:before {
+  content: "\f060";
+}
+
+.fa-times:before {
+  content: "\f00d";
+}
+
+.fa-bars:before {
+  content: "\f0c9";
+}
+
+.fa-check:before {
+  content: "\f00c";
+}
+
+.fa-info:before {
+  content: "\f129";
+}
+
+.fa-exclamation:before {
+  content: "\f12a";
+}
+
+.fa-lock:before {
+  content: "\f023";
+}
+
+.fa-unlock:before {
+  content: "\f09c";
+}
+
+.fa-envelope:before {
+  content: "\f0e0";
+}
+
+.fa-phone:before {
+  content: "\f095";
+}
+
+.fa-map-marker:before {
+  content: "\f041";
+}
+
+.fa-clock:before {
+  content: "\f017";
+}
+
+.fa-calendar:before {
+  content: "\f133";
+}
+
+.fa-truck:before {
+  content: "\f0d1";
+}
+
+.fa-credit-card:before {
+  content: "\f09d";
+}
+
+.fa-paypal:before {
+  content: "\f1ed";
+}
+
+.fa-amazon:before {
+  content: "\f270";
+}
+
+.fa-apple:before {
+  content: "\f179";
+}
+
+.fa-windows:before {
+  content: "\f17a";
+}
+
+.fa-android:before {
+  content: "\f17b";
+}
+
+.fa-linkedin:before {
+  content: "\f08c";
+}
+
+.fa-twitter:before {
+  content: "\f099";
+}
+
+.fa-facebook:before {
+  content: "\f09a";
+}
+
+.fa-instagram:before {
+  content: "\f16d";
+}
+
+.fa-youtube:before {
+  content: "\f167";
+}
+
+.fa-pinterest:before {
+  content: "\f0d2";
+}
+
+.fa-snapchat:before {
+  content: "\f2ab";
+}
+
+.fa-whatsapp:before {
+  content: "\f232";
+}
+
+.fa-tiktok:before {
+  content: "\e07b";
+}
+
+.fa-discord:before {
+  content: "\f392";
+}
+
+.fa-telegram:before {
+  content: "\f2c6";
+}
+
+.fa-reddit:before {
+  content: "\f1a1";
+}
+
+.fa-twitch:before {
+  content: "\f1e8";
+}
+
+.fa-vimeo:before {
+  content: "\f27d";
+}
+
+.fa-skype:before {
+  content: "\f17e";
+}
+
+.fa-dropbox:before {
+  content: "\f16b";
+}
+
+.fa-github:before {
+  content: "\f09b";
+}
+
+.fa-gitlab:before {
+  content: "\f296";
+}
+
+.fa-bitbucket:before {
+  content: "\f171";
+}
+
+.fa-stack-overflow:before {
+  content: "\f16c";
+}
+
+.fa-medium:before {
+  content: "\f23a";
+}
+
+.fa-quora:before {
+  content: "\f2c4";
+}
+
+.fa-yelp:before {
+  content: "\f1e9";
+}
+
+.fa-foursquare:before {
+  content: "\f180";
+}
+
+.fa-google:before {
+  content: "\f1a0";
+}
+
+.fa-google-play:before {
+  content: "\f3ab";
+}
+
+.fa-app-store:before {
+  content: "\f36f";
+}
+
+.fa-windows-store:before {
+  content: "\f326";
+}
+
+.fa-steam:before {
+  content: "\f1b6";
+}
+
+.fa-spotify:before {
+  content: "\f1bc";
+}
+
+.fa-soundcloud:before {
+  content: "\f1be";
+}
+
+.fa-bandcamp:before {
+  content: "\f2d5";
+}
+
+.fa-itunes:before {
+  content: "\f3b4";
+}
+
+.fa-deviantart:before {
+  content: "\f1bd";
+}
+
+.fa-dribbble:before {
+  content: "\f17d";
+}
+
+.fa-behance:before {
+  content: "\f1b4";
+}
+
+.fa-500px:before {
+  content: "\f26e";
+}
+
+.fa-flickr:before {
+  content: "\f16e";
+}
+
+.fa-vine:before {
+  content: "\f1ca";
+}
+
+.fa-periscope:before {
+  content: "\f3da";
+}
+
+.fa-mixcloud:before {
+  content: "\f289";
+}
+
+.fa-vk:before {
+  content: "\f189";
+}
+
+.fa-odnoklassniki:before {
+  content: "\f263";
+}
+
+.fa-renren:before {
+  content: "\f18b";
+}
+
+.fa-weibo:before {
+  content: "\f18a";
+}
+
+.fa-weixin:before {
+  content: "\f1d7";
+}
+
+.fa-qq:before {
+  content: "\f1d6";
+}
+
+.fa-xing:before {
+  content: "\f168";
+}
+
+.fa-blogger:before {
+  content: "\f37c";
+}
+
+.fa-wordpress:before {
+  content: "\f19a";
+}
+
+.fa-joomla:before {
+  content: "\f1aa";
+}
+
+.fa-drupal:before {
+  content: "\f1a9";
+}
+
+.fa-magento:before {
+  content: "\f3c4";
+}
+
+.fa-opencart:before {
+  content: "\f23d";
+}
+
+.fa-prestashop:before {
+  content: "\f3ab";
+}
+
+.fa-shopify:before {
+  content: "\f957";
+}
+
+.fa-woocommerce:before {
+  content: "\f480";
+}
+
+.fa-btc:before {
+  content: "\f15a";
+}
+
+.fa-ethereum:before {
+  content: "\f42e";
+}
+
+.fa-cc-visa:before {
+  content: "\f1f0";
+}
+
+.fa-cc-mastercard:before {
+  content: "\f1f1";
+}
+
+.fa-cc-amex:before {
+  content: "\f1f3";
+}
+
+.fa-cc-paypal:before {
+  content: "\f1f4";
+}
+
+.fa-cc-stripe:before {
+  content: "\f1f5";
+}
+
+.fa-cc-discover:before {
+  content: "\f1f2";
+}
+
+.fa-cc-diners-club:before {
+  content: "\f24c";
+}
+
+.fa-cc-jcb:before {
+  content: "\f24b";
+}
+
+.fa-cc-apple-pay:before {
+  content: "\f416";
+}
+
+.fa-cc-google-pay:before {
+  content: "\e926";
+}
+
+.fa-cc-amazon-pay:before {
+  content: "\f42d";
+}
+
+.fa-cc-paypal:before {
+  content: "\f1f4";
+}
+
+.fa-cc-stripe:before {
+  content: "\f1f5";
+}
+
+.fa-cc-visa:before {
+  content: "\f1f0";
+}
+
+.fa-cc-mastercard:before {
+  content: "\f1f1";
+}
+
+.fa-cc-amex:before {
+  content: "\f1f3";
+}
+
+.fa-cc-discover:before {
+  content: "\f1f2";
+}
+
+.fa-cc-diners-club:before {
+  content: "\f24c";
+}
+
+.fa-cc-jcb:before {
+  content: "\f24b";
+}
+
+.fa-cc-apple-pay:before {
+  content: "\f416";
+}
+
+.fa-cc-google-pay:before {
+  content: "\e926";
+}
+
+.fa-cc-amazon-pay:before {
+  content: "\f42d";
+}

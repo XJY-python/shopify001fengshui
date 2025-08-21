@@ -1,0 +1,105 @@
+.element-box {
+    transition: all 0.3s ease;
+    transform-origin: left center;
+}
+.element-box:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+.product-panel {
+    transition: opacity 0.5s ease;
+}
+.product-card {
+    transition: all 0.2s ease;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+}
+.element-icon {
+    font-size: 2rem;
+}
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    .elements-panel, .products-panel {
+        width: 100% !important;
+    }
+    .elements-panel {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 1rem;
+    }
+    .element-box {
+        min-width: 150px;
+        margin-right: 1rem;
+    }
+}
+/* Define color classes for each element */
+:root {
+    --metal: #a8a8a8;
+    --wood: #8B5A2B;
+    --water: #3B82F6;
+    --fire: #EF4444;
+    --earth: #B7791F;
+}
+
+.text-metal {
+    color: var(--metal);
+}
+
+.bg-metal {
+    background-color: var(--metal);
+}
+
+.border-metal {
+    border-color: var(--metal);
+}
+
+.text-wood {
+    color: var(--wood);
+}
+
+.bg-wood {
+    background-color: var(--wood);
+}
+
+.border-wood {
+    border-color: var(--wood);
+}
+
+.text-water {
+    color: var(--water);
+}
+
+.bg-water {
+    background-color: var(--water);
+}
+
+.border-water {
+    border-color: var(--water);
+}
+
+.text-fire {
+    color: var(--fire);
+}
+
+.bg-fire {
+    background-color: var(--fire);
+}
+
+.border-fire {
+    border-color: var(--fire);
+}
+
+.text-earth {
+    color: var(--earth);
+}
+
+.bg-earth {
+    background-color: var(--earth);
+}
+
+.border-earth {
+    border-color: var(--earth);
+}
