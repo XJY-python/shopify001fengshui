@@ -45,7 +45,19 @@
     transform: translateY(-10px);
     transition: all 0.3s ease;
     pointer-events: none;
-    z-index: 10;
+    z-index: 100; /* Highest z-index to ensure it appears above everything */
+  }
+  /* Add margin to element boxes to prevent overlap */
+  .element-box {
+    margin-bottom: 6rem; /* Reserve space for dropdown */
+    position: relative;
+  }
+  .element-box:last-child {
+    margin-bottom: 0;
+  }
+  /* Add spacing between elements to prevent dropdown overlap */
+  .elements-panel {
+    gap: 2rem; /* Gap between element boxes for dropdown space */
   }
   .category-tag {
     display: block;
@@ -247,7 +259,7 @@
               <i class="fas fa-leaf"></i>
             </div>
             <div>
-              <h3 class="font-bold text-lg">木1 (Wood)</h3>
+              <h3 class="font-bold text-lg">木 (Wood)</h3>
               <p class="text-sm text-gray-600">象征生长、创造和活力</p>
             </div>
           </div>
