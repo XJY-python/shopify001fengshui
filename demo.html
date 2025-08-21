@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五行元素产品展示插件 - 演示</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .feature {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature i {
+            font-size: 3em;
+            margin-bottom: 15px;
+            color: #4facfe;
+        }
+        
+        .feature h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .demo-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .demo-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        .installation {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .steps {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .steps li {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .steps li::before {
+            content: counter(step);
+            counter-increment: step;
+            background: #4facfe;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4facfe;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #00f2fe;
+            transform: translateY(-2px);
+        }
+        
+        .element-colors {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .color-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .metal { background: #a8a8a8; }
+        .wood { background: #8B5A2B; }
+        .water { background: #3B82F6; }
+        .fire { background: #EF4444; }
+        .earth { background: #B7791F; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>五行元素产品展示插件</h1>
+            <p>基于中国传统五行哲学的产品展示解决方案</p>
+        </div>
+        
+        <div class="content">
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-palette"></i>
+                    <h3>五行色彩主题</h3>
+                    <p>金、木、水、火、土五种元素的专属配色方案</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-filter"></i>
+                    <h3>智能分类筛选</h3>
+                    <p>基于data-category属性的高效产品筛选功能</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>响应式设计</h3>
+                    <p>完美适配桌面、平板和移动设备</p>
+                </div>
+            </div>
+            
+            <div class="element-colors">
+                <div class="color-dot metal" title="金元素">金</div>
+                <div class="color-dot wood" title="木元素">木</div>
+                <div class="color-dot water" title="水元素">水</div>
+                <div class="color-dot fire" title="火元素">火</div>
+                <div class="color-dot earth" title="土元素">土</div>
+            </div>
+            
+            <div class="demo-section">
+                <h2>功能演示</h2>
+                <p>五行元素产品展示插件提供了以下核心功能：</p>
+                
+                <ul style="margin: 20px 0; padding-left: 30px;">
+                    <li>悬停显示产品分类下拉菜单</li>
+                    <li>点击分类标签筛选对应产品</li>
+                    <li>平滑的动画过渡效果</li>
+                    <li>响应式布局设计</li>
+                    <li>Shopify主题集成支持</li>
+                </ul>
+                
+                <div class="code-block">
+// 简化的筛选逻辑示例<br>
+function filterProducts(element, category) {<br>
+&nbsp;&nbsp;const productCards = document.querySelectorAll(`#${element}-products .product-card`);<br>
+&nbsp;&nbsp;productCards.forEach(card => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const cardCategory = card.getAttribute('data-category');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;card.style.display = cardCategory === category ? 'block' : 'none';<br>
+&nbsp;&nbsp;});<br>
+}
+                </div>
+            </div>
+            
+            <div class="installation">
+                <h2>安装指南</h2>
+                <ol class="steps" style="counter-reset: step;">
+                    <li>将 five-elements-display.liquid 文件复制到 Shopify 主题的 sections 目录</li>
+                    <li>在主题设置中添加五行元素产品展示区块</li>
+                    <li>配置各元素对应的产品集合</li>
+                    <li>为产品添加相应的 data-category 属性</li>
+                    <li>保存并发布主题更改</li>
+                </ol>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="sections/five-elements-display.liquid" class="btn" download>
+                        <i class="fas fa-download"></i> 下载插件文件
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 五行元素产品展示插件 | 基于 Shopify 主题开发</p>
+        </div>
+    </div>
+</body>
+</html>

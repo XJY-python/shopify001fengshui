@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五行元素筛选测试</title>
+    <style>
+        .product-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>五行元素筛选功能测试</h1>
+    
+    <div>
+        <button onclick="filterProducts('metal', '珠宝首饰')">测试金元素 - 珠宝首饰</button>
+        <button onclick="filterProducts('wood', '木制家具')">测试木元素 - 木制家具</button>
+        <button onclick="filterProducts('water', '玻璃器皿')">测试水元素 - 玻璃器皿</button>
+    </div>
+
+    <div id="metal-products">
+        <h2>金元素产品</h2>
+        <div class="product-card" data-category="珠宝首饰">
+            <h3>纯金手链</h3>
+            <p>18K金，精致工艺</p>
+        </div>
+        <div class="product-card" data-category="珠宝首饰">
+            <h3>翡翠吊坠</h3>
+            <p>天然A货翡翠，925银托</p>
+        </div>
+        <div class="product-card" data-category="金属工艺品">
+            <h3>檀木象棋</h3>
+            <p>手工雕刻，金属包边</p>
+        </div>
+    </div>
+
+    <script>
+        function filterProducts(element, category) {
+            console.log('Filtering:', element, category);
+            
+            // Get all product cards in the current element panel
+            const productCards = document.querySelectorAll(`#${element}-products .product-card`);
+            
+            // Filter and show only matching category using data-category attribute
+            productCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                if (cardCategory === category) {
+                    card.style.display = 'inline-block';
+                    console.log('Showing card:', card.querySelector('h3').textContent);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
