@@ -1,0 +1,1880 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'section-related-products.css' | asset_url | stylesheet_tag }}
+{{ 'font-awesome.css' | asset_url | stylesheet_tag }}
+{{ 'tailwind-utils.js' | asset_url | script_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .element-box {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left center;
+    position: relative;
+    will-change: transform, box-shadow;
+  }
+  .element-box:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+  }
+  .element-box:hover .category-tags {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .category-tags {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 100;
+  }
+  .element-box {
+    margin-bottom: 5px;
+    position: relative;
+  }
+  .element-box:last-child {
+    margin-bottom: 0;
+  }
+  .elements-panel {
+    /* 保持原有样式 */
+  }
+  .category-tag {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+  }
+  .category-tag:hover {
+    transform: translateX(5px);
+  }
+  .category-tag:last-child {
+    margin-bottom: 0;
+  }
+  .product-panel {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(10px);
+  }
+  .product-panel.opacity-100 {
+    transform: translateY(0);
+  }
+  .product-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+  }
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
+  }
+  .element-icon {
+    font-size: 2rem;
+  }
+  
+  /* 加载动画样式 */
+  .loader {
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 3px solid currentColor;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* 产品卡片进入动画 */
+  .product-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s forwards;
+  }
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* 错开动画延迟 */
+  .product-card:nth-child(1) { animation-delay: 0.1s; }
+  .product-card:nth-child(2) { animation-delay: 0.2s; }
+  .product-card:nth-child(3) { animation-delay: 0.3s; }
+  .product-card:nth-child(4) { animation-delay: 0.4s; }
+  .product-card:nth-child(5) { animation-delay: 0.5s; }
+  .product-card:nth-child(6) { animation-delay: 0.6s; }
+  .product-card:nth-child(7) { animation-delay: 0.7s; }
+  .product-card:nth-child(8) { animation-delay: 0.8s; }
+  .product-card:nth-child(9) { animation-delay: 0.9s; }
+  
+  /* 空状态样式 */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: #f9fafb;
+    border-radius: 0.75rem;
+  }
+  .empty-state .icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.3;
+  }
+  .empty-state h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .empty-state p {
+    color: #6b7280;
+    max-width: 300px;
+    margin: 0 auto 1.5rem;
+  }
+  .empty-state button {
+    padding: 0.5rem 1rem;
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s;
+  }
+  .empty-state button:hover {
+    background-color: #2563eb;
+  }
+  
+  /* 排序下拉菜单样式 */
+  .sort-container {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .sort-label {
+    margin-right: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  .sort-select {
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1em;
+    appearance: none;
+    transition: border-color 0.2s;
+  }
+  .sort-select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .main-container {
+      flex-direction: column;
+    }
+    .elements-panel, .products-panel {
+      width: 100% !important;
+    }
+    .elements-panel {
+      flex-direction: row;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      padding-top: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+    }
+    .elements-panel::-webkit-scrollbar {
+      height: 4px;
+    }
+    .elements-panel::-webkit-scrollbar-thumb {
+      background-color: rgba(156, 163, 175, 0.5);
+      border-radius: 2px;
+    }
+    .element-box {
+      min-width: 160px;
+      margin-right: 1rem;
+      flex-shrink: 0;
+    }
+    /* 移动端优化产品卡片 */
+    .product-card {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card .p-4 {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card .p-4 p:last-child {
+      margin-top: auto;
+    }
+    /* 移动端排序容器 */
+    .sort-container {
+      justify-content: center;
+      margin-top: 1rem;
+    }
+  }
+  
+  /* 元素颜色 */
+  .bg-metal { background-color: #4a5568; }
+  .text-metal { color: #2d3748; }
+  .border-metal { border-color: #4a5568; }
+  
+  .bg-wood { background-color: #8B5A2B; }
+  .text-wood { color: #8B5A2B; }
+  .border-wood { border-color: #8B5A2B; }
+  
+  .bg-water { background-color: #3B82F6; }
+  .text-water { color: #3B82F6; }
+  .border-water { border-color: #3B82F6; }
+  
+  .bg-fire { background-color: #EF4444; }
+  .text-fire { color: #EF4444; }
+  .border-fire { border-color: #EF4444; }
+  
+  .bg-earth { background-color: #B7791F; }
+  .text-earth { color: #B7791F; }
+  .border-earth { border-color: #B7791F; }
+  
+  /* 透明度样式 */
+  .bg-opacity-10 { background-color: rgba(74, 85, 104, 0.1); }
+  .bg-opacity-20 { background-color: rgba(74, 85, 104, 0.2); }
+  .bg-opacity-30 { background-color: rgba(74, 85, 104, 0.3); }
+  
+  /* Wood opacity variants */
+  .bg-wood.bg-opacity-10 { background-color: rgba(139, 90, 43, 0.1); }
+  .bg-wood.bg-opacity-20 { background-color: rgba(139, 90, 43, 0.2); }
+  .bg-wood.bg-opacity-30 { background-color: rgba(139, 90, 43, 0.3); }
+  
+  /* Water opacity variants */
+  .bg-water.bg-opacity-10 { background-color: rgba(59, 130, 246, 0.1); }
+  .bg-water.bg-opacity-20 { background-color: rgba(59, 130, 246, 0.2); }
+  .bg-water.bg-opacity-30 { background-color: rgba(59, 130, 246, 0.3); }
+  
+  /* Fire opacity variants */
+  .bg-fire.bg-opacity-10 { background-color: rgba(239, 68, 68, 0.1); }
+  .bg-fire.bg-opacity-20 { background-color: rgba(239, 68, 68, 0.2); }
+  .bg-fire.bg-opacity-30 { background-color: rgba(239, 68, 68, 0.3); }
+  
+  /* Earth opacity variants */
+  .bg-earth.bg-opacity-10 { background-color: rgba(183, 121, 31, 0.1); }
+  .bg-earth.bg-opacity-20 { background-color: rgba(183, 121, 31, 0.2); }
+  .bg-earth.bg-opacity-30 { background-color: rgba(183, 121, 31, 0.3); }
+{%- endstyle -%}
+
+<style>
+  /* Tailwind-like utility classes */
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .flex-row { flex-direction: row; }
+  .items-center { align-items: center; }
+  .justify-center { justify-content: center; }
+  .space-y-4 > * + * { margin-top: 1rem; }
+  .space-x-4 > * + * { margin-left: 1rem; }
+  .space-x-1 > * + * { margin-left: 0.25rem; }
+  .space-x-5 > * + * { margin-left: 1.25rem; }
+  .space-y-5px > * + * { margin-top: 5px; }
+  .w-full { width: 100%; }
+  .w-1\/3 { width: 33.333333%; }
+  .w-2\/3 { width: 66.666667%; }
+  .w-10 { width: 2.5rem; }
+  .w-24 { width: 6rem; }
+  .h-10 { height: 2.5rem; }
+  .h-24 { height: 6rem; }
+  .h-48 { height: 12rem; }
+  .p-4 { padding: 1rem; }
+  .p-6 { padding: 1.5rem; }
+  .px-4 { padding-left: 1rem; padding-right: 1rem; }
+  .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+  .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+  .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+  .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+  .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+  .mr-3 { margin-right: 0.75rem; }
+  .mb-1 { margin-bottom: 0.25rem; }
+  .mb-2 { margin-bottom: 0.5rem; }
+  .mb-3 { margin-bottom: 0.75rem; }
+  .mb-6 { margin-bottom: 1.5rem; }
+  .mb-12 { margin-bottom: 3rem; }
+  .mt-2 { margin-top: 0.5rem; }
+  .mt-3 { margin-top: 0.75rem; }
+  .mt-6 { margin-top: 1.5rem; }
+  .bg-white { background-color: #fff; }
+  .bg-gray-50 { background-color: #f9fafb; }
+  .bg-gray-100 { background-color: #f3f4f6; }
+  .bg-gray-700 { background-color: #374151; }
+  .rounded-lg { border-radius: 0.5rem; }
+  .rounded-xl { border-radius: 0.75rem; }
+  .rounded-full { border-radius: 9999px; }
+  .border-l-4 { border-left-width: 4px; }
+  .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+  .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+  .overflow-hidden { overflow: hidden; }
+  .cursor-pointer { cursor: pointer; }
+  .text-center { text-align: center; }
+  .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+  .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+  .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+  .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+  .text-5xl { font-size: 3rem; line-height: 1; }
+  .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+  .font-bold { font-weight: 700; }
+  .font-semibold { font-weight: 600; }
+  .font-sans { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+  .text-gray-600 { color: #4b5563; }
+  .text-gray-700 { color: #374151; }
+  .text-gray-800 { color: #1f2937; }
+  .text-gray-500 { color: #6b7280; }
+  .text-gray-400 { color: #9ca3af; }
+  .border-gray-300 { border-color:rgb(0, 102, 255); }
+  .hidden { display: none; }
+  .grid { display: grid; }
+  .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gap-6 { gap: 1.5rem; }
+  .gap-2 { gap: 0.5rem; }
+  .flex-wrap { flex-wrap: wrap; }
+  .max-w-md { max-width: 28rem; }
+  .opacity-0 { opacity: 0; }
+  .opacity-100 { opacity: 1; }
+  
+  /* Hover effects for category tags */
+  .category-tag:hover {
+    opacity: 0.8;
+    transform: translateX(5px);
+  }
+  
+  /* Specific hover effects for each element */
+  .bg-metal.bg-opacity-10:hover { background-color: rgba(168, 168, 168, 0.3); }
+  .bg-wood.bg-opacity-10:hover { background-color: rgba(139, 90, 43, 0.3); }
+  .bg-water.bg-opacity-10:hover { background-color: rgba(59, 130, 246, 0.3); }
+  .bg-fire.bg-opacity-10:hover { background-color: rgba(239, 68, 68, 0.3); }
+  .bg-earth.bg-opacity-10:hover { background-color: rgba(183, 121, 31, 0.3); }
+
+  /* Hover effects for category tags in product panels */
+  .product-categories span:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+  }
+  
+  /* Specific hover effects for category tags */
+  .product-categories .bg-metal:hover { background-color: rgba(168, 168, 168, 0.3); }
+  .product-categories .bg-wood:hover { background-color: rgba(139, 90, 43, 0.3); }
+  .product-categories .bg-water:hover { background-color: rgba(59, 130, 246, 0.3); }
+  .product-categories .bg-fire:hover { background-color: rgba(239, 68, 68, 0.3); }
+  .product-categories .bg-earth:hover { background-color: rgba(183, 121, 31, 0.3); }
+
+  @media (min-width: 640px) {
+    .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1024px) {
+    .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 768px) {
+    .md\:flex-row { flex-direction: row; }
+    .md\:w-1\/3 { width: 33.333333%; }
+    .md\:w-2\/3 { width: 66.666667%; }
+  }
+
+  .bg-gradient-to-b { background-image: linear-gradient(to bottom, var(--tw-gradient-stops)); }
+  .from-gray-50 { --tw-gradient-from: #f9fafb; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(249, 250, 251, 0)); }
+  .to-gray-100 { --tw-gradient-to: #f3f4f6; }
+</style>
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="five-elements-display page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h2 class="five-elements-display__heading inline-richtext {{ section.settings.heading_size }}">
+      {{ section.settings.heading }}
+    </h2>
+    
+    <div class="main-container flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden mt-6">
+      <!-- Left Panel - Elements -->
+      <div class="elements-panel w-full md:w-1/3 p-6 bg-gradient-to-b from-gray-50 to-gray-100 flex flex-col space-y-5px">
+        <div class="element-box bg-white p-4 rounded-lg border-l-4 border-metal cursor-pointer" 
+             data-element="metal">
+          <div class="flex items-center">
+            <div class="element-icon text-metal mr-3">
+              <i class="fas fa-gem"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-xl">金 (Metal)</h3>
+              <p class="text-sm text-gray-600">代表财富、坚固和精确</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="element-box bg-white p-4 rounded-lg border-l-4 border-wood cursor-pointer" 
+             data-element="wood">
+          <div class="flex items-center">
+            <div class="element-icon text-wood mr-3">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-xl">木 (Wood)</h3>
+              <p class="text-sm text-gray-600">象征生长、创造和活力</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="element-box bg-white p-4 rounded-lg border-l-4 border-water cursor-pointer" 
+             data-element="water">
+          <div class="flex items-center">
+            <div class="element-icon text-water mr-3">
+              <i class="fas fa-tint"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-xl">水 (Water)</h3>
+              <p class="text-sm text-gray-600">代表流动、智慧和适应</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="element-box bg-white p-4 rounded-lg border-l-4 border-fire cursor-pointer" 
+             data-element="fire">
+          <div class="flex items-center">
+            <div class="element-icon text-fire mr-3">
+              <i class="fas fa-fire"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-xl">火 (Fire)</h3>
+              <p class="text-sm text-gray-600">象征热情、能量和变革</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="element-box bg-white p-4 rounded-lg border-l-4 border-earth cursor-pointer" 
+             data-element="earth">
+          <div class="flex items-center">
+            <div class="element-icon text-earth mr-3">
+              <i class="fas fa-mountain"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-xl">土 (Earth)</h3>
+              <p class="text-sm text-gray-600">代表稳定、滋养和基础</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel - Products -->
+      <div class="products-panel w-full md:w-2/3 p-6">
+        <!-- Default Message -->
+        <div id="default-message" class="h-full flex flex-col items-center justify-center text-center py-12">
+          <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+            <i class="fas fa-hand-pointer text-4xl text-gray-400"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-700 mb-2">选择五行元素</h3>
+          <p class="text-gray-500 max-w-md">将鼠标悬停在左侧的元素上，查看元素简介和相关产品系列</p>
+        </div>
+
+        <!-- Metal Products -->
+        <div id="metal-products" class="product-panel hidden opacity-0">
+          <div class="flex items-center mb-6">
+            <div class="w-10 h-10 bg-metal bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-gem text-metal"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-metal">金属产品</h2>
+          </div>
+          
+          <!-- 排序控件 -->
+          <div class="sort-container">
+            <span class="sort-label">排序方式:</span>
+            <select class="sort-select" data-element="metal">
+              <option value="default">默认排序</option>
+              <option value="price-asc">价格从低到高</option>
+              <option value="price-desc">价格从高到低</option>
+              <option value="newest">最新上架</option>
+            </select>
+          </div>
+          
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
+            <div class="flex flex-wrap gap-3 md:space-x-5 product-categories">
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-metal hover:bg-opacity-20 border border-gray-300 transition-all duration-200">珠宝首饰</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-metal hover:bg-opacity-20 border border-gray-300 transition-all duration-200">金属工艺品</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-metal hover:bg-opacity-20 border border-gray-300 transition-all duration-200">贵金属投资</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-metal hover:bg-opacity-20 border border-gray-300 transition-all duration-200">手表钟表</span>
+            </div>
+          </div>
+          
+          <!-- 加载状态容器 -->
+          <div id="metal-loading" class="hidden flex justify-center py-12">
+            <div class="loader text-metal"></div>
+          </div>
+          
+          <!-- 产品容器 -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="metal-products-container">
+            <!-- 珠宝首饰系列 -->
+            {%- if section.settings.metal_collection_1 != blank -%}
+              {%- assign metal_collection_1 = collections[section.settings.metal_collection_1] -%}
+              {%- for product in metal_collection_1.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="珠宝首饰" 
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-gem text-5xl text-metal"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-metal font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 金属工艺品系列 -->
+            {%- if section.settings.metal_collection_2 != blank -%}
+              {%- assign metal_collection_2 = collections[section.settings.metal_collection_2] -%}
+              {%- for product in metal_collection_2.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="金属工艺品"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-hammer text-5xl text-metal"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-metal font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 贵金属投资系列 -->
+            {%- if section.settings.metal_collection_3 != blank -%}
+              {%- assign metal_collection_3 = collections[section.settings.metal_collection_3] -%}
+              {%- for product in metal_collection_3.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="贵金属投资"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-coins text-5xl text-metal"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-metal font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 手表钟表系列 -->
+            {%- if section.settings.metal_collection_4 != blank -%}
+              {%- assign metal_collection_4 = collections[section.settings.metal_collection_4] -%}
+              {%- for product in metal_collection_4.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="手表钟表"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-clock text-5xl text-metal"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-metal font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if section.settings.metal_collection_1 == blank and section.settings.metal_collection_2 == blank and section.settings.metal_collection_3 == blank and section.settings.metal_collection_4 == blank -%}
+              <!-- 空状态 -->
+              <div class="empty-state col-span-full">
+                <div class="icon text-metal">
+                  <i class="fas fa-gem"></i>
+                </div>
+                <h3>暂无金属类产品</h3>
+                <p>目前没有相关金属元素的产品，敬请期待。</p>
+                <button onclick="showProducts('wood')">查看木系产品</button>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <!-- Wood Products -->
+        <div id="wood-products" class="product-panel hidden opacity-0">
+          <div class="flex items-center mb-6">
+            <div class="w-10 h-10 bg-wood bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-leaf text-wood"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-wood">木系产品</h2>
+          </div>
+          
+          <!-- 排序控件 -->
+          <div class="sort-container">
+            <span class="sort-label">排序方式:</span>
+            <select class="sort-select" data-element="wood">
+              <option value="default">默认排序</option>
+              <option value="price-asc">价格从低到高</option>
+              <option value="price-desc">价格从高到低</option>
+              <option value="newest">最新上架</option>
+            </select>
+          </div>
+          
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
+            <div class="flex flex-wrap gap-3 md:space-x-5 product-categories">
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-wood hover:bg-opacity-20 border border-gray-300 transition-all duration-200">木制家具</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-wood hover:bg-opacity-20 border border-gray-300 transition-all duration-200">绿植盆栽</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-wood hover:bg-opacity-20 border border-gray-300 transition-all duration-200">环保用品</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-wood hover:bg-opacity-20 border border-gray-300 transition-all duration-200">文房四宝</span>
+            </div>
+          </div>
+          
+          <!-- 加载状态容器 -->
+          <div id="wood-loading" class="hidden flex justify-center py-12">
+            <div class="loader text-wood"></div>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="wood-products-container">
+            <!-- 木制家具系列 -->
+            {%- if section.settings.wood_collection_1 != blank -%}
+              {%- assign wood_collection_1 = collections[section.settings.wood_collection_1] -%}
+              {%- for product in wood_collection_1.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="木制家具"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-couch text-5xl text-wood"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-wood font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 绿植盆栽系列 -->
+            {%- if section.settings.wood_collection_2 != blank -%}
+              {%- assign wood_collection_2 = collections[section.settings.wood_collection_2] -%}
+              {%- for product in wood_collection_2.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="绿植盆栽"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-leaf text-5xl text-wood"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-wood font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 环保用品系列 -->
+            {%- if section.settings.wood_collection_3 != blank -%}
+              {%- assign wood_collection_3 = collections[section.settings.wood_collection_3] -%}
+              {%- for product in wood_collection_3.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="环保用品"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-recycle text-5xl text-wood"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-wood font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 文房四宝系列 -->
+            {%- if section.settings.wood_collection_4 != blank -%}
+              {%- assign wood_collection_4 = collections[section.settings.wood_collection_4] -%}
+              {%- for product in wood_collection_4.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="文房四宝"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-pen-fancy text-5xl text-wood"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-wood font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if section.settings.wood_collection_1 == blank and section.settings.wood_collection_2 == blank and section.settings.wood_collection_3 == blank and section.settings.wood_collection_4 == blank -%}
+              <!-- 空状态 -->
+              <div class="empty-state col-span-full">
+                <div class="icon text-wood">
+                  <i class="fas fa-leaf"></i>
+                </div>
+                <h3>暂无木系产品</h3>
+                <p>目前没有相关木元素的产品，敬请期待。</p>
+                <button onclick="showProducts('water')">查看水系产品</button>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <!-- Water Products -->
+        <div id="water-products" class="product-panel hidden opacity-0">
+          <div class="flex items-center mb-6">
+            <div class="w-10 h-10 bg-water bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-tint text-water"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-water">水系产品</h2>
+          </div>
+          
+          <!-- 排序控件 -->
+          <div class="sort-container">
+            <span class="sort-label">排序方式:</span>
+            <select class="sort-select" data-element="water">
+              <option value="default">默认排序</option>
+              <option value="price-asc">价格从低到高</option>
+              <option value="price-desc">价格从高到低</option>
+              <option value="newest">最新上架</option>
+            </select>
+          </div>
+          
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
+            <div class="flex flex-wrap gap-3 md:space-x-5 product-categories">
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-water hover:bg-opacity-20 border border-gray-300 transition-all duration-200">玻璃器皿</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-water hover:bg-opacity-20 border border-gray-300 transition-all duration-200">水族用品</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-water hover:bg-opacity-20 border border-gray-300 transition-all duration-200">清洁用品</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-water hover:bg-opacity-20 border border-gray-300 transition-all duration-200">香薰精油</span>
+            </div>
+          </div>
+          
+          <!-- 加载状态容器 -->
+          <div id="water-loading" class="hidden flex justify-center py-12">
+            <div class="loader text-water"></div>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="water-products-container">
+            <!-- 玻璃器皿系列 -->
+            {%- if section.settings.water_collection_1 != blank -%}
+              {%- assign water_collection_1 = collections[section.settings.water_collection_1] -%}
+              {%- for product in water_collection_1.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="玻璃器皿"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-wine-glass-alt text-5xl text-water"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-water font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 水族用品系列 -->
+            {%- if section.settings.water_collection_2 != blank -%}
+              {%- assign water_collection_2 = collections[section.settings.water_collection_2] -%}
+              {%- for product in water_collection_2.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="水族用品"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-fish text-5xl text-water"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-water font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 清洁用品系列 -->
+            {%- if section.settings.water_collection_3 != blank -%}
+              {%- assign water_collection_3 = collections[section.settings.water_collection_3] -%}
+              {%- for product in water_collection_3.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="清洁用品"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-broom text-5xl text-water"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-water font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 香薰精油系列 -->
+            {%- if section.settings.water_collection_4 != blank -%}
+              {%- assign water_collection_4 = collections[section.settings.water_collection_4] -%}
+              {%- for product in water_collection_4.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="香薰精油"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-spa text-5xl text-water"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-water font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if section.settings.water_collection_1 == blank and section.settings.water_collection_2 == blank and section.settings.water_collection_3 == blank and section.settings.water_collection_4 == blank -%}
+              <!-- 空状态 -->
+              <div class="empty-state col-span-full">
+                <div class="icon text-water">
+                  <i class="fas fa-tint"></i>
+                </div>
+                <h3>暂无水系产品</h3>
+                <p>目前没有相关水元素的产品，敬请期待。</p>
+                <button onclick="showProducts('fire')">查看火系产品</button>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <!-- Fire Products -->
+        <div id="fire-products" class="product-panel hidden opacity-0">
+          <div class="flex items-center mb-6">
+            <div class="w-10 h-10 bg-fire bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-fire text-fire"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-fire">火系产品</h2>
+          </div>
+          
+          <!-- 排序控件 -->
+          <div class="sort-container">
+            <span class="sort-label">排序方式:</span>
+            <select class="sort-select" data-element="fire">
+              <option value="default">默认排序</option>
+              <option value="price-asc">价格从低到高</option>
+              <option value="price-desc">价格从高到低</option>
+              <option value="newest">最新上架</option>
+            </select>
+          </div>
+          
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
+            <div class="flex flex-wrap gap-3 md:space-x-5 product-categories">
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-fire hover:bg-opacity-20 border border-gray-300 transition-all duration-200">辣椒制品</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-fire hover:bg-opacity-20 border border-gray-300 transition-all duration-200">香薰蜡烛</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-fire hover:bg-opacity-20 border border-gray-300 transition-all duration-200">红色服饰</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-fire hover:bg-opacity-20 border border-gray-300 transition-all duration-200">热饮茶品</span>
+            </div>
+          </div>
+          
+          <!-- 加载状态容器 -->
+          <div id="fire-loading" class="hidden flex justify-center py-12">
+            <div class="loader text-fire"></div>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="fire-products-container">
+            <!-- 辣椒制品系列 -->
+            {%- if section.settings.fire_collection_1 != blank -%}
+              {%- assign fire_collection_1 = collections[section.settings.fire_collection_1] -%}
+              {%- for product in fire_collection_1.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="辣椒制品"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-pepper-hot text-5xl text-fire"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-fire font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 香薰蜡烛系列 -->
+            {%- if section.settings.fire_collection_2 != blank -%}
+              {%- assign fire_collection_2 = collections[section.settings.fire_collection_2] -%}
+              {%- for product in fire_collection_2.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="香薰蜡烛"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-candle-holder text-5xl text-fire"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-fire font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 红色服饰系列 -->
+            {%- if section.settings.fire_collection_3 != blank -%}
+              {%- assign fire_collection_3 = collections[section.settings.fire_collection_3] -%}
+              {%- for product in fire_collection_3.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="红色服饰"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-tshirt text-5xl text-fire"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-fire font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 热饮茶品系列 -->
+            {%- if section.settings.fire_collection_4 != blank -%}
+              {%- assign fire_collection_4 = collections[section.settings.fire_collection_4] -%}
+              {%- for product in fire_collection_4.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="热饮茶品"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-mug-hot text-5xl text-fire"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-fire font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if section.settings.fire_collection_1 == blank and section.settings.fire_collection_2 == blank and section.settings.fire_collection_3 == blank and section.settings.fire_collection_4 == blank -%}
+              <!-- 空状态 -->
+              <div class="empty-state col-span-full">
+                <div class="icon text-fire">
+                  <i class="fas fa-fire"></i>
+                </div>
+                <h3>暂无火系产品</h3>
+                <p>目前没有相关火元素的产品，敬请期待。</p>
+                <button onclick="showProducts('earth')">查看土系产品</button>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <!-- Earth Products -->
+        <div id="earth-products" class="product-panel hidden opacity-0">
+          <div class="flex items-center mb-6">
+            <div class="w-10 h-10 bg-earth bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-mountain text-earth"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-earth">土系产品</h2>
+          </div>
+          
+          <!-- 排序控件 -->
+          <div class="sort-container">
+            <span class="sort-label">排序方式:</span>
+            <select class="sort-select" data-element="earth">
+              <option value="default">默认排序</option>
+              <option value="price-asc">价格从低到高</option>
+              <option value="price-desc">价格从高到低</option>
+              <option value="newest">最新上架</option>
+            </select>
+          </div>
+          
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
+            <div class="flex flex-wrap gap-3 md:space-x-5 product-categories">
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-earth hover:bg-opacity-20 border border-gray-300 transition-all duration-200">陶瓷器皿</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-earth hover:bg-opacity-20 border border-gray-300 transition-all duration-200">有机食品</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-earth hover:bg-opacity-20 border border-gray-300 transition-all duration-200">家居装饰</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-black rounded-full cursor-pointer hover:bg-earth hover:bg-opacity-20 border border-gray-300 transition-all duration-200">养生保健</span>
+            </div>
+          </div>
+          
+          <!-- 加载状态容器 -->
+          <div id="earth-loading" class="hidden flex justify-center py-12">
+            <div class="loader text-earth"></div>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="earth-products-container">
+            <!-- 陶瓷器皿系列 -->
+            {%- if section.settings.earth_collection_1 != blank -%}
+              {%- assign earth_collection_1 = collections[section.settings.earth_collection_1] -%}
+              {%- for product in earth_collection_1.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="陶瓷器皿"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-mug text-5xl text-earth"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-earth font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 有机食品系列 -->
+            {%- if section.settings.earth_collection_2 != blank -%}
+              {%- assign earth_collection_2 = collections[section.settings.earth_collection_2] -%}
+              {%- for product in earth_collection_2.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="有机食品"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-apple-alt text-5xl text-earth"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-earth font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 家居装饰系列 -->
+            {%- if section.settings.earth_collection_3 != blank -%}
+              {%- assign earth_collection_3 = collections[section.settings.earth_collection_3] -%}
+              {%- for product in earth_collection_3.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="家居装饰"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-couch text-5xl text-earth"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-earth font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <!-- 养生保健系列 -->
+            {%- if section.settings.earth_collection_4 != blank -%}
+              {%- assign earth_collection_4 = collections[section.settings.earth_collection_4] -%}
+              {%- for product in earth_collection_4.products limit: 3 -%}
+                <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" 
+                   data-category="养生保健"
+                   data-price="{{ product.price }}"
+                   data-date="{{ product.created_at }}">
+                  <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                           alt="{{ product.featured_image.alt | escape }}" 
+                           class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    {%- else -%}
+                      <i class="fas fa-heart text-5xl text-earth"></i>
+                    {%- endif -%}
+                  </div>
+                  <div class="p-4">
+                    <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
+                    <p class="text-gray-600 text-sm mb-2">{{ product.vendor }}</p>
+                    <p class="text-earth font-bold">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if section.settings.earth_collection_1 == blank and section.settings.earth_collection_2 == blank and section.settings.earth_collection_3 == blank and section.settings.earth_collection_4 == blank -%}
+              <!-- 空状态 -->
+              <div class="empty-state col-span-full">
+                <div class="icon text-earth">
+                  <i class="fas fa-mountain"></i>
+                </div>
+                <h3>暂无土系产品</h3>
+                <p>目前没有相关土元素的产品，敬请期待。</p>
+                <button onclick="showProducts('metal')">查看金属产品</button>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 全局函数，用于空状态按钮跳转
+  window.showProducts = function(element) {
+    showProducts(element);
+  };
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    // 页面加载时默认显示金属产品
+    showProducts('metal');
+    
+    // 为元素盒子添加事件监听
+    document.querySelectorAll('.element-box').forEach(box => {
+      box.addEventListener('mouseenter', function() {
+        const element = this.dataset.element;
+        showElementDescription(element);
+        showProducts(element);
+      });
+      
+      // 为移动设备添加点击事件
+      box.addEventListener('click', function() {
+        const element = this.dataset.element;
+        showElementDescription(element);
+        showProducts(element);
+        
+        // 在移动设备上滚动到产品面板
+        if (window.innerWidth <= 768) {
+          const productsPanel = document.querySelector('.products-panel');
+          if (productsPanel) {
+            productsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    // 显示元素描述
+    function showElementDescription(element) {
+      // 隐藏所有现有描述
+      document.querySelectorAll('.element-description').forEach(desc => {
+        desc.classList.add('hidden');
+      });
+
+      // 为元素创建或显示描述
+      let descriptionBox = document.querySelector(`.element-box[data-element="${element}"] .element-description`);
+      
+      if (!descriptionBox) {
+        descriptionBox = document.createElement('div');
+        descriptionBox.className = 'element-description mt-3 p-3 bg-gray-50 rounded-lg text-sm text-gray-600 hidden animate-fadeIn';
+        
+        // 根据元素添加描述内容
+        let descriptionContent = '';
+        switch(element) {
+          case 'metal':
+            descriptionContent = '金元素代表财富、坚固、精确和纪律。在五行理论中，金象征着收获、结构和组织。';
+            break;
+          case 'wood':
+            descriptionContent = '木元素象征生长、创造、活力和扩张。在五行中，木代表着新的开始和成长。';
+            break;
+          case 'water':
+            descriptionContent = '水元素代表流动、智慧、适应和净化。在五行中，水象征着深度思考和内在智慧。';
+            break;
+          case 'fire':
+            descriptionContent = '火元素象征热情、能量、变革和光明。在五行中，火代表着激情和转化。';
+            break;
+          case 'earth':
+            descriptionContent = '土元素代表稳定、滋养、基础和实用。在五行中，土象征着安全和可靠性。';
+            break;
+        }
+        
+        descriptionBox.textContent = descriptionContent;
+        document.querySelector(`.element-box[data-element="${element}"]`).appendChild(descriptionBox);
+      }
+      
+      // 显示描述并添加动画
+      descriptionBox.classList.remove('hidden');
+      setTimeout(() => {
+        descriptionBox.style.opacity = '1';
+      }, 10);
+    }
+
+    // 显示产品
+    function showProducts(element) {
+      // 隐藏所有产品面板和默认消息
+      document.querySelectorAll('.product-panel').forEach(panel => {
+        panel.classList.add('hidden');
+        panel.classList.remove('opacity-100');
+        panel.classList.add('opacity-0');
+      });
+      document.getElementById('default-message').classList.add('hidden');
+
+      // 显示选中的产品面板
+      const productPanel = document.getElementById(`${element}-products`);
+      if (productPanel) {
+        // 显示加载状态
+        const loadingIndicator = document.getElementById(`${element}-loading`);
+        const productContainer = document.getElementById(`${element}-products-container`);
+        
+        if (loadingIndicator && productContainer) {
+          // 保存当前显示状态
+          const wasFiltered = productContainer.querySelectorAll('.product-card[style*="display: none"]').length > 0;
+          
+          // 仅在首次加载或未筛选时显示加载状态
+          if (!wasFiltered) {
+            productContainer.style.opacity = '0.5';
+            loadingIndicator.classList.remove('hidden');
+          }
+        }
+        
+        // 显示产品面板
+        productPanel.classList.remove('hidden');
+        
+        // 触发动画
+        setTimeout(() => {
+          productPanel.classList.remove('opacity-0');
+          productPanel.classList.add('opacity-100');
+          
+          // 隐藏加载状态
+          if (loadingIndicator) {
+            setTimeout(() => {
+              loadingIndicator.classList.add('hidden');
+              if (productContainer) productContainer.style.opacity = '1';
+            }, 300);
+          }
+          
+          // 重置产品卡片动画
+          resetProductAnimations(element);
+        }, 10);
+      }
+    }
+
+    // 重置产品卡片动画
+    function resetProductAnimations(element) {
+      const productCards = document.querySelectorAll(`#${element}-products .product-card`);
+      productCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, 50 + (index * 100));
+      });
+    }
+
+    // 为下拉菜单添加排序事件监听
+    document.querySelectorAll('.sort-select').forEach(select => {
+      select.addEventListener('change', function() {
+        const element = this.dataset.element;
+        const sortType = this.value;
+        sortProducts(element, sortType);
+      });
+    });
+
+    // 产品排序功能
+    function sortProducts(element, sortType) {
+      const productContainer = document.getElementById(`${element}-products-container`);
+      const productCards = Array.from(productContainer.querySelectorAll('.product-card:not([style*="display: none"])'));
+      
+      // 显示加载状态
+      const loadingIndicator = document.getElementById(`${element}-loading`);
+      if (loadingIndicator) {
+        loadingIndicator.classList.remove('hidden');
+        productContainer.style.opacity = '0.5';
+      }
+      
+      // 短暂延迟模拟加载过程
+      setTimeout(() => {
+        // 根据选择的排序类型进行排序
+        switch(sortType) {
+          case 'price-asc':
+            // 价格从低到高
+            productCards.sort((a, b) => {
+              const priceA = parseFloat(a.dataset.price);
+              const priceB = parseFloat(b.dataset.price);
+              return priceA - priceB;
+            });
+            break;
+          case 'price-desc':
+            // 价格从高到低
+            productCards.sort((a, b) => {
+              const priceA = parseFloat(a.dataset.price);
+              const priceB = parseFloat(b.dataset.price);
+              return priceB - priceA;
+            });
+            break;
+          case 'newest':
+            // 最新上架
+            productCards.sort((a, b) => {
+              const dateA = new Date(a.dataset.date);
+              const dateB = new Date(b.dataset.date);
+              return dateB - dateA;
+            });
+            break;
+          default:
+            // 默认排序（原始顺序）
+            productCards.sort((a, b) => {
+              const indexA = Array.from(productContainer.children).indexOf(a);
+              const indexB = Array.from(productContainer.children).indexOf(b);
+              return indexA - indexB;
+            });
+        }
+        
+        // 重新排列产品卡片
+        productCards.forEach(card => {
+          productContainer.appendChild(card);
+        });
+        
+        // 隐藏加载状态并重置动画
+        if (loadingIndicator) {
+          loadingIndicator.classList.add('hidden');
+          productContainer.style.opacity = '1';
+        }
+        
+        // 重置动画
+        resetProductAnimations(element);
+      }, 500);
+    }
+
+    // 为分类标签添加事件监听
+    document.querySelectorAll('.category-tag').forEach(tag => {
+      tag.addEventListener('click', function(e) {
+        e.stopPropagation(); // 防止事件冒泡
+        const element = this.closest('.element-box').dataset.element;
+        const category = this.dataset.category;
+        filterProducts(element, category);
+      });
+    });
+
+    // 为产品面板中的分类标签添加事件监听
+    document.querySelectorAll('.product-categories span').forEach(span => {
+      span.addEventListener('click', function() {
+        const element = this.closest('.product-panel').id.replace('-products', '');
+        const category = this.textContent;
+        
+        // 添加选中状态动画
+        this.classList.add('scale-105');
+        setTimeout(() => {
+          this.classList.remove('scale-105');
+        }, 200);
+        
+        filterProducts(element, category);
+      });
+    });
+
+    // 筛选产品
+    function filterProducts(element, category) {
+      // 显示加载状态
+      const loadingIndicator = document.getElementById(`${element}-loading`);
+      const productContainer = document.getElementById(`${element}-products-container`);
+      
+      if (loadingIndicator && productContainer) {
+        loadingIndicator.classList.remove('hidden');
+        productContainer.style.opacity = '0.5';
+      }
+      
+      // 短暂延迟模拟加载过程
+      setTimeout(() => {
+        // 先显示所有产品
+        showProducts(element);
+        
+        // 获取当前元素面板中的所有产品卡片
+        const productCards = document.querySelectorAll(`#${element}-products .product-card`);
+        
+        // 使用数据属性筛选并显示匹配的分类
+        let hasVisibleProducts = false;
+        productCards.forEach(card => {
+          const cardCategory = card.getAttribute('data-category');
+          if (cardCategory === category) {
+            card.style.display = 'block';
+            hasVisibleProducts = true;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        
+        // 如果没有找到该分类的产品，显示消息
+        let noProductsMsg = document.querySelector(`#${element}-products-container p.text-gray-500`);
+        if (!hasVisibleProducts) {
+          if (!noProductsMsg) {
+            noProductsMsg = document.createElement('p');
+            noProductsMsg.className = 'text-gray-500 col-span-full text-center py-8';
+            noProductsMsg.textContent = `暂无${category}类产品`;
+            productContainer.appendChild(noProductsMsg);
+          }
+        } else if (noProductsMsg) {
+          noProductsMsg.remove();
+        }
+        
+        // 更新分类标题的显示样式
+        const categorySpans = document.querySelectorAll(`#${element}-products .product-categories span`);
+        categorySpans.forEach(span => {
+          if (span.textContent === category) {
+            span.classList.add('bg-opacity-30');
+            span.classList.add('font-semibold');
+          } else {
+            span.classList.remove('bg-opacity-30');
+            span.classList.remove('font-semibold');
+          }
+        });
+        
+        // 添加重置筛选按钮（如果不存在）
+        const productPanel = document.getElementById(`${element}-products`);
+        let resetButton = productPanel.querySelector('.reset-filter');
+        if (!resetButton) {
+          resetButton = document.createElement('button');
+          resetButton.className = 'reset-filter px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors mt-4';
+          resetButton.textContent = '重置筛选';
+          productPanel.querySelector('.mb-6').appendChild(resetButton);
+          
+          resetButton.addEventListener('click', function() {
+            resetFilter(element);
+          });
+        }
+        
+        // 隐藏加载状态
+        if (loadingIndicator) {
+          loadingIndicator.classList.add('hidden');
+          productContainer.style.opacity = '1';
+        }
+        
+        // 重置动画
+        resetProductAnimations(element);
+      }, 300);
+    }
+    
+    // 重置筛选
+    function resetFilter(element) {
+      // 显示加载状态
+      const loadingIndicator = document.getElementById(`${element}-loading`);
+      const productContainer = document.getElementById(`${element}-products-container`);
+      
+      if (loadingIndicator && productContainer) {
+        loadingIndicator.classList.remove('hidden');
+        productContainer.style.opacity = '0.5';
+      }
+      
+      // 短暂延迟模拟加载过程
+      setTimeout(() => {
+        // 显示所有产品卡片
+        const productCards = document.querySelectorAll(`#${element}-products .product-card`);
+        productCards.forEach(card => {
+          card.style.display = 'block';
+        });
+        
+        // 移除任何"无产品"消息
+        const noProductsMsg = document.querySelector(`#${element}-products-container p.text-gray-500`);
+        if (noProductsMsg) {
+          noProductsMsg.remove();
+        }
+        
+        // 重置分类标签样式
+        const categorySpans = document.querySelectorAll(`#${element}-products .product-categories span`);
+        categorySpans.forEach(span => {
+          span.classList.remove('bg-opacity-30');
+          span.classList.remove('font-semibold');
+        });
+        
+        // 重置排序下拉菜单
+        const sortSelect = document.querySelector(`.sort-select[data-element="${element}"]`);
+        if (sortSelect) {
+          sortSelect.value = 'default';
+        }
+        
+        // 移除重置按钮
+        const resetButton = document.querySelector(`#${element}-products .reset-filter`);
+        if (resetButton) {
+          resetButton.remove();
+        }
+        
+        // 隐藏加载状态
+        if (loadingIndicator) {
+          loadingIndicator.classList.add('hidden');
+          productContainer.style.opacity = '1';
+        }
+        
+        // 重置动画
+        resetProductAnimations(element);
+      }, 300);
+    }
+
+    // 为重置按钮添加事件监听
+    document.querySelectorAll('.reset-filter').forEach(button => {
+      button.addEventListener('click', function() {
+        const element = this.closest('.product-panel').id.replace('-products', '');
+        resetFilter(element);
+      });
+    });
+    
+    // 添加窗口大小变化时的响应式处理
+    window.addEventListener('resize', function() {
+      // 对于每个元素面板，重置产品卡片样式以适应新的屏幕尺寸
+      ['metal', 'wood', 'water', 'fire', 'earth'].forEach(element => {
+        const visiblePanel = document.getElementById(`${element}-products`);
+        if (visiblePanel && !visiblePanel.classList.contains('hidden')) {
+          resetProductAnimations(element);
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "五行元素产品展示",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "五行元素产品展示",
+      "label": "标题"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h0",
+          "label": "H0"
+        },
+        {
+          "value": "hxl",
+          "label": "HXL"
+        },
+        {
+          "value": "hxxl",
+          "label": "HXXL"
+        }
+      ],
+      "default": "h1",
+      "label": "标题大小"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "颜色方案",
+      "info": "影响背景和文本颜色",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "元素设置"
+    },
+    {
+      "type": "header",
+      "content": "金元素产品集合"
+    },
+    {
+      "type": "collection",
+      "id": "metal_collection_1",
+      "label": "珠宝首饰系列"
+    },
+    {
+      "type": "collection",
+      "id": "metal_collection_2",
+      "label": "金属工艺品系列"
+    },
+    {
+      "type": "collection",
+      "id": "metal_collection_3",
+      "label": "贵金属投资系列"
+    },
+    {
+      "type": "collection",
+      "id": "metal_collection_4",
+      "label": "手表钟表系列"
+    },
+    {
+      "type": "header",
+      "content": "木元素产品集合"
+    },
+    {
+      "type": "collection",
+      "id": "wood_collection_1",
+      "label": "木制家具系列"
+    },
+    {
+      "type": "collection",
+      "id": "wood_collection_2",
+      "label": "绿植盆栽系列"
+    },
+    {
+      "type": "collection",
+      "id": "wood_collection_3",
+      "label": "环保用品系列"
+    },
+    {
+      "type": "collection",
+      "id": "wood_collection_4",
+      "label": "文房四宝系列"
+    },
+    {
+      "type": "header",
+      "content": "水元素产品集合"
+    },
+    {
+      "type": "collection",
+      "id": "water_collection_1",
+      "label": "玻璃器皿系列"
+    },
+    {
+      "type": "collection",
+      "id": "water_collection_2",
+      "label": "水族用品系列"
+    },
+    {
+      "type": "collection",
+      "id": "water_collection_3",
+      "label": "清洁用品系列"
+    },
+    {
+      "type": "collection",
+      "id": "water_collection_4",
+      "label": "香薰精油系列"
+    },
+    {
+      "type": "header",
+      "content": "火元素产品集合"
+    },
+    {
+      "type": "collection",
+      "id": "fire_collection_1",
+      "label": "辣椒制品系列"
+    },
+    {
+      "type": "collection",
+      "id": "fire_collection_2",
+      "label": "香薰蜡烛系列"
+    },
+    {
+      "type": "collection",
+      "id": "fire_collection_3",
+      "label": "红色服饰系列"
+    },
+    {
+      "type": "collection",
+      "id": "fire_collection_4",
+      "label": "热饮茶品系列"
+    },
+    {
+      "type": "header",
+      "content": "土元素产品集合"
+    },
+    {
+      "type": "collection",
+      "id": "earth_collection_1",
+      "label": "陶瓷器皿系列"
+    },
+    {
+      "type": "collection",
+      "id": "earth_collection_2",
+      "label": "有机食品系列"
+    },
+    {
+      "type": "collection",
+      "id": "earth_collection_3",
+      "label": "家居装饰系列"
+    },
+    {
+      "type": "collection",
+      "id": "earth_collection_4",
+      "label": "养生保健系列"
+    },
+    {
+      "type": "header",
+      "content": "边距设置"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "上边距",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "下边距",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "五行元素产品展示",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
