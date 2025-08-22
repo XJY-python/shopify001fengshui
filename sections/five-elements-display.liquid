@@ -974,6 +974,9 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Show metal products by default on page load
+    showProducts('metal');
+    
     // Add event listeners to element boxes
     document.querySelectorAll('.element-box').forEach(box => {
       box.addEventListener('mouseenter', function() {
