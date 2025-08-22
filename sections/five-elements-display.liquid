@@ -385,7 +385,7 @@
             <i class="fas fa-hand-pointer text-4xl text-gray-400"></i>
           </div>
           <h3 class="text-2xl font-bold text-gray-700 mb-2">选择五行元素</h3>
-          <p class="text-gray-500 max-w-md">将鼠标悬停在左侧的元素上，查看五行元素的详细介绍</p>
+          <p class="text-gray-500 max-w-md">将鼠标悬停在左侧的元素上，查看元素简介和相关产品系列</p>
         </div>
 
         <!-- Metal Products -->
@@ -978,152 +978,50 @@
     document.querySelectorAll('.element-box').forEach(box => {
       box.addEventListener('mouseenter', function() {
         const element = this.dataset.element;
-        showRichText(element);
+        showElementDescription(element);
+        showProducts(element);
       });
     });
 
-    function showRichText(element) {
-      // Hide all product panels and default message
-      document.querySelectorAll('.product-panel').forEach(panel => {
-        panel.classList.add('hidden');
-        panel.classList.remove('opacity-100');
-        panel.classList.add('opacity-0');
+    function showElementDescription(element) {
+      // Hide all existing descriptions
+      document.querySelectorAll('.element-description').forEach(desc => {
+        desc.classList.add('hidden');
       });
-      document.getElementById('default-message').classList.add('hidden');
 
-      // Create or show rich text content for the element
-      let richTextPanel = document.getElementById(`${element}-rich-text`);
+      // Create or show description for the element
+      let descriptionBox = document.querySelector(`.element-box[data-element="${element}"] .element-description`);
       
-      if (!richTextPanel) {
-        richTextPanel = document.createElement('div');
-        richTextPanel.id = `${element}-rich-text`;
-        richTextPanel.className = 'rich-text-panel p-6 bg-white rounded-lg shadow-md';
+      if (!descriptionBox) {
+        descriptionBox = document.createElement('div');
+        descriptionBox.className = 'element-description mt-3 p-3 bg-gray-50 rounded-lg text-sm text-gray-600 hidden';
         
-        // Add rich text content based on element
-        let richTextContent = '';
+        // Add description content based on element
+        let descriptionContent = '';
         switch(element) {
           case 'metal':
-            richTextContent = `
-              <div class="flex items-center mb-6">
-                <div class="w-10 h-10 bg-metal bg-opacity-20 rounded-full flex items-center justify-center mr-3">
-                  <i class="fas fa-gem text-metal"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-metal">金元素</h2>
-              </div>
-              <div class="prose max-w-none">
-                <p class="text-lg text-gray-700 mb-4">金元素代表财富、坚固、精确和纪律。在五行理论中，金象征着收获、结构和组织。</p>
-                <h3 class="text-xl font-semibold text-metal mb-3">特性：</h3>
-                <ul class="list-disc list-inside text-gray-600 mb-4">
-                  <li>坚固耐用，象征永恒</li>
-                  <li>代表财富和繁荣</li>
-                  <li>具有精确和纪律的特性</li>
-                  <li>象征收获和成果</li>
-                </ul>
-                <h3 class="text-xl font-semibold text-metal mb-3">相关产品：</h3>
-                <p class="text-gray-600">珠宝首饰、金属工艺品、贵金属投资品、手表钟表等。</p>
-              </div>
-            `;
+            descriptionContent = '金元素代表财富、坚固、精确和纪律。在五行理论中，金象征着收获、结构和组织。';
             break;
           case 'wood':
-            richTextContent = `
-              <div class="flex items-center mb-6">
-                <div class="w-10 h-10 bg-wood bg-opacity-20 rounded-full flex items-center justify-center mr-3">
-                  <i class="fas fa-leaf text-wood"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-wood">木元素</h2>
-              </div>
-              <div class="prose max-w-none">
-                <p class="text-lg text-gray-700 mb-4">木元素象征生长、创造、活力和扩张。在五行中，木代表着新的开始和成长。</p>
-                <h3 class="text-xl font-semibold text-wood mb-3">特性：</h3>
-                <ul class="list-disc list-inside text-gray-600 mb-4">
-                  <li>代表生长和扩张</li>
-                  <li>象征创造力和活力</li>
-                  <li>具有柔韧和适应的特性</li>
-                  <li>代表新的开始和希望</li>
-                </ul>
-                <h3 class="text-xl font-semibold text-wood mb-3">相关产品：</h3>
-                <p class="text-gray-600">木制家具、绿植盆栽、环保用品、文房四宝等。</p>
-              </div>
-            `;
+            descriptionContent = '木元素象征生长、创造、活力和扩张。在五行中，木代表着新的开始和成长。';
             break;
           case 'water':
-            richTextContent = `
-              <div class="flex items-center mb-6">
-                <div class="w-10 h-10 bg-water bg-opacity-20 rounded-full flex items-center justify-center mr-3">
-                  <i class="fas fa-tint text-water"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-water">水元素</h2>
-              </div>
-              <div class="prose max-w-none">
-                <p class="text-lg text-gray-700 mb-4">水元素代表流动、智慧、适应和净化。在五行中，水象征着深度思考和内在智慧。</p>
-                <h3 class="text-xl font-semibold text-water mb-3">特性：</h3>
-                <ul class="list-disc list-inside text-gray-600 mb-4">
-                  <li>代表流动和变化</li>
-                  <li>象征智慧和洞察力</li>
-                  <li>具有适应和净化的特性</li>
-                  <li>代表情感和直觉</li>
-                </ul>
-                <h3 class="text-xl font-semibold text-water mb-3">相关产品：</h3>
-                <p class="text-gray-600">玻璃器皿、水族用品、清洁用品、香薰精油等。</p>
-              </div>
-            `;
+            descriptionContent = '水元素代表流动、智慧、适应和净化。在五行中，水象征着深度思考和内在智慧。';
             break;
           case 'fire':
-            richTextContent = `
-              <div class="flex items-center mb-6">
-                <div class="w-10 h-10 bg-fire bg-opacity-20 rounded-full flex items-center justify-center mr-3">
-                  <i class="fas fa-fire text-fire"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-fire">火元素</h2>
-              </div>
-              <div class="prose max-w-none">
-                <p class="text-lg text-gray-700 mb-4">火元素象征热情、能量、变革和 illumination。在五行中，火代表着激情和 transformation。</p>
-                <h3 class="text-xl font-semibold text-fire mb-3">特性：</h3>
-                <ul class="list-disc list-inside text-gray-600 mb-4">
-                  <li>代表热情和能量</li>
-                  <li>象征变革和转化</li>
-                  <li>具有光明和温暖的特性</li>
-                  <li>代表活力和动力</li>
-                </ul>
-                <h3 class="text-xl font-semibold text-fire mb-3">相关产品：</h3>
-                <p class="text-gray-600">辣椒制品、香薰蜡烛、红色服饰、热饮茶品等。</p>
-              </div>
-            `;
+            descriptionContent = '火元素象征热情、能量、变革和光明。在五行中，火代表着激情和转化。';
             break;
           case 'earth':
-            richTextContent = `
-              <div class="flex items-center mb-6">
-                <div class="w-10 h-10 bg-earth bg-opacity-20 rounded-full flex items-center justify-center mr-3">
-                  <i class="fas fa-mountain text-earth"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-earth">土元素</h2>
-              </div>
-              <div class="prose max-w-none">
-                <p class="text-lg text-gray-700 mb-4">土元素代表稳定、滋养、基础和实用。在五行中，土象征着安全和可靠性。</p>
-                <h3 class="text-xl font-semibold text-earth mb-3">特性：</h3>
-                <ul class="list-disc list-inside text-gray-600 mb-4">
-                  <li>代表稳定和安全</li>
-                  <li>象征滋养和关怀</li>
-                  <li>具有实用和可靠的特性</li>
-                  <li>代表基础和支撑</li>
-                </ul>
-                <h3 class="text-xl font-semibold text-earth mb-3">相关产品：</h3>
-                <p class="text-gray-600">陶瓷器皿、有机食品、家居装饰、养生保健等。</p>
-              </div>
-            `;
+            descriptionContent = '土元素代表稳定、滋养、基础和实用。在五行中，土象征着安全和可靠性。';
             break;
         }
         
-        richTextPanel.innerHTML = richTextContent;
-        document.querySelector('.products-panel').appendChild(richTextPanel);
+        descriptionBox.textContent = descriptionContent;
+        document.querySelector(`.element-box[data-element="${element}"]`).appendChild(descriptionBox);
       }
       
-      // Show the rich text panel
-      richTextPanel.classList.remove('hidden');
-      setTimeout(() => {
-        richTextPanel.classList.remove('opacity-0');
-        richTextPanel.classList.add('opacity-100');
-      }, 10);
+      // Show the description
+      descriptionBox.classList.remove('hidden');
     }
 
     function showProducts(element) {
