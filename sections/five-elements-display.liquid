@@ -165,9 +165,29 @@
   .bg-gray-50 { background-color: #f9fafb; }
   .bg-gray-100 { background-color: #f3f4f6; }
   .bg-gray-700 { background-color: #374151; }
-  .bg-opacity-10 { --tw-bg-opacity: 0.1; }
-  .bg-opacity-20 { --tw-bg-opacity: 0.2; }
-  .bg-opacity-30 { --tw-bg-opacity: 0.3; }
+  .bg-opacity-10 { background-color: rgba(168, 168, 168, 0.1); }
+  .bg-opacity-20 { background-color: rgba(168, 168, 168, 0.2); }
+  .bg-opacity-30 { background-color: rgba(168, 168, 168, 0.3); }
+  
+  /* Wood opacity variants */
+  .bg-wood.bg-opacity-10 { background-color: rgba(139, 90, 43, 0.1); }
+  .bg-wood.bg-opacity-20 { background-color: rgba(139, 90, 43, 0.2); }
+  .bg-wood.bg-opacity-30 { background-color: rgba(139, 90, 43, 0.3); }
+  
+  /* Water opacity variants */
+  .bg-water.bg-opacity-10 { background-color: rgba(59, 130, 246, 0.1); }
+  .bg-water.bg-opacity-20 { background-color: rgba(59, 130, 246, 0.2); }
+  .bg-water.bg-opacity-30 { background-color: rgba(59, 130, 246, 0.3); }
+  
+  /* Fire opacity variants */
+  .bg-fire.bg-opacity-10 { background-color: rgba(239, 68, 68, 0.1); }
+  .bg-fire.bg-opacity-20 { background-color: rgba(239, 68, 68, 0.2); }
+  .bg-fire.bg-opacity-30 { background-color: rgba(239, 68, 68, 0.3); }
+  
+  /* Earth opacity variants */
+  .bg-earth.bg-opacity-10 { background-color: rgba(183, 121, 31, 0.1); }
+  .bg-earth.bg-opacity-20 { background-color: rgba(183, 121, 31, 0.2); }
+  .bg-earth.bg-opacity-30 { background-color: rgba(183, 121, 31, 0.3); }
   .rounded-lg { border-radius: 0.5rem; }
   .rounded-xl { border-radius: 0.75rem; }
   .rounded-full { border-radius: 9999px; }
@@ -202,7 +222,31 @@
   .max-w-md { max-width: 28rem; }
   .opacity-0 { opacity: 0; }
   .opacity-100 { opacity: 1; }
-  .hover\:bg-opacity-20:hover { --tw-bg-opacity: 0.2; }
+  /* Hover effects for category tags */
+  .category-tag:hover {
+    opacity: 0.8;
+    transform: translateX(5px);
+  }
+  
+  /* Specific hover effects for each element */
+  .bg-metal.bg-opacity-10:hover { background-color: rgba(168, 168, 168, 0.3); }
+  .bg-wood.bg-opacity-10:hover { background-color: rgba(139, 90, 43, 0.3); }
+  .bg-water.bg-opacity-10:hover { background-color: rgba(59, 130, 246, 0.3); }
+  .bg-fire.bg-opacity-10:hover { background-color: rgba(239, 68, 68, 0.3); }
+  .bg-earth.bg-opacity-10:hover { background-color: rgba(183, 121, 31, 0.3); }
+
+  /* Hover effects for category tags in product panels */
+  .product-categories span:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+  
+  /* Specific hover effects for category tags */
+  .product-categories .bg-metal:hover { background-color: rgba(168, 168, 168, 0.3); }
+  .product-categories .bg-wood:hover { background-color: rgba(139, 90, 43, 0.3); }
+  .product-categories .bg-water:hover { background-color: rgba(59, 130, 246, 0.3); }
+  .product-categories .bg-fire:hover { background-color: rgba(239, 68, 68, 0.3); }
+  .product-categories .bg-earth:hover { background-color: rgba(183, 121, 31, 0.3); }
 
   @media (min-width: 640px) {
     .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -355,10 +399,10 @@
           <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
             <div class="flex space-x-4 product-categories">
-              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">珠宝首饰</span>
-              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">金属工艺品</span>
-              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">贵金属投资</span>
-              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-opacity-20">手表钟表</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-metal hover:bg-opacity-20">珠宝首饰</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-metal hover:bg-opacity-20">金属工艺品</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-metal hover:bg-opacity-20">贵金属投资</span>
+              <span class="px-4 py-2 bg-metal bg-opacity-10 text-metal rounded-full cursor-pointer hover:bg-metal hover:bg-opacity-20">手表钟表</span>
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="metal-products-container">
@@ -471,10 +515,10 @@
           <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
             <div class="flex space-x-4 product-categories">
-              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">木制家具</span>
-              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">绿植盆栽</span>
-              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">环保用品</span>
-              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-opacity-20">文房四宝</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-wood hover:bg-opacity-20">木制家具</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-wood hover:bg-opacity-20">绿植盆栽</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-wood hover:bg-opacity-20">环保用品</span>
+              <span class="px-4 py-2 bg-wood bg-opacity-10 text-wood rounded-full cursor-pointer hover:bg-wood hover:bg-opacity-20">文房四宝</span>
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="wood-products-container">
@@ -587,10 +631,10 @@
           <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
             <div class="flex space-x-4 product-categories">
-              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">玻璃器皿</span>
-              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">水族用品</span>
-              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">清洁用品</span>
-              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-opacity-20">香薰精油</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-water hover:bg-opacity-20">玻璃器皿</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-water hover:bg-opacity-20">水族用品</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-water hover:bg-opacity-20">清洁用品</span>
+              <span class="px-4 py-2 bg-water bg-opacity-10 text-water rounded-full cursor-pointer hover:bg-water hover:bg-opacity-20">香薰精油</span>
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="water-products-container">
@@ -703,10 +747,10 @@
           <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
             <div class="flex space-x-4 product-categories">
-              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">辣椒制品</span>
-              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">香薰蜡烛</span>
-              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">红色服饰</span>
-              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-opacity-20">热饮茶品</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-fire hover:bg-opacity-20">辣椒制品</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-fire hover:bg-opacity-20">香薰蜡烛</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-fire hover:bg-opacity-20">红色服饰</span>
+              <span class="px-4 py-2 bg-fire bg-opacity-10 text-fire rounded-full cursor-pointer hover:bg-fire hover:bg-opacity-20">热饮茶品</span>
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="fire-products-container">
@@ -819,10 +863,10 @@
           <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-3">产品分类</h3>
             <div class="flex space-x-4 product-categories">
-              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">陶瓷器皿</span>
-              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">有机食品</span>
-              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">家居装饰</span>
-              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-opacity-20">养生保健</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-earth hover:bg-opacity-20">陶瓷器皿</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-earth hover:bg-opacity-20">有机食品</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-earth hover:bg-opacity-20">家居装饰</span>
+              <span class="px-4 py-2 bg-earth bg-opacity-10 text-earth rounded-full cursor-pointer hover:bg-earth hover:bg-opacity-20">养生保健</span>
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="earth-products-container">
