@@ -106,9 +106,10 @@
   }
   
   /* Element colors */
-  .bg-metal { background-color: #a8a8a8; }
-  .text-metal { color: #a8a8a8; }
-  .border-metal { border-color: #a8a8a8; }
+  /* 修改金属元素颜色为深色 - 原色: #a8a8a8 (浅灰色) */
+  .bg-metal { background-color: #4a5568; } /* 深灰色背景 - 颜色值: #4a5568 */
+  .text-metal { color: #2d3748; } /* 深灰色文字 - 颜色值: #2d3748 */
+  .border-metal { border-color: #4a5568; } /* 深灰色边框 - 颜色值: #4a5568 */
   
   .bg-wood { background-color: #8B5A2B; }
   .text-wood { color: #8B5A2B; }
@@ -168,9 +169,10 @@
   .bg-gray-50 { background-color: #f9fafb; }
   .bg-gray-100 { background-color: #f3f4f6; }
   .bg-gray-700 { background-color: #374151; }
-  .bg-opacity-10 { background-color: rgba(168, 168, 168, 0.1); }
-  .bg-opacity-20 { background-color: rgba(168, 168, 168, 0.2); }
-  .bg-opacity-30 { background-color: rgba(168, 168, 168, 0.3); }
+  /* 修改透明度样式使用新的深色金属颜色值 - 原色: rgba(168, 168, 168, opacity) */
+  .bg-opacity-10 { background-color: rgba(74, 85, 104, 0.1); } /* 透明度: 10% - 颜色值: rgba(74, 85, 104, 0.1) */
+  .bg-opacity-20 { background-color: rgba(74, 85, 104, 0.2); } /* 透明度: 20% - 颜色值: rgba(74, 85, 104, 0.2) */
+  .bg-opacity-30 { background-color: rgba(74, 85, 104, 0.3); } /* 透明度: 30% - 颜色值: rgba(74, 85, 104, 0.3) */
   
   /* Wood opacity variants */
   .bg-wood.bg-opacity-10 { background-color: rgba(139, 90, 43, 0.1); }
@@ -231,8 +233,8 @@
     transform: translateX(5px);
   }
   
-  /* Specific hover effects for each element */
-  .bg-metal.bg-opacity-10:hover { background-color: rgba(168, 168, 168, 0.3); }
+  /* 修改金属元素悬停效果使用新的深色值 - 原色: rgba(168, 168, 168, 0.3) */
+  .bg-metal.bg-opacity-10:hover { background-color: rgba(74, 85, 104, 0.3); } /* 悬停透明度: 30% - 颜色值: rgba(74, 85, 104, 0.3) */
   .bg-wood.bg-opacity-10:hover { background-color: rgba(139, 90, 43, 0.3); }
   .bg-water.bg-opacity-10:hover { background-color: rgba(59, 130, 246, 0.3); }
   .bg-fire.bg-opacity-10:hover { background-color: rgba(239, 68, 68, 0.3); }
@@ -244,8 +246,8 @@
     transform: scale(1.05);
   }
   
-  /* Specific hover effects for category tags */
-  .product-categories .bg-metal:hover { background-color: rgba(168, 168, 168, 0.3); }
+  /* 修改产品分类标签悬停效果使用新的深色值 - 原色: rgba(168, 168, 168, 0.3) */
+  .product-categories .bg-metal:hover { background-color: rgba(74, 85, 104, 0.3); } /* 悬停透明度: 30% - 颜色值: rgba(74, 85, 104, 0.3) */
   .product-categories .bg-wood:hover { background-color: rgba(139, 90, 43, 0.3); }
   .product-categories .bg-water:hover { background-color: rgba(59, 130, 246, 0.3); }
   .product-categories .bg-fire:hover { background-color: rgba(239, 68, 68, 0.3); }
