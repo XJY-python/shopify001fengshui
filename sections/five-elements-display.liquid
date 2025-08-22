@@ -384,8 +384,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="珠宝首饰">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-gem text-5xl text-metal"></i>
@@ -407,8 +408,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="金属工艺品">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-hammer text-5xl text-metal"></i>
@@ -430,8 +432,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="贵金属投资">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-coins text-5xl text-metal"></i>
@@ -453,8 +456,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="手表钟表">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-clock text-5xl text-metal"></i>
@@ -500,8 +504,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="木制家具">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-couch text-5xl text-wood"></i>
@@ -523,8 +528,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="绿植盆栽">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-leaf text-5xl text-wood"></i>
@@ -546,8 +552,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="环保用品">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-recycle text-5xl text-wood"></i>
@@ -569,8 +576,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="文房四宝">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-pen-fancy text-5xl text-wood"></i>
@@ -616,8 +624,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="玻璃器皿">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-wine-glass-alt text-5xl text-water"></i>
@@ -639,8 +648,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="水族用品">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-fish text-5xl text-water"></i>
@@ -662,8 +672,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="清洁用品">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-broom text-5xl text-water"></i>
@@ -685,8 +696,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="香薰精油">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-spa text-5xl text-water"></i>
@@ -732,8 +744,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="辣椒制品">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-pepper-hot text-5xl text-fire"></i>
@@ -755,8 +768,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="香薰蜡烛">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-candle-holder text-5xl text-fire"></i>
@@ -778,8 +792,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="红色服饰">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-tshirt text-5xl text-fire"></i>
@@ -801,8 +816,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="热饮茶品">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-mug-hot text-5xl text-fire"></i>
@@ -848,8 +864,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="陶瓷器皿">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-mug text-5xl text-earth"></i>
@@ -871,8 +888,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="有机食品">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-apple-alt text-5xl text-earth"></i>
@@ -894,8 +912,9 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="家居装饰">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
                       <i class="fas fa-couch text-5xl text-earth"></i>
@@ -917,12 +936,17 @@
                 <a href="{{ product.url }}" class="product-card bg-white rounded-lg overflow-hidden shadow-md block" data-category="养生保健">
                   <div class="h-48 flex items-center justify-center overflow-hidden bg-gray-100">
                     {%- if product.featured_image -%}
-                      <img src="{{ product.featured_image | img_url: '300x300' }}" 
+                      <img src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
                            alt="{{ product.featured_image.alt | escape }}" 
+                           width="300" height="300"
                            class="w-full h-full object-cover">
                     {%- else -%}
-                      <i class="fas fa-heart text-5xl text-earth"></i>
-                    {%- endif -%}
+                      <!-- 修改养生保健系列图标颜色为深色 - 原色: #B7791F (浅棕色) -->
+                      <!-- 颜色值: #8B4513 (深棕色) -->
+                      <!-- 字体大小: 5xl (3rem/48px) -->
+                      <!-- 透明度: 不透明 (100%) -->
+                      <i class="fas fa-heart text-5xl" style="color: #8B4513;"></i>
+                    {%- endif -%>
                   </div>
                   <div class="p-4">
                     <h3 class="font-bold text-xl mb-1">{{ product.title }}</h3>
