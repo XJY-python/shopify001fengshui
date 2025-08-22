@@ -952,6 +952,21 @@
         showElementDescription(element);
         showProducts(element);
       });
+      
+      // Add click event for mobile devices
+      box.addEventListener('click', function() {
+        const element = this.dataset.element;
+        showElementDescription(element);
+        showProducts(element);
+        
+        // Scroll to products panel on mobile
+        if (window.innerWidth <= 768) {
+          const productsPanel = document.querySelector('.products-panel');
+          if (productsPanel) {
+            productsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
     });
 
     function showElementDescription(element) {
