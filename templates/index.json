@@ -11,6 +11,7 @@
   "sections": {
     "fengshui_bdpkY8": {
       "type": "fengshui",
+      "custom_css": [],
       "name": "五行元素产品展示",
       "settings": {
         "heading": "五行元素产品展示2",
