@@ -51,7 +51,11 @@
           "settings": {
             "button_title": "热门商品",
             "button_description": "查看热门商品系列",
-            "linked_collections": []
+            "linked_collections": [
+              "手链",
+              "吊坠",
+              "项链"
+            ]
           }
         },
         "menu_button_6DDTxq": {
@@ -93,30 +97,6 @@
             "button_description": "菜单描述内容",
             "linked_collections": []
           }
-        },
-        "menu_button_3r3AXh": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
-            "linked_collections": []
-          }
-        },
-        "menu_button_cmj9Lt": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
-            "linked_collections": []
-          }
-        },
-        "menu_button_kXV8CX": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "新品上市",
-            "button_description": "最新上架商品",
-            "linked_collections": []
-          }
         }
       },
       "block_order": [
@@ -125,10 +105,7 @@
         "menu_button_LJbLA4",
         "menu_button_4cwghb",
         "menu_button_kjU8zT",
-        "menu_button_EBMdn7",
-        "menu_button_3r3AXh",
-        "menu_button_cmj9Lt",
-        "menu_button_kXV8CX"
+        "menu_button_EBMdn7"
       ],
       "name": "自定义菜单",
       "settings": {
