@@ -43,27 +43,14 @@
         "padding_bottom": 36
       }
     },
-    "zidignyicaidan2_PTipmk": {
-      "type": "zidignyicaidan2",
-      "name": "自定义菜单",
-      "settings": {
-        "menu_width": 30,
-        "product_width": 70,
-        "primary_color": "#007bff",
-        "border_color": "#e1e1e1",
-        "background_color": "#f8f8f8",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "zidignyicaidan2_aEeYHC": {
+    "zidignyicaidan2_f7WUUj": {
       "type": "zidignyicaidan2",
       "blocks": {
-        "menu_category_DUna4a": {
+        "menu_category_WPmWwG": {
           "type": "menu_category",
           "settings": {
-            "category_title": "热望奇热网奇热网亲热请问",
-            "category_description": "放大范德萨发大水",
+            "category_title": "热门商品",
+            "category_description": "查看热门商品",
             "linked_collections": [
               "吊坠",
               "手链",
@@ -71,7 +58,7 @@
             ]
           }
         },
-        "menu_category_rQVmLn": {
+        "menu_category_fV7TEc": {
           "type": "menu_category",
           "settings": {
             "category_title": "新品上市",
@@ -81,8 +68,8 @@
         }
       },
       "block_order": [
-        "menu_category_DUna4a",
-        "menu_category_rQVmLn"
+        "menu_category_WPmWwG",
+        "menu_category_fV7TEc"
       ],
       "name": "自定义菜单",
       "settings": {
@@ -98,7 +85,6 @@
   },
   "order": [
     "fengshui_bdpkY8",
-    "zidignyicaidan2_PTipmk",
-    "zidignyicaidan2_aEeYHC"
+    "zidignyicaidan2_f7WUUj"
   ]
 }
