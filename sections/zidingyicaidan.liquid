@@ -1,0 +1,539 @@
+{% comment %}
+  Interactive Menu System
+  Left side: Customizable number of menu buttons
+  Right side: Corresponding content series display
+  Features: Hover to expand button details, click to switch right content
+{% endcomment %}
+
+{%- style -%}
+  :root {
+    --menu-primary-color: {{ section.settings.primary_color }};
+    --menu-secondary-color: {{ section.settings.secondary_color }};
+    --menu-text-color: {{ section.settings.text_color }};
+    --menu-text-light: {{ section.settings.text_light_color }};
+    --menu-border-color: {{ section.settings.border_color }};
+    --menu-transition-speed: 0.3s;
+    --menu-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .menu-container-{{ section.id }} {
+    display: flex;
+    min-height: 400px;
+    background-color: #f5f7ff;
+    margin: {{ section.settings.margin_top }}px {{ section.settings.margin_right }}px {{ section.settings.margin_bottom }}px {{ section.settings.margin_left }}px;
+  }
+  
+  /* Left menu sidebar styles */
+  .menu-sidebar-{{ section.id }} {
+    width: 320px;
+    background: white;
+    border-right: 1px solid var(--menu-border-color);
+    padding: 20px 0;
+    overflow-y: auto;
+    box-shadow: var(--menu-shadow);
+    z-index: 10;
+  }
+  
+  .menu-header-{{ section.id }} {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--menu-border-color);
+    margin-bottom: 20px;
+  }
+  
+  .menu-header-{{ section.id }} h2 {
+    color: var(--menu-primary-color);
+    margin-bottom: 10px;
+  }
+  
+  .menu-items-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px;
+  }
+  
+  .menu-item-{{ section.id }} {
+    position: relative;
+    background: white;
+    border: 1px solid var(--menu-border-color);
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all var(--menu-transition-speed);
+    overflow: hidden;
+  }
+  
+  .menu-item-{{ section.id }}:hover {
+    border-color: var(--menu-primary-color);
+    box-shadow: var(--menu-shadow);
+  }
+  
+  .menu-item-{{ section.id }}.active {
+    border-color: var(--menu-primary-color);
+    background-color: rgba(74, 108, 247, 0.05);
+  }
+  
+  .menu-item-title-{{ section.id }} {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--menu-text-color);
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .menu-item-description-{{ section.id }} {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    color: var(--menu-text-light);
+    font-size: 14px;
+    line-height: 1.5;
+    transition: all var(--menu-transition-speed);
+  }
+  
+  .menu-item-{{ section.id }}:hover .menu-item-description-{{ section.id }} {
+    max-height: 100px;
+    opacity: 1;
+    margin-top: 10px;
+  }
+  
+  /* Right content area styles */
+  .content-area-{{ section.id }} {
+    flex: 1;
+    padding: 30px;
+    background: white;
+    overflow-y: auto;
+  }
+  
+  .content-header-{{ section.id }} {
+    margin-bottom: 30px;
+  }
+  
+  .content-header-{{ section.id }} h2 {
+    color: var(--menu-primary-color);
+    margin-bottom: 10px;
+  }
+  
+  .series-grid-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .series-item-{{ section.id }} {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--menu-shadow);
+    transition: transform var(--menu-transition-speed);
+  }
+  
+  .series-item-{{ section.id }}:hover {
+    transform: translateY(-5px);
+  }
+  
+  .series-image-{{ section.id }} {
+    height: 160px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--menu-text-light);
+  }
+  
+  .series-content-{{ section.id }} {
+    padding: 15px;
+  }
+  
+  .series-title-{{ section.id }} {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--menu-text-color);
+  }
+  
+  .series-description-{{ section.id }} {
+    color: var(--menu-text-light);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 992px) {
+    .menu-container-{{ section.id }} {
+      flex-direction: column;
+    }
+    
+    .menu-sidebar-{{ section.id }} {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid var(--menu-border-color);
+    }
+  }
+  
+  /* Accessibility support */
+  .menu-item-{{ section.id }}:focus {
+    outline: 2px solid var(--menu-primary-color);
+    outline-offset: 2px;
+  }
+{%- endstyle -%}
+
+<div class="menu-container-{{ section.id }}">
+  <!-- Left menu sidebar -->
+  <div class="menu-sidebar-{{ section.id }}">
+    <div class="menu-header-{{ section.id }}">
+      <h2>{{ section.settings.menu_title }}</h2>
+      <p>{{ section.settings.menu_subtitle }}</p>
+    </div>
+    
+    <div class="menu-items-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        <div class="menu-item-{{ section.id }}" data-index="{{ forloop.index0 }}">
+          <div class="menu-item-title-{{ section.id }}">
+            <span>{{ block.settings.menu_item_title }}</span>
+            <span>&rsaquo;</span>
+          </div>
+          <div class="menu-item-description-{{ section.id }}">
+            {{ block.settings.menu_item_description }}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+  
+  <!-- Right content area -->
+  <div class="content-area-{{ section.id }}">
+    <div class="content-header-{{ section.id }}">
+      <h2 id="content-title-{{ section.id }}">{{ section.settings.default_title }}</h2>
+      <p id="content-description-{{ section.id }}">{{ section.settings.default_description }}</p>
+    </div>
+    
+    <div class="series-grid-{{ section.id }}" id="series-container-{{ section.id }}">
+      <!-- Content will be loaded dynamically via JavaScript -->
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionId = '{{ section.id }}';
+    const menuItems = document.querySelectorAll('.menu-item-' + sectionId);
+    const contentTitle = document.getElementById('content-title-' + sectionId);
+    const contentDescription = document.getElementById('content-description-' + sectionId);
+    const seriesContainer = document.getElementById('series-container-' + sectionId);
+    
+    // Menu data from section blocks
+    const menuData = [
+      {%- for block in section.blocks -%}
+        {
+          title: {{ block.settings.menu_item_title | json }},
+          description: {{ block.settings.menu_item_description | json }},
+          series: [
+            {%- for i in (1..5) -%}
+              {%- assign series_title_key = 'series_title_' | append: i -%}
+              {%- assign series_desc_key = 'series_description_' | append: i -%}
+              {%- if block.settings[series_title_key] != blank -%}
+                {
+                  title: {{ block.settings[series_title_key] | json }},
+                  description: {{ block.settings[series_desc_key] | json }}
+                }{%- unless forloop.last and block.settings[series_title_key] != blank -%},{%- endunless -%}
+              {%- endif -%}
+            {%- endfor -%}
+          ]
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ];
+    
+    // Initial state: activate first menu item if available
+    if (menuItems.length > 0 && menuData.length > 0) {
+      activateMenuItem(0);
+    }
+    
+    // Add click event to each menu item
+    menuItems.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        activateMenuItem(index);
+      });
+      
+      // Add keyboard support
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activateMenuItem(index);
+        }
+      });
+    });
+    
+    // Activate menu item function
+    function activateMenuItem(index) {
+      // Remove all active states
+      menuItems.forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Add active state to current item
+      menuItems[index].classList.add('active');
+      
+      // Update content area
+      const data = menuData[index];
+      contentTitle.textContent = data.title;
+      contentDescription.textContent = data.description;
+      
+      // Clear and refill series container
+      seriesContainer.innerHTML = '';
+      
+      data.series.forEach(series => {
+        const seriesItem = document.createElement('div');
+        seriesItem.className = 'series-item-' + sectionId;
+        
+        seriesItem.innerHTML = `
+          <div class="series-image-${sectionId}">
+            ${series.title}
+          </div>
+          <div class="series-content-${sectionId}">
+            <h3 class="series-title-${sectionId}">${series.title}</h3>
+            <p class="series-description-${sectionId}">${series.description}</p>
+          </div>
+        `;
+        
+        seriesContainer.appendChild(seriesItem);
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Interactive Menu",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Menu Settings"
+    },
+    {
+      "type": "text",
+      "id": "menu_title",
+      "label": "Menu Title",
+      "default": "Product Categories"
+    },
+    {
+      "type": "text",
+      "id": "menu_subtitle",
+      "label": "Menu Subtitle",
+      "default": "Select your interested product series"
+    },
+    {
+      "type": "text",
+      "id": "default_title",
+      "label": "Default Title",
+      "default": "Please select a category"
+    },
+    {
+      "type": "text",
+      "id": "default_description",
+      "label": "Default Description",
+      "default": "Click on the left menu to view details"
+    },
+    {
+      "type": "header",
+      "content": "Style Settings"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color",
+      "default": "#4a6cf7"
+    },
+    {
+      "type": "color",
+      "id": "secondary_color",
+      "label": "Secondary Color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "text_light_color",
+      "label": "Text Light Color",
+      "default": "#6c757d"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#dee2e6"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Margin",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Right Margin",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Margin",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Left Margin",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_item",
+      "name": "Menu Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item_title",
+          "label": "Menu Item Title",
+          "default": "Electronics"
+        },
+        {
+          "type": "textarea",
+          "id": "menu_item_description",
+          "label": "Menu Item Description",
+          "default": "Latest technology products and smart devices, including phones, computers, and tablets."
+        },
+        {
+          "type": "header",
+          "content": "Series Items"
+        },
+        {
+          "type": "text",
+          "id": "series_title_1",
+          "label": "Series Title 1",
+          "default": "Smartphones"
+        },
+        {
+          "type": "textarea",
+          "id": "series_description_1",
+          "label": "Series Description 1",
+          "default": "Latest smartphones with high-performance processors and excellent cameras."
+        },
+        {
+          "type": "text",
+          "id": "series_title_2",
+          "label": "Series Title 2",
+          "default": "Laptops"
+        },
+        {
+          "type": "textarea",
+          "id": "series_description_2",
+          "label": "Series Description 2",
+          "default": "Lightweight and portable with strong performance for work and entertainment."
+        },
+        {
+          "type": "text",
+          "id": "series_title_3",
+          "label": "Series Title 3",
+          "default": "Smart Watches"
+        },
+        {
+          "type": "textarea",
+          "id": "series_description_3",
+          "label": "Series Description 3",
+          "default": "Health monitoring, message notifications, multiple sports mode recording."
+        },
+        {
+          "type": "text",
+          "id": "series_title_4",
+          "label": "Series Title 4",
+          "default": ""
+        },
+        {
+          "type": "textarea",
+          "id": "series_description_4",
+          "label": "Series Description 4",
+          "default": ""
+        },
+        {
+          "type": "text",
+          "id": "series_title_5",
+          "label": "Series Title 5",
+          "default": ""
+        },
+        {
+          "type": "textarea",
+          "id": "series_description_5",
+          "label": "Series Description 5",
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Interactive Menu",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "menu_item",
+          "settings": {
+            "menu_item_title": "Electronics",
+            "menu_item_description": "Latest technology products and smart devices, including phones, computers, and tablets.",
+            "series_title_1": "Smartphones",
+            "series_description_1": "Latest smartphones with high-performance processors and excellent cameras.",
+            "series_title_2": "Laptops",
+            "series_description_2": "Lightweight and portable with strong performance for work and entertainment.",
+            "series_title_3": "Smart Watches",
+            "series_description_3": "Health monitoring, message notifications, multiple sports mode recording."
+          }
+        },
+        {
+          "type": "menu_item",
+          "settings": {
+            "menu_item_title": "Home Goods",
+            "menu_item_description": "High-quality home decor and practical household items to make your home more cozy and comfortable.",
+            "series_title_1": "Kitchen Utensils",
+            "series_description_1": "High-quality kitchenware to make cooking simpler and more fun.",
+            "series_title_2": "Home Decor",
+            "series_description_2": "Beautiful decorations to add artistic atmosphere to your home.",
+            "series_title_3": "Bedding",
+            "series_description_3": "Comfortable bedding to ensure your quality sleep.",
+            "series_title_4": "Lighting Fixtures",
+            "series_description_4": "Various lighting options to create a warm home atmosphere."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

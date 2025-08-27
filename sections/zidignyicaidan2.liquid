@@ -1,0 +1,425 @@
+{% comment %}
+  Custom Menu System
+  Left side: Menu buttons, Right side: Associated collections display
+  Description: Supports dynamic menu buttons, each can link to multiple collections
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Custom Menu System",
+  "class": "custom-menu-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Menu Configuration"
+    },
+    {
+      "type": "range",
+      "id": "max_items",
+      "label": "Maximum Menu Items",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Style Settings"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color",
+      "default": "#007bff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#e1e1e1"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f8f8f8"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_button",
+      "name": "Menu Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_title",
+          "label": "Button Title",
+          "default": "Menu Item"
+        },
+        {
+          "type": "text",
+          "id": "button_description",
+          "label": "Button Description",
+          "default": "Menu description content"
+        },
+        {
+          "type": "header",
+          "content": "Collection Configuration"
+        },
+        {
+          "type": "collection_list",
+          "id": "linked_collections",
+          "label": "Linked Collections",
+          "limit": 10
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Menu",
+      "category": "Navigation",
+      "blocks": [
+        {
+          "type": "menu_button",
+          "settings": {
+            "button_title": "Popular Products",
+            "button_description": "View popular product collections"
+          }
+        },
+        {
+          "type": "menu_button",
+          "settings": {
+            "button_title": "New Arrivals",
+            "button_description": "Latest products"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{%- style -%}
+  .custom-menu-section-{{ section.id }} {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    min-height: 400px;
+    background-color: {{ section.settings.background_color }};
+  }
+
+  .menu-buttons-container-{{ section.id }} {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .menu-button-{{ section.id }} {
+    position: relative;
+    padding: 15px;
+    border: 1px solid {{ section.settings.border_color }};
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+  }
+
+  .menu-button-{{ section.id }}:hover {
+    background-color: #f8f8f8;
+    border-color: #d0d0d0;
+  }
+
+  .menu-button-{{ section.id }}.active {
+    background-color: #f0f8ff;
+    border-color: {{ section.settings.primary_color }};
+  }
+
+  .menu-button-{{ section.id }} h3 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .menu-button-{{ section.id }} p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .menu-button-content-{{ section.id }} {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    min-width: 250px;
+    background: white;
+    border: 1px solid {{ section.settings.border_color }};
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+
+  .menu-button-{{ section.id }}:hover .menu-button-content-{{ section.id }} {
+    display: block;
+  }
+
+  .menu-button-content-{{ section.id }} h4 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+  }
+
+  .menu-button-content-{{ section.id }} p {
+    margin: 0 0 10px 0;
+    color: #666;
+  }
+
+  .menu-button-content-{{ section.id }} ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .menu-button-content-{{ section.id }} li {
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .menu-button-content-{{ section.id }} li:last-child {
+    border-bottom: none;
+  }
+
+  .collections-display-{{ section.id }} {
+    flex: 2;
+    padding: 20px;
+    border: 1px solid {{ section.settings.border_color }};
+    border-radius: 8px;
+    background: white;
+    min-height: 300px;
+  }
+
+  .collection-grid-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .collection-item-{{ section.id }} {
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+
+  .collection-item-{{ section.id }}:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .collection-item-{{ section.id }} img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  .collection-item-{{ section.id }} h4 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+  }
+
+  .collection-item-{{ section.id }} p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .loading-{{ section.id }} {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+  }
+
+  .empty-state-{{ section.id }} {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+  }
+
+  @media (max-width: 768px) {
+    .custom-menu-section-{{ section.id }} {
+      flex-direction: column;
+    }
+    
+    .menu-button-content-{{ section.id }} {
+      position: static;
+      left: auto;
+      top: auto;
+      margin-top: 10px;
+      min-width: auto;
+    }
+  }
+{%- endstyle -%}
+
+<div class="custom-menu-section-{{ section.id }}">
+  <div class="menu-buttons-container-{{ section.id }}">
+    {% for block in section.blocks %}
+      {% if block.type == 'menu_button' %}
+        <div class="menu-button-{{ section.id }}" 
+             data-collections="{% if block.settings.linked_collections %}{% for collection in block.settings.linked_collections %}{{ collection.id }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endif %}">
+          <h3>{{ block.settings.button_title }}</h3>
+          <p>{{ block.settings.button_description }}</p>
+          
+          <div class="menu-button-content-{{ section.id }}">
+            <h4>{{ block.settings.button_title }}</h4>
+            <p>{{ block.settings.button_description }}</p>
+            
+            {% if block.settings.linked_collections %}
+              <ul>
+                {% for collection in block.settings.linked_collections %}
+                  <li>{{ collection.title }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No collections linked</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+    
+    {% if section.blocks.size == 0 %}
+      <div class="empty-state-{{ section.id }}">
+        <p>Please add menu buttons</p>
+        <p>Click "Add content" in theme editor to create menu buttons</p>
+      </div>
+    {% endif %}
+  </div>
+  
+  <div class="collections-display-{{ section.id }}">
+    <div class="empty-state-{{ section.id }}">Please select a menu on the left to view associated collections</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const sectionId = '{{ section.id }}';
+  const menuButtons = document.querySelectorAll(`.menu-button-${sectionId}`);
+  let activeButton = null;
+  
+  // Mouse hover to show content
+  menuButtons.forEach(button => {
+    button.addEventListener('mouseenter', function() {
+      const content = this.querySelector(`.menu-button-content-${sectionId}`);
+      if (content) {
+        content.style.display = 'block';
+      }
+    });
+    
+    button.addEventListener('mouseleave', function() {
+      const content = this.querySelector(`.menu-button-content-${sectionId}`);
+      if (content && !this.classList.contains('active')) {
+        content.style.display = 'none';
+      }
+    });
+    
+    // Click to load collections
+    button.addEventListener('click', function() {
+      // Remove previous active button style
+      if (activeButton) {
+        activeButton.classList.remove('active');
+        const prevContent = activeButton.querySelector(`.menu-button-content-${sectionId}`);
+        if (prevContent) {
+          prevContent.style.display = 'none';
+        }
+      }
+      
+      // Set current button as active
+      this.classList.add('active');
+      activeButton = this;
+      
+      const content = this.querySelector(`.menu-button-content-${sectionId}`);
+      if (content) {
+        content.style.display = 'block';
+      }
+      
+      const collectionIds = this.getAttribute('data-collections');
+      if (collectionIds) {
+        loadCollections(collectionIds);
+      } else {
+        showEmptyState();
+      }
+    });
+  });
+
+  function loadCollections(collectionIds) {
+    const collectionArray = collectionIds.split(',');
+    const displayArea = document.querySelector(`.collections-display-${sectionId}`);
+    
+    displayArea.innerHTML = '<div class="loading-' + sectionId + '">Loading...</div>';
+    
+    // Use Shopify's AJAX API to get collection data
+    const requests = collectionArray.map(id => {
+      return fetch(`/collections/${id}?view=ajax`)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.text();
+        })
+        .catch(error => {
+          console.error('Error loading collection:', error);
+          return null;
+        });
+    });
+
+    Promise.all(requests).then(results => {
+      const validResults = results.filter(result => result !== null);
+      
+      if (validResults.length === 0) {
+        showEmptyState();
+        return;
+      }
+      
+      displayArea.innerHTML = '<div class="collection-grid-' + sectionId + '"></div>';
+      const grid = displayArea.querySelector(`.collection-grid-${sectionId}`);
+      
+      validResults.forEach(html => {
+        if (html) {
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = html;
+          const collectionItem = tempDiv.querySelector('.collection-item') || tempDiv.firstElementChild;
+          if (collectionItem) {
+            grid.appendChild(collectionItem);
+          }
+        }
+      });
+    });
+  }
+
+  function showEmptyState() {
+    const displayArea = document.querySelector(`.collections-display-${sectionId}`);
+    displayArea.innerHTML = '<div class="empty-state-' + sectionId + '">Please select a menu to view collections</div>';
+  }
+  
+  // Default show first menu content (if available)
+  if (menuButtons.length > 0) {
+    const firstButton = menuButtons[0];
+    const firstCollections = firstButton.getAttribute('data-collections');
+    if (firstCollections) {
+      firstButton.click();
+    }
+  }
+})();
+</script>
+
+{% comment %}
+  使用说明:
+  1. 将此文件保存为 sections/custom-menu.liquid
+  2. 在主题编辑器中添加此section
+  3. 点击"添加内容"创建菜单按钮
+  4. 为每个按钮配置标题、描述和关联的系列
+  5. 保存后即可使用
+{% endcomment %}
