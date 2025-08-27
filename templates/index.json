@@ -9,115 +9,47 @@
  */
 {
   "sections": {
-    "fengshui_bdpkY8": {
-      "type": "fengshui",
-      "custom_css": [
-        ".product-panel .mb-6:has(.text-lg.font-semibold.text-gray-700) {margin-bottom: 1rem !important;}"
-      ],
-      "name": "五行元素产品展示",
-      "settings": {
-        "heading": "五行元素产品展示2",
-        "heading_size": "h1",
-        "color_scheme": "",
-        "metal_collection_1": "吊坠",
-        "metal_collection_2": "项链",
-        "metal_collection_3": "手链",
-        "metal_collection_4": "",
-        "wood_collection_1": "",
-        "wood_collection_2": "",
-        "wood_collection_3": "",
-        "wood_collection_4": "",
-        "water_collection_1": "",
-        "water_collection_2": "",
-        "water_collection_3": "",
-        "water_collection_4": "",
-        "fire_collection_1": "",
-        "fire_collection_2": "",
-        "fire_collection_3": "",
-        "fire_collection_4": "",
-        "earth_collection_1": "",
-        "earth_collection_2": "",
-        "earth_collection_3": "",
-        "earth_collection_4": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "zidignyicaidan2_PTipmk": {
+    "zidignyicaidan2_9PHemj": {
       "type": "zidignyicaidan2",
       "blocks": {
-        "menu_button_6fcJK4": {
-          "type": "menu_button",
+        "menu_category_3GEzwQ": {
+          "type": "menu_category",
           "settings": {
-            "button_title": "热门商品",
-            "button_description": "查看热门商品系列",
+            "category_title": "热门商品",
+            "category_description": "查看热门商品",
             "linked_collections": [
-              "手链",
               "吊坠",
+              "手链",
               "项链"
             ]
           }
         },
-        "menu_button_6DDTxq": {
-          "type": "menu_button",
+        "menu_category_JzwR9A": {
+          "type": "menu_category",
           "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
-            "linked_collections": []
-          }
-        },
-        "menu_button_LJbLA4": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
-            "linked_collections": []
-          }
-        },
-        "menu_button_4cwghb": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
-            "linked_collections": []
-          }
-        },
-        "menu_button_kjU8zT": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
-            "linked_collections": []
-          }
-        },
-        "menu_button_EBMdn7": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
+            "category_title": "新品上市",
+            "category_description": "最新上架商品",
             "linked_collections": []
           }
         }
       },
       "block_order": [
-        "menu_button_6fcJK4",
-        "menu_button_6DDTxq",
-        "menu_button_LJbLA4",
-        "menu_button_4cwghb",
-        "menu_button_kjU8zT",
-        "menu_button_EBMdn7"
+        "menu_category_3GEzwQ",
+        "menu_category_JzwR9A"
       ],
       "name": "自定义菜单",
       "settings": {
-        "max_items": 10,
+        "menu_width": 30,
+        "product_width": 70,
         "primary_color": "#007bff",
         "border_color": "#e1e1e1",
-        "background_color": "#f8f8f8"
+        "background_color": "#f8f8f8",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
   "order": [
-    "fengshui_bdpkY8",
-    "zidignyicaidan2_PTipmk"
+    "zidignyicaidan2_9PHemj"
   ]
 }
