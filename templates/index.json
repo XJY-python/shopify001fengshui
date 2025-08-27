@@ -42,9 +42,42 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "zidignyicaidan2_PTipmk": {
+      "type": "zidignyicaidan2",
+      "blocks": {
+        "menu_button_6fcJK4": {
+          "type": "menu_button",
+          "settings": {
+            "button_title": "热门商品",
+            "button_description": "查看热门商品系列",
+            "linked_collections": []
+          }
+        },
+        "menu_button_kXV8CX": {
+          "type": "menu_button",
+          "settings": {
+            "button_title": "新品上市",
+            "button_description": "最新上架商品",
+            "linked_collections": []
+          }
+        }
+      },
+      "block_order": [
+        "menu_button_6fcJK4",
+        "menu_button_kXV8CX"
+      ],
+      "name": "自定义菜单",
+      "settings": {
+        "max_items": 1,
+        "primary_color": "#007bff",
+        "border_color": "#e1e1e1",
+        "background_color": "#f8f8f8"
+      }
     }
   },
   "order": [
-    "fengshui_bdpkY8"
+    "fengshui_bdpkY8",
+    "zidignyicaidan2_PTipmk"
   ]
 }
