@@ -6,17 +6,17 @@
 
 {% schema %}
 {
-  "name": "Custom Menu System",
+  "name": "自定义菜单系统",
   "class": "custom-menu-section",
   "settings": [
     {
       "type": "header",
-      "content": "Menu Configuration"
+      "content": "菜单配置"
     },
     {
       "type": "range",
       "id": "max_items",
-      "label": "Maximum Menu Items",
+      "label": "最大菜单项数量",
       "min": 1,
       "max": 10,
       "step": 1,
@@ -24,52 +24,52 @@
     },
     {
       "type": "header",
-      "content": "Style Settings"
+      "content": "样式设置"
     },
     {
       "type": "color",
       "id": "primary_color",
-      "label": "Primary Color",
+      "label": "主色调",
       "default": "#007bff"
     },
     {
       "type": "color",
       "id": "border_color",
-      "label": "Border Color",
+      "label": "边框颜色",
       "default": "#e1e1e1"
     },
     {
       "type": "color",
       "id": "background_color",
-      "label": "Background Color",
+      "label": "背景颜色",
       "default": "#f8f8f8"
     }
   ],
   "blocks": [
     {
       "type": "menu_button",
-      "name": "Menu Button",
+      "name": "菜单按钮",
       "settings": [
         {
           "type": "text",
           "id": "button_title",
-          "label": "Button Title",
-          "default": "Menu Item"
+          "label": "按钮标题",
+          "default": "菜单项"
         },
         {
           "type": "text",
           "id": "button_description",
-          "label": "Button Description",
-          "default": "Menu description content"
+          "label": "按钮描述",
+          "default": "菜单描述内容"
         },
         {
           "type": "header",
-          "content": "Collection Configuration"
+          "content": "系列配置"
         },
         {
           "type": "collection_list",
           "id": "linked_collections",
-          "label": "Linked Collections",
+          "label": "关联系列",
           "limit": 10
         }
       ]
@@ -77,21 +77,21 @@
   ],
   "presets": [
     {
-      "name": "Custom Menu",
-      "category": "Navigation",
+      "name": "自定义菜单",
+      "category": "导航",
       "blocks": [
         {
           "type": "menu_button",
           "settings": {
-            "button_title": "Popular Products",
-            "button_description": "View popular product collections"
+            "button_title": "热门商品",
+            "button_description": "查看热门商品系列"
           }
         },
         {
           "type": "menu_button",
           "settings": {
-            "button_title": "New Arrivals",
-            "button_description": "Latest products"
+            "button_title": "新品上市",
+            "button_description": "最新上架商品"
           }
         }
       ]
@@ -285,7 +285,7 @@
                 {% endfor %}
               </ul>
             {% else %}
-              <p>No collections linked</p>
+              <p>未关联任何系列</p>
             {% endif %}
           </div>
         </div>
@@ -294,14 +294,14 @@
     
     {% if section.blocks.size == 0 %}
       <div class="empty-state-{{ section.id }}">
-        <p>Please add menu buttons</p>
-        <p>Click "Add content" in theme editor to create menu buttons</p>
+        <p>请添加菜单按钮</p>
+        <p>在主题编辑器中点击"添加内容"来创建菜单按钮</p>
       </div>
     {% endif %}
   </div>
   
   <div class="collections-display-{{ section.id }}">
-    <div class="empty-state-{{ section.id }}">Please select a menu on the left to view associated collections</div>
+    <div class="empty-state-{{ section.id }}">请选择左侧菜单查看关联系列</div>
   </div>
 </div>
 
@@ -360,7 +360,7 @@
     const collectionArray = collectionIds.split(',');
     const displayArea = document.querySelector(`.collections-display-${sectionId}`);
     
-    displayArea.innerHTML = '<div class="loading-' + sectionId + '">Loading...</div>';
+    displayArea.innerHTML = '<div class="loading-' + sectionId + '">加载中...</div>';
     
     // Use Shopify's AJAX API to get collection data
     const requests = collectionArray.map(id => {
@@ -401,7 +401,7 @@
 
   function showEmptyState() {
     const displayArea = document.querySelector(`.collections-display-${sectionId}`);
-    displayArea.innerHTML = '<div class="empty-state-' + sectionId + '">Please select a menu to view collections</div>';
+    displayArea.innerHTML = '<div class="empty-state-' + sectionId + '">请选择菜单查看系列</div>';
   }
   
   // Default show first menu content (if available)
