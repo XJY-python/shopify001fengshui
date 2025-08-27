@@ -45,79 +45,60 @@
     },
     "zidignyicaidan2_PTipmk": {
       "type": "zidignyicaidan2",
+      "name": "自定义菜单",
+      "settings": {
+        "menu_width": 30,
+        "product_width": 70,
+        "primary_color": "#007bff",
+        "border_color": "#e1e1e1",
+        "background_color": "#f8f8f8",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "zidignyicaidan2_aEeYHC": {
+      "type": "zidignyicaidan2",
       "blocks": {
-        "menu_button_6fcJK4": {
-          "type": "menu_button",
+        "menu_category_DUna4a": {
+          "type": "menu_category",
           "settings": {
-            "button_title": "热门商品",
-            "button_description": "查看热门商品系列",
+            "category_title": "热望奇热网奇热网亲热请问",
+            "category_description": "放大范德萨发大水",
             "linked_collections": [
-              "手链",
               "吊坠",
+              "手链",
               "项链"
             ]
           }
         },
-        "menu_button_6DDTxq": {
-          "type": "menu_button",
+        "menu_category_rQVmLn": {
+          "type": "menu_category",
           "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
-            "linked_collections": []
-          }
-        },
-        "menu_button_LJbLA4": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
-            "linked_collections": []
-          }
-        },
-        "menu_button_4cwghb": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
-            "linked_collections": []
-          }
-        },
-        "menu_button_kjU8zT": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
-            "linked_collections": []
-          }
-        },
-        "menu_button_EBMdn7": {
-          "type": "menu_button",
-          "settings": {
-            "button_title": "菜单项",
-            "button_description": "菜单描述内容",
+            "category_title": "新品上市",
+            "category_description": "最新上架商品",
             "linked_collections": []
           }
         }
       },
       "block_order": [
-        "menu_button_6fcJK4",
-        "menu_button_6DDTxq",
-        "menu_button_LJbLA4",
-        "menu_button_4cwghb",
-        "menu_button_kjU8zT",
-        "menu_button_EBMdn7"
+        "menu_category_DUna4a",
+        "menu_category_rQVmLn"
       ],
       "name": "自定义菜单",
       "settings": {
-        "max_items": 10,
+        "menu_width": 30,
+        "product_width": 70,
         "primary_color": "#007bff",
         "border_color": "#e1e1e1",
-        "background_color": "#f8f8f8"
+        "background_color": "#f8f8f8",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
   "order": [
     "fengshui_bdpkY8",
-    "zidignyicaidan2_PTipmk"
+    "zidignyicaidan2_PTipmk",
+    "zidignyicaidan2_aEeYHC"
   ]
 }
