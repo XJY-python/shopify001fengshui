@@ -188,21 +188,43 @@
   .category-header-{{ section.id }} {
     padding: 15px;
     display: flex;
-    justify-content: between;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    gap: 10px;
+  }
+
+  .category-header-content {
+    flex: 1;
+    min-width: 0;
   }
 
   .category-header-{{ section.id }} h3 {
     margin: 0;
     font-size: 16px;
     font-weight: 600;
-    flex: 1;
+    color: #333;
+    line-height: 1.3;
   }
 
   .category-header-{{ section.id }} p {
-    margin: 5px 0 0 0;
+    margin: 8px 0 0 0;
     font-size: 14px;
     color: #666;
+    line-height: 1.4;
+    display: block;
+  }
+
+  .dropdown-icon-container {
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .dropdown-icon-{{ section.id }} {
+    transition: transform 0.3s ease;
+    font-size: 12px;
+    color: #666;
+    display: block;
   }
 
   .dropdown-icon-{{ section.id }} {
@@ -374,11 +396,13 @@
       {% if block.type == 'menu_category' %}
         <div class="menu-category-{{ section.id }}" data-category="{{ block.id }}">
           <div class="category-header-{{ section.id }}">
-            <div>
+            <div class="category-header-content">
               <h3>{{ block.settings.category_title }}</h3>
               <p>{{ block.settings.category_description }}</p>
             </div>
-            <span class="dropdown-icon-{{ section.id }}">▼</span>
+            <div class="dropdown-icon-container">
+              <span class="dropdown-icon-{{ section.id }}">▼</span>
+            </div>
           </div>
           
           <div class="dropdown-content-{{ section.id }}">
