@@ -663,7 +663,9 @@ document.addEventListener('DOMContentLoaded', function() {
         .grid__item .card, 
         .product-item, 
         [data-product-handle],
-        [data-product-id]
+        [data-product-id],
+        .card,
+        .card__inner
       `);
       
       let finalHtml = '';
@@ -675,9 +677,10 @@ document.addEventListener('DOMContentLoaded', function() {
             ${Array.from(productCards).map((card, index) => {
               // 标准化产品卡片
               const cleanCard = card.cloneNode(true);
-              // 清理样式和类
+              // 清理内联样式但保留原有类名
               cleanCard.style.cssText = '';
-              cleanCard.className = 'product-card-{{ section.id }}';
+              // 添加新的类名而不覆盖原有类名
+              cleanCard.classList.add('product-card-{{ section.id }}');
               // 移除可能冲突的属性
               cleanCard.removeAttribute('id');
               cleanCard.removeAttribute('style');
@@ -744,7 +747,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
     
-    const productCards = tempDiv.querySelectorAll('.card, .product-card, .grid__item');
+    const productCards = tempDiv.querySelectorAll('.card, .product-card, .grid__item, .card__inner');
     
     let finalHtml = '';
     
@@ -754,7 +757,8 @@ document.addEventListener('DOMContentLoaded', function() {
           ${Array.from(productCards).map(card => {
             const cleanCard = card.cloneNode(true);
             cleanCard.style.cssText = '';
-            cleanCard.className = 'product-card-{{ section.id }}';
+            // 保留原有类名，只添加新类名
+            cleanCard.classList.add('product-card-{{ section.id }}');
             return cleanCard.outerHTML;
           }).join('')}
         </div>
