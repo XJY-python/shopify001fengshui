@@ -17,6 +17,9 @@
           "settings": {
             "category_title": "金",
             "category_description": "我是金描述",
+            "category_image": "shopify://shop_images/13a26fd69b70d15db7e7c21b7f783427_360x_e3e03432-e2ec-4de5-a4fa-2a3078c28084.webp",
+            "image_width": 50,
+            "image_height": 50,
             "linked_collections": [
               "吊坠",
               "手链",
@@ -29,6 +32,8 @@
           "settings": {
             "category_title": "土",
             "category_description": "土查看热门商品",
+            "image_width": 60,
+            "image_height": 60,
             "linked_collections": [
               "吊坠",
               "手链",
@@ -41,6 +46,8 @@
           "settings": {
             "category_title": "新品上市",
             "category_description": "最新上架商品",
+            "image_width": 60,
+            "image_height": 60,
             "linked_collections": []
           }
         }
