@@ -85,7 +85,7 @@
       ],
       "name": "自定义菜单",
       "settings": {
-        "menu_width": 20,
+        "menu_width": 35,
         "product_width": 80,
         "columns_desktop": 4,
         "columns_mobile": 2,
