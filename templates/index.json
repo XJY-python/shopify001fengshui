@@ -15,8 +15,8 @@
         "menu_category_iENaHc": {
           "type": "menu_category",
           "settings": {
-            "category_title": "金",
-            "category_description": "我是金描述",
+            "category_title": "🔗 Metal",
+            "category_description": "Clear, sharp focus that values truth and lets go of the unnecessary.",
             "category_image": "shopify://shop_images/20250828-151213.png",
             "image_width": 50,
             "image_height": 50,
@@ -30,8 +30,8 @@
         "menu_category_NiyUnp": {
           "type": "menu_category",
           "settings": {
-            "category_title": "产品分类",
-            "category_description": "分类描述内容",
+            "category_title": "🌳 Wood",
+            "category_description": "New growth pushing upward—full of fresh starts and creative energy.",
             "category_image": "shopify://shop_images/20250828-151245.png",
             "image_width": 60,
             "image_height": 60,
@@ -41,8 +41,8 @@
         "menu_category_NzrTme": {
           "type": "menu_category",
           "settings": {
-            "category_title": "土",
-            "category_description": "土查看热门商品",
+            "category_title": "💧 Water",
+            "category_description": "Deep, intuitive flow that adapts and moves with quiet strength.",
             "category_image": "shopify://shop_images/20250828-151208.png",
             "image_width": 60,
             "image_height": 60,
@@ -56,8 +56,8 @@
         "menu_category_i78FYt": {
           "type": "menu_category",
           "settings": {
-            "category_title": "新品上市",
-            "category_description": "最新上架商品",
+            "category_title": "🔥 Fire",
+            "category_description": "Warm, bright passion that connects and energizes everyone around.",
             "category_image": "shopify://shop_images/20250828-151225.png",
             "image_width": 60,
             "image_height": 60,
@@ -67,8 +67,8 @@
         "menu_category_bkVk4W": {
           "type": "menu_category",
           "settings": {
-            "category_title": "产品分类",
-            "category_description": "分类描述内容",
+            "category_title": "🪨 Earth",
+            "category_description": "Grounded and nurturing—like coming home to warmth and stability.",
             "category_image": "shopify://shop_images/20250828-151236.png",
             "image_width": 60,
             "image_height": 60,
@@ -85,7 +85,7 @@
       ],
       "name": "自定义菜单",
       "settings": {
-        "menu_width": 20,
+        "menu_width": 35,
         "product_width": 80,
         "columns_desktop": 4,
         "columns_mobile": 2,
