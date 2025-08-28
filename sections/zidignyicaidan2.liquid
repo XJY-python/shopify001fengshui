@@ -655,17 +655,79 @@ document.addEventListener('DOMContentLoaded', function() {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
       
-      // 更精确和高效的选择器
-      const productCards = doc.querySelectorAll(`
-        .card-wrapper, 
-        .product-card, 
-        .grid__item .card, 
-        .product-item, 
-        [data-product-handle],
-        [data-product-id],
-        .card,
-        .card__inner
-      `);
+      // 更精确和高效的选择器 - 避免重复匹配
+      // 使用层级选择器确保只选择最外层的产品容器
+      let productCards = [];
+      
+      // 首先尝试选择最外层的产品容器
+      const cardWrappers = doc.querySelectorAll('.card-wrapper:not(.card-wrapper .card-wrapper)');
+      if (cardWrappers.length > 0) {
+        productCards = Array.from(cardWrappers);
+      } else {
+        // 如果没有找到card-wrapper，尝试其他选择器但避免重复
+        const allPossibleCards = doc.querySelectorAll(`
+          .product-card:not(.card-wrapper *),
+          .grid__item > .card:not(.card-wrapper *),
+          [data-product-handle]:not(.card-wrapper *),
+          [data-product-id]:not(.card-wrapper *),
+          .card:not(.card-wrapper *):not(.product-card *):not([data-product-handle] *):not([data-product-id] *)
+        `);
+        
+        // 使用更简单的方法去重 - 基于元素在DOM中的位置
+        const uniqueCards = [];
+        const seenElements = new Set();
+        
+        Array.from(allPossibleCards).forEach(card => {
+          // 检查这个元素是否已经是另一个选中元素的子元素
+          let isChildOfSelected = false;
+          for (const selectedCard of uniqueCards) {
+            if (selectedCard.contains(card)) {
+              isChildOfSelected = true;
+              break;
+            }
+          }
+          
+          // 检查这个元素是否包含其他已选中的元素
+          let containsSelected = false;
+          for (const selectedCard of uniqueCards) {
+            if (card.contains(selectedCard) && card !== selectedCard) {
+              containsSelected = true;
+              // 如果这个元素包含已选中的元素，移除已选中的元素
+              const index = uniqueCards.indexOf(selectedCard);
+              if (index > -1) {
+                uniqueCards.splice(index, 1);
+              }
+              break;
+            }
+          }
+          
+          if (!isChildOfSelected && !seenElements.has(card)) {
+            uniqueCards.push(card);
+            seenElements.add(card);
+          }
+        });
+        
+        productCards = uniqueCards;
+      }
+      
+      // 最终过滤：确保没有重复的产品
+      const finalProductCards = [];
+      const productIds = new Set();
+      
+      productCards.forEach(card => {
+        // 尝试获取产品ID
+        const productId = card.getAttribute('data-product-id') || 
+                         card.getAttribute('data-product-handle') ||
+                         card.querySelector('[data-product-id]')?.getAttribute('data-product-id') ||
+                         card.querySelector('[data-product-handle]')?.getAttribute('data-product-handle');
+        
+        if (!productId || !productIds.has(productId)) {
+          if (productId) productIds.add(productId);
+          finalProductCards.push(card);
+        }
+      });
+      
+      productCards = finalProductCards;
       
       let finalHtml = '';
       
