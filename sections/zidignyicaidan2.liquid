@@ -487,8 +487,8 @@
   <!-- 右侧产品展示面板 -->
   <div class="products-panel-{{ section.id }}">
     <div class="empty-state-{{ section.id }}">
-      <h3>请将鼠标悬停在左侧菜单上查看产品</h3>
-      <p>悬停在菜单分类上显示所有产品，悬停在具体系列上显示该系列产品</p>
+      <h3>请点击左侧菜单查看产品</h3>
+      <p>点击菜单分类显示所有产品，点击具体系列显示该系列产品</p>
     </div>
   </div>
 </div>
@@ -503,26 +503,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 初始化菜单交互
   function initMenuInteractions() {
-    // 菜单分类鼠标悬停事件 - 显示所有系列产品
+    // 菜单分类点击事件 - 显示所有系列产品
     menuCategories.forEach(category => {
-      category.addEventListener('mouseenter', function() {
+      category.addEventListener('click', function() {
         clearTimeout(hoverTimeout);
         loadAllProducts();
-      });
-
-      category.addEventListener('mouseleave', function() {
-        // 添加延迟，避免快速切换时的闪烁
-        hoverTimeout = setTimeout(() => {
-          // 鼠标离开分类时保持当前显示状态
-        }, 300);
+        
+        // 移除所有激活状态
+        document.querySelectorAll(`.collection-item-${sectionId}`).forEach(i => 
+          i.classList.remove('active')
+        );
       });
     });
 
-    // 系列项鼠标悬停事件 - 显示单个系列产品
+    // 系列项点击事件 - 显示单个系列产品
     menuCategories.forEach(category => {
       const collectionItems = category.querySelectorAll(`.collection-item-${sectionId}`);
       collectionItems.forEach(item => {
-        item.addEventListener('mouseenter', function(e) {
+        item.addEventListener('click', function(e) {
+          e.stopPropagation(); // 阻止事件冒泡到父元素
           clearTimeout(hoverTimeout);
           const collectionId = this.getAttribute('data-collection-id');
           const collectionHandle = this.getAttribute('data-collection-handle');
