@@ -596,16 +596,43 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // 创建产品网格
-    productsPanel.innerHTML = `
-      <div class="product-grid-${sectionId}">
-        ${html}
-      </div>
-    `;
+    // 清理HTML内容，确保格式正确
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    
+    // 获取所有产品卡片 - 更全面的选择器
+    const productCards = tempDiv.querySelectorAll('.card, .product-card, .grid__item, [class*="product"], [class*="card"], .product-item, .collection-product, .product-grid__item, .product-block');
+    
+    let finalHtml = '';
+    
+    // 如果找到产品卡片，重新包装它们
+    if (productCards.length > 0) {
+      finalHtml = `
+        <div class="product-grid-{{ section.id }}">
+          ${Array.from(productCards).map(card => {
+            // 清理卡片样式，确保统一显示
+            const cleanCard = card.cloneNode(true);
+            cleanCard.style.cssText = '';
+            cleanCard.className = 'product-card-{{ section.id }}';
+            return cleanCard.outerHTML;
+          }).join('')}
+        </div>
+      `;
+    } else {
+      // 如果没有找到特定卡片，直接使用原始HTML但确保有网格容器
+      finalHtml = `
+        <div class="product-grid-{{ section.id }}">
+          ${html}
+        </div>
+      `;
+    }
+
+    // 设置产品面板内容
+    productsPanel.innerHTML = finalHtml;
 
     // 添加产品卡片交互效果
-    const productCards = productsPanel.querySelectorAll(`.product-card-${sectionId}`);
-    productCards.forEach(card => {
+    const finalProductCards = productsPanel.querySelectorAll(`.product-card-{{ section.id }}`);
+    finalProductCards.forEach(card => {
       card.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-4px)';
         this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
