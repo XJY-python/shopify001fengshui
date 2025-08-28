@@ -144,6 +144,35 @@
         },
         {
           "type": "header",
+          "content": "菜单图片设置"
+        },
+        {
+          "type": "image_picker",
+          "id": "category_image",
+          "label": "菜单图片"
+        },
+        {
+          "type": "range",
+          "id": "image_width",
+          "label": "图片宽度",
+          "min": 20,
+          "max": 100,
+          "step": 5,
+          "default": 60,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "image_height",
+          "label": "图片高度",
+          "min": 20,
+          "max": 100,
+          "step": 5,
+          "default": 60,
+          "unit": "px"
+        },
+        {
+          "type": "header",
           "content": "产品系列配置"
         },
         {
@@ -239,6 +268,18 @@
   .category-header-content {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .category-image-{{ section.id }} {
+    width: {{ block.settings.image_width }}px;
+    height: {{ block.settings.image_height }}px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin: 0 auto;
   }
 
   .category-header-{{ section.id }} h3 {
@@ -453,6 +494,13 @@
         <div class="menu-category-{{ section.id }}" data-category="{{ block.id }}">
           <div class="category-header-{{ section.id }}">
             <div class="category-header-content">
+              {% if block.settings.category_image %}
+                <img class="category-image-{{ section.id }}" 
+                     src="{{ block.settings.category_image | img_url: 'medium' }}" 
+                     alt="{{ block.settings.category_title }}"
+                     width="{{ block.settings.image_width }}"
+                     height="{{ block.settings.image_height }}">
+              {% endif %}
               <h3>{{ block.settings.category_title }}</h3>
               <p>{{ block.settings.category_description }}</p>
             </div>
