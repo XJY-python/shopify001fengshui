@@ -35,7 +35,11 @@
             "category_image": "shopify://shop_images/20250828-151245.png",
             "image_width": 60,
             "image_height": 60,
-            "linked_collections": []
+            "linked_collections": [
+              "吊坠",
+              "手链",
+              "项链"
+            ]
           }
         },
         "menu_category_NzrTme": {
@@ -61,7 +65,11 @@
             "category_image": "shopify://shop_images/20250828-151225.png",
             "image_width": 60,
             "image_height": 60,
-            "linked_collections": []
+            "linked_collections": [
+              "吊坠",
+              "手链",
+              "项链"
+            ]
           }
         },
         "menu_category_bkVk4W": {
@@ -72,7 +80,11 @@
             "category_image": "shopify://shop_images/20250828-151236.png",
             "image_width": 60,
             "image_height": 60,
-            "linked_collections": []
+            "linked_collections": [
+              "吊坠",
+              "手链",
+              "项链"
+            ]
           }
         }
       },
