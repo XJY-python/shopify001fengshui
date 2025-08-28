@@ -27,9 +27,13 @@
         "menu_category_NzrTme": {
           "type": "menu_category",
           "settings": {
-            "category_title": "热门商品",
-            "category_description": "查看热门商品",
-            "linked_collections": []
+            "category_title": "土",
+            "category_description": "土查看热门商品",
+            "linked_collections": [
+              "吊坠",
+              "手链",
+              "项链"
+            ]
           }
         },
         "menu_category_i78FYt": {
