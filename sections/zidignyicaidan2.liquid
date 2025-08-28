@@ -456,12 +456,12 @@
     }
 
     .menu-panel-{{ section.id }} {
-      order: 2;
-      margin-top: 20px;
+      order: 1; /* 菜单在上面 */
+      margin-bottom: 20px;
     }
 
     .products-panel-{{ section.id }} {
-      order: 1;
+      order: 2; /* 产品在下面 */
       min-height: 300px;
     }
 
@@ -488,6 +488,21 @@
 
     .dropdown-content-{{ section.id }} {
       padding: 12px;
+    }
+
+    /* 移动端菜单项点击跳转 */
+    .collection-item-{{ section.id }} {
+      cursor: pointer;
+      text-align: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      transition: all 0.2s ease;
+    }
+
+    .collection-item-{{ section.id }}:hover,
+    .collection-item-{{ section.id }}:active {
+      background-color: #f8f8f8;
+      color: {{ section.settings.primary_color }};
     }
   }
 {%- endstyle -%}
@@ -590,17 +605,27 @@ document.addEventListener('DOMContentLoaded', function() {
           clearTimeout(hoverTimeout);
           const collectionId = this.getAttribute('data-collection-id');
           const collectionHandle = this.getAttribute('data-collection-handle');
-          loadSingleCollection(collectionId, collectionHandle);
           
-          // 设置激活状态
-          document.querySelectorAll(`.collection-item-${sectionId}`).forEach(i => 
-            i.classList.remove('active')
-          );
-          this.classList.add('active');
+          // 检查是否是移动设备
+          const isMobile = window.innerWidth <= 768;
           
-          // 设置父菜单分类为激活状态
-          menuCategories.forEach(cat => cat.classList.remove('active'));
-          category.classList.add('active');
+          if (isMobile) {
+            // 移动端：跳转到系列页面
+            window.location.href = `/collections/${collectionHandle}`;
+          } else {
+            // 桌面端：在当前页面加载系列产品
+            loadSingleCollection(collectionId, collectionHandle);
+            
+            // 设置激活状态
+            document.querySelectorAll(`.collection-item-${sectionId}`).forEach(i => 
+              i.classList.remove('active')
+            );
+            this.classList.add('active');
+            
+            // 设置父菜单分类为激活状态
+            menuCategories.forEach(cat => cat.classList.remove('active'));
+            category.classList.add('active');
+          }
         });
       });
     });
