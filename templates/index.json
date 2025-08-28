@@ -17,7 +17,7 @@
           "settings": {
             "category_title": "金",
             "category_description": "我是金描述",
-            "category_image": "shopify://shop_images/13a26fd69b70d15db7e7c21b7f783427_360x_e3e03432-e2ec-4de5-a4fa-2a3078c28084.webp",
+            "category_image": "shopify://shop_images/20250828-151213.png",
             "image_width": 50,
             "image_height": 50,
             "linked_collections": [
@@ -32,6 +32,7 @@
           "settings": {
             "category_title": "产品分类",
             "category_description": "分类描述内容",
+            "category_image": "shopify://shop_images/20250828-151245.png",
             "image_width": 60,
             "image_height": 60,
             "linked_collections": []
@@ -42,6 +43,7 @@
           "settings": {
             "category_title": "土",
             "category_description": "土查看热门商品",
+            "category_image": "shopify://shop_images/20250828-151208.png",
             "image_width": 60,
             "image_height": 60,
             "linked_collections": [
@@ -56,6 +58,18 @@
           "settings": {
             "category_title": "新品上市",
             "category_description": "最新上架商品",
+            "category_image": "shopify://shop_images/20250828-151225.png",
+            "image_width": 60,
+            "image_height": 60,
+            "linked_collections": []
+          }
+        },
+        "menu_category_bkVk4W": {
+          "type": "menu_category",
+          "settings": {
+            "category_title": "产品分类",
+            "category_description": "分类描述内容",
+            "category_image": "shopify://shop_images/20250828-151236.png",
             "image_width": 60,
             "image_height": 60,
             "linked_collections": []
@@ -66,7 +80,8 @@
         "menu_category_iENaHc",
         "menu_category_NiyUnp",
         "menu_category_NzrTme",
-        "menu_category_i78FYt"
+        "menu_category_i78FYt",
+        "menu_category_bkVk4W"
       ],
       "name": "自定义菜单",
       "settings": {
