@@ -9,44 +9,21 @@
  */
 {
   "sections": {
-    "zidignyicaidan2_zF8Pfd": {
-      "type": "zidignyicaidan2",
-      "blocks": {
-        "menu_category_BUrKiW": {
-          "type": "menu_category",
-          "settings": {
-            "category_title": "热门商品",
-            "category_description": "查看热门商品",
-            "linked_collections": []
-          }
-        },
-        "menu_category_iBjYAb": {
-          "type": "menu_category",
-          "settings": {
-            "category_title": "新品上市",
-            "category_description": "最新上架商品",
-            "linked_collections": []
-          }
-        }
-      },
-      "block_order": [
-        "menu_category_BUrKiW",
-        "menu_category_iBjYAb"
-      ],
-      "name": "自定义菜单",
-      "settings": {
-        "menu_width": 30,
-        "product_width": 70,
-        "primary_color": "#007bff",
-        "border_color": "#e1e1e1",
-        "background_color": "#f8f8f8",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "zidignyicaidan2_mc99Tz": {
       "type": "zidignyicaidan2",
       "blocks": {
+        "menu_category_iENaHc": {
+          "type": "menu_category",
+          "settings": {
+            "category_title": "金",
+            "category_description": "我是金描述",
+            "linked_collections": [
+              "吊坠",
+              "手链",
+              "项链"
+            ]
+          }
+        },
         "menu_category_NzrTme": {
           "type": "menu_category",
           "settings": {
@@ -65,23 +42,23 @@
         }
       },
       "block_order": [
+        "menu_category_iENaHc",
         "menu_category_NzrTme",
         "menu_category_i78FYt"
       ],
       "name": "自定义菜单",
       "settings": {
-        "menu_width": 30,
+        "menu_width": 25,
         "product_width": 70,
         "primary_color": "#007bff",
         "border_color": "#e1e1e1",
         "background_color": "#f8f8f8",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 40,
+        "padding_bottom": 20
       }
     }
   },
   "order": [
-    "zidignyicaidan2_zF8Pfd",
     "zidignyicaidan2_mc99Tz"
   ]
 }
