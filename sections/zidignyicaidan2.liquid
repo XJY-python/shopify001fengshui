@@ -280,10 +280,14 @@
   }
 
   .dropdown-content-{{ section.id }} {
-    display: block;
+    display: none;
     padding: 15px;
     border-top: 1px solid {{ section.settings.border_color }};
     background: white;
+  }
+
+  .menu-category-{{ section.id }}.active .dropdown-content-{{ section.id }} {
+    display: block;
   }
 
   .collection-list-{{ section.id }} {
