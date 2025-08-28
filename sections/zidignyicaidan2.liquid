@@ -505,19 +505,28 @@
       color: {{ section.settings.primary_color }};
     }
 
-    /* 置顶按钮样式 */
+  /* 置顶按钮样式 - 只在移动端显示 */
+  .sticky-header-{{ section.id }} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: white;
+    padding: 15px;
+    border-bottom: 2px solid {{ section.settings.primary_color }};
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: none; /* 默认隐藏 */
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  /* 桌面端隐藏置顶按钮 */
+  @media (min-width: 769px) {
     .sticky-header-{{ section.id }} {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: white;
-      padding: 15px;
-      border-bottom: 2px solid {{ section.settings.primary_color }};
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      display: none;
-      align-items: center;
-      justify-content: space-between;
+      display: none !important;
     }
+  }
 
     .sticky-header-{{ section.id }} .sticky-title {
       font-size: 18px;
@@ -656,7 +665,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // 设置置顶按钮标题
             stickyTitle.textContent = categoryTitle || '产品列表';
             
-            // 显示置顶按钮
+            // 立即显示置顶按钮（不等待滚动）
             stickyHeader.style.display = 'flex';
             
             // 滚动到产品面板
