@@ -504,10 +504,47 @@
       background-color: #f8f8f8;
       color: {{ section.settings.primary_color }};
     }
+
+    /* 置顶按钮样式 */
+    .sticky-header-{{ section.id }} {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: white;
+      padding: 15px;
+      border-bottom: 2px solid {{ section.settings.primary_color }};
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sticky-header-{{ section.id }} .sticky-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: {{ section.settings.primary_color }};
+      margin: 0;
+    }
+
+    .sticky-header-{{ section.id }} .back-button {
+      background: {{ section.settings.primary_color }};
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+    }
   }
 {%- endstyle -%}
 
 <div class="custom-menu-section-{{ section.id }}">
+  <!-- 置顶按钮 - 移动端使用 -->
+  <div class="sticky-header-{{ section.id }}" id="sticky-header-{{ section.id }}">
+    <h3 class="sticky-title"></h3>
+    <button class="back-button" onclick="backToMenuList()">返回列表</button>
+  </div>
+
   <!-- 左侧菜单面板 -->
   <div class="menu-panel-{{ section.id }}">
     {% for block in section.blocks %}
@@ -538,7 +575,8 @@
                 {% for collection in block.settings.linked_collections %}
                   <li class="collection-item-{{ section.id }}" 
                       data-collection-id="{{ collection.id }}"
-                      data-collection-handle="{{ collection.handle }}">
+                      data-collection-handle="{{ collection.handle }}"
+                      data-category-title="{{ block.settings.category_title }}">
                     {{ collection.title }}
                   </li>
                 {% endfor %}
@@ -605,13 +643,32 @@ document.addEventListener('DOMContentLoaded', function() {
           clearTimeout(hoverTimeout);
           const collectionId = this.getAttribute('data-collection-id');
           const collectionHandle = this.getAttribute('data-collection-handle');
+          const categoryTitle = this.getAttribute('data-category-title');
           
           // 检查是否是移动设备
           const isMobile = window.innerWidth <= 768;
           
           if (isMobile) {
-            // 移动端：跳转到系列页面
-            window.location.href = `/collections/${collectionHandle}`;
+            // 移动端：显示置顶按钮并滚动到产品面板
+            const stickyHeader = document.getElementById(`sticky-header-${sectionId}`);
+            const stickyTitle = stickyHeader.querySelector('.sticky-title');
+            
+            // 设置置顶按钮标题
+            stickyTitle.textContent = categoryTitle || '产品列表';
+            
+            // 显示置顶按钮
+            stickyHeader.style.display = 'flex';
+            
+            // 滚动到产品面板
+            const productsPanel = document.querySelector(`.products-panel-${sectionId}`);
+            if (productsPanel) {
+              productsPanel.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+            // 加载系列产品
+            loadSingleCollection(collectionId, collectionHandle);
           } else {
             // 桌面端：在当前页面加载系列产品
             loadSingleCollection(collectionId, collectionHandle);
@@ -937,6 +994,18 @@ document.addEventListener('DOMContentLoaded', function() {
   // 初始化
   initMenuInteractions();
 });
+
+// 返回菜单列表函数
+function backToMenuList() {
+  const stickyHeader = document.getElementById(`sticky-header-{{ section.id }}`);
+  stickyHeader.style.display = 'none';
+  
+  // 滚动回顶部
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
 
 // 添加CSS动画
 const style = document.createElement('style');
