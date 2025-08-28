@@ -236,14 +236,10 @@
   }
 
   .dropdown-content-{{ section.id }} {
-    display: none;
+    display: block;
     padding: 15px;
     border-top: 1px solid {{ section.settings.border_color }};
     background: white;
-  }
-
-  .menu-category-{{ section.id }}.active .dropdown-content-{{ section.id }} {
-    display: block;
   }
 
   .collection-list-{{ section.id }} {
@@ -435,8 +431,8 @@
   <!-- 右侧产品展示面板 -->
   <div class="products-panel-{{ section.id }}">
     <div class="empty-state-{{ section.id }}">
-      <h3>请选择左侧分类查看产品</h3>
-      <p>点击菜单分类展开下拉列表，选择产品系列查看详情</p>
+      <h3>请将鼠标悬停在左侧菜单上查看产品</h3>
+      <p>悬停在菜单分类上显示所有产品，悬停在具体系列上显示该系列产品</p>
     </div>
   </div>
 </div>
@@ -446,76 +442,111 @@ document.addEventListener('DOMContentLoaded', function() {
   const sectionId = '{{ section.id }}';
   const menuCategories = document.querySelectorAll(`.menu-category-${sectionId}`);
   const productsPanel = document.querySelector(`.products-panel-${sectionId}`);
-  let activeCategory = null;
-  let activeCollection = null;
+  let allProductsData = null;
+  let hoverTimeout = null;
 
   // 初始化菜单交互
   function initMenuInteractions() {
-    // 菜单分类点击事件
+    // 菜单分类鼠标悬停事件 - 显示所有系列产品
     menuCategories.forEach(category => {
-      const header = category.querySelector(`.category-header-${sectionId}`);
-      
-      header.addEventListener('click', function(e) {
-        e.stopPropagation();
-        toggleCategory(category);
+      category.addEventListener('mouseenter', function() {
+        clearTimeout(hoverTimeout);
+        loadAllProducts();
       });
 
-      // 系列项点击事件
+      category.addEventListener('mouseleave', function() {
+        // 添加延迟，避免快速切换时的闪烁
+        hoverTimeout = setTimeout(() => {
+          // 鼠标离开分类时保持当前显示状态
+        }, 300);
+      });
+    });
+
+    // 系列项鼠标悬停事件 - 显示单个系列产品
+    menuCategories.forEach(category => {
       const collectionItems = category.querySelectorAll(`.collection-item-${sectionId}`);
       collectionItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-          e.stopPropagation();
+        item.addEventListener('mouseenter', function(e) {
+          clearTimeout(hoverTimeout);
           const collectionId = this.getAttribute('data-collection-id');
           const collectionHandle = this.getAttribute('data-collection-handle');
-          loadProducts(collectionId, collectionHandle);
+          loadSingleCollection(collectionId, collectionHandle);
           
           // 设置激活状态
-          collectionItems.forEach(i => i.classList.remove('active'));
+          document.querySelectorAll(`.collection-item-${sectionId}`).forEach(i => 
+            i.classList.remove('active')
+          );
           this.classList.add('active');
-          activeCollection = this;
         });
       });
     });
 
-    // 点击外部关闭下拉菜单
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest(`.menu-category-${sectionId}`)) {
-        menuCategories.forEach(category => {
-          category.classList.remove('active');
-        });
-      }
-    });
+    // 默认加载所有产品
+    setTimeout(() => {
+      loadAllProducts();
+    }, 500);
   }
 
-  // 切换分类展开/收起
-  function toggleCategory(category) {
-    const isActive = category.classList.contains('active');
-    
-    // 关闭其他分类
-    menuCategories.forEach(cat => {
-      if (cat !== category) {
-        cat.classList.remove('active');
-      }
-    });
-
-    // 切换当前分类
-    if (isActive) {
-      category.classList.remove('active');
-    } else {
-      category.classList.add('active');
-      activeCategory = category;
+  // 加载所有系列的产品
+  function loadAllProducts() {
+    if (allProductsData) {
+      displayProducts(allProductsData);
+      return;
     }
+
+    // 显示加载状态
+    productsPanel.innerHTML = `
+      <div class="loading-${sectionId}">
+        <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
+        <p>正在加载所有产品...</p>
+      </div>
+    `;
+
+    // 收集所有系列的产品
+    const allCollections = [];
+    menuCategories.forEach(category => {
+      const collectionItems = category.querySelectorAll(`.collection-item-${sectionId}`);
+      collectionItems.forEach(item => {
+        const collectionHandle = item.getAttribute('data-collection-handle');
+        if (collectionHandle) {
+          allCollections.push(collectionHandle);
+        }
+      });
+    });
+
+    if (allCollections.length === 0) {
+      showEmptyState();
+      return;
+    }
+
+    // 并行加载所有系列的产品
+    const promises = allCollections.map(handle => 
+      fetch(`/collections/${handle}?view=ajax-products`)
+        .then(response => response.ok ? response.text() : '')
+        .catch(() => '')
+    );
+
+    Promise.all(promises)
+      .then(results => {
+        const combinedHtml = results.filter(html => html.trim()).join('');
+        allProductsData = combinedHtml;
+        displayProducts(combinedHtml);
+      })
+      .catch(error => {
+        console.error('加载所有产品错误:', error);
+        showErrorState();
+      });
   }
 
-  // 加载产品数据
-  function loadProducts(collectionId, collectionHandle) {
+  // 加载单个系列的产品
+  function loadSingleCollection(collectionId, collectionHandle) {
     if (!collectionHandle) return;
     
     // 显示加载状态
     productsPanel.innerHTML = `
       <div class="loading-${sectionId}">
         <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
-        <p>正在加载产品...</p>
+        <p>正在加载系列产品...</p>
       </div>
     `;
 
@@ -529,27 +560,37 @@ document.addEventListener('DOMContentLoaded', function() {
         displayProducts(html);
       })
       .catch(error => {
-        console.error('加载产品错误:', error);
-        productsPanel.innerHTML = `
-          <div class="empty-state-${sectionId}">
-            <div style="font-size: 24px; margin-bottom: 10px;">❌</div>
-            <h3>加载失败</h3>
-            <p>无法加载产品数据，请稍后重试</p>
-          </div>
-        `;
+        console.error('加载系列产品错误:', error);
+        showErrorState();
       });
+  }
+
+  // 显示错误状态
+  function showErrorState() {
+    productsPanel.innerHTML = `
+      <div class="empty-state-${sectionId}">
+        <div style="font-size: 24px; margin-bottom: 10px;">❌</div>
+        <h3>加载失败</h3>
+        <p>无法加载产品数据，请稍后重试</p>
+      </div>
+    `;
+  }
+
+  // 显示空状态
+  function showEmptyState() {
+    productsPanel.innerHTML = `
+      <div class="empty-state-${sectionId}">
+        <div style="font-size: 24px; margin-bottom: 10px;">📦</div>
+        <h3>暂无产品</h3>
+        <p>请先配置产品系列</p>
+      </div>
+    `;
   }
 
   // 显示产品
   function displayProducts(html) {
     if (!html || html.trim() === '') {
-      productsPanel.innerHTML = `
-        <div class="empty-state-${sectionId}">
-          <div style="font-size: 24px; margin-bottom: 10px;">📦</div>
-          <h3>暂无产品</h3>
-          <p>该系列暂无产品</p>
-        </div>
-      `;
+      showEmptyState();
       return;
     }
 
@@ -577,19 +618,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 初始化
   initMenuInteractions();
-
-  // 默认展开第一个分类（如果有）
-  if (menuCategories.length > 0) {
-    const firstCategory = menuCategories[0];
-    const firstCollection = firstCategory.querySelector(`.collection-item-${sectionId}`);
-    
-    if (firstCollection) {
-      setTimeout(() => {
-        toggleCategory(firstCategory);
-        firstCollection.click();
-      }, 100);
-    }
-  }
 });
 
 // 添加CSS动画
@@ -610,6 +638,19 @@ style.textContent = `
   .product-card-{{ section.id }}:nth-child(4) { animation-delay: 0.4s; }
   .product-card-{{ section.id }}:nth-child(5) { animation-delay: 0.5s; }
   .product-card-{{ section.id }}:nth-child(6) { animation-delay: 0.6s; }
+  
+  /* 悬停效果增强 */
+  .collection-item-{{ section.id }}:hover {
+    background-color: #f8f8f8;
+    transform: translateX(5px);
+    transition: all 0.2s ease;
+  }
+  
+  .collection-item-{{ section.id }}.active {
+    background-color: #e3f2fd;
+    color: {{ section.settings.primary_color }};
+    font-weight: 600;
+  }
 `;
 document.head.appendChild(style);
 </script>
