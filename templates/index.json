@@ -53,8 +53,8 @@
       "name": "自定义菜单",
       "settings": {
         "menu_width": 20,
-        "product_width": 65,
-        "columns_desktop": 5,
+        "product_width": 80,
+        "columns_desktop": 3,
         "columns_mobile": 2,
         "rows_desktop": 8,
         "rows_mobile": 1,
