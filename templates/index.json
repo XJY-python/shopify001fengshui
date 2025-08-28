@@ -102,7 +102,7 @@
         "columns_desktop": 4,
         "columns_mobile": 1,
         "rows_desktop": 4,
-        "rows_mobile": 1,
+        "rows_mobile": 3,
         "primary_color": "#7d9cfd",
         "border_color": "#ffffff",
         "background_color": "#fafafa",
