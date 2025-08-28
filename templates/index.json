@@ -27,6 +27,16 @@
             ]
           }
         },
+        "menu_category_NiyUnp": {
+          "type": "menu_category",
+          "settings": {
+            "category_title": "产品分类",
+            "category_description": "分类描述内容",
+            "image_width": 60,
+            "image_height": 60,
+            "linked_collections": []
+          }
+        },
         "menu_category_NzrTme": {
           "type": "menu_category",
           "settings": {
@@ -54,6 +64,7 @@
       },
       "block_order": [
         "menu_category_iENaHc",
+        "menu_category_NiyUnp",
         "menu_category_NzrTme",
         "menu_category_i78FYt"
       ],
