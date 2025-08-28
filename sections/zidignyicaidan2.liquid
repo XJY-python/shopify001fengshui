@@ -516,6 +516,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll(`.collection-item-${sectionId}`).forEach(i => 
           i.classList.remove('active')
         );
+        
+        // 移除所有菜单分类的激活状态
+        menuCategories.forEach(cat => cat.classList.remove('active'));
+        // 设置当前菜单分类为激活状态
+        this.classList.add('active');
       });
     });
 
@@ -535,6 +540,10 @@ document.addEventListener('DOMContentLoaded', function() {
             i.classList.remove('active')
           );
           this.classList.add('active');
+          
+          // 设置父菜单分类为激活状态
+          menuCategories.forEach(cat => cat.classList.remove('active'));
+          category.classList.add('active');
         });
       });
     });
@@ -542,6 +551,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // 默认加载所有产品
     setTimeout(() => {
       loadAllProducts();
+      // 默认激活第一个菜单分类
+      if (menuCategories.length > 0) {
+        menuCategories[0].classList.add('active');
+      }
     }, 500);
   }
 
