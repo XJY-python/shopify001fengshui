@@ -9,22 +9,18 @@
  */
 {
   "sections": {
-    "zidignyicaidan2_9PHemj": {
+    "zidignyicaidan2_zF8Pfd": {
       "type": "zidignyicaidan2",
       "blocks": {
-        "menu_category_3GEzwQ": {
+        "menu_category_BUrKiW": {
           "type": "menu_category",
           "settings": {
             "category_title": "热门商品",
             "category_description": "查看热门商品",
-            "linked_collections": [
-              "吊坠",
-              "手链",
-              "项链"
-            ]
+            "linked_collections": []
           }
         },
-        "menu_category_JzwR9A": {
+        "menu_category_iBjYAb": {
           "type": "menu_category",
           "settings": {
             "category_title": "新品上市",
@@ -34,8 +30,43 @@
         }
       },
       "block_order": [
-        "menu_category_3GEzwQ",
-        "menu_category_JzwR9A"
+        "menu_category_BUrKiW",
+        "menu_category_iBjYAb"
+      ],
+      "name": "自定义菜单",
+      "settings": {
+        "menu_width": 30,
+        "product_width": 70,
+        "primary_color": "#007bff",
+        "border_color": "#e1e1e1",
+        "background_color": "#f8f8f8",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "zidignyicaidan2_mc99Tz": {
+      "type": "zidignyicaidan2",
+      "blocks": {
+        "menu_category_NzrTme": {
+          "type": "menu_category",
+          "settings": {
+            "category_title": "热门商品",
+            "category_description": "查看热门商品",
+            "linked_collections": []
+          }
+        },
+        "menu_category_i78FYt": {
+          "type": "menu_category",
+          "settings": {
+            "category_title": "新品上市",
+            "category_description": "最新上架商品",
+            "linked_collections": []
+          }
+        }
+      },
+      "block_order": [
+        "menu_category_NzrTme",
+        "menu_category_i78FYt"
       ],
       "name": "自定义菜单",
       "settings": {
@@ -50,6 +81,7 @@
     }
   },
   "order": [
-    "zidignyicaidan2_9PHemj"
+    "zidignyicaidan2_zF8Pfd",
+    "zidignyicaidan2_mc99Tz"
   ]
 }
