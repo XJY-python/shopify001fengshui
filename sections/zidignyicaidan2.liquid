@@ -551,7 +551,7 @@
   <!-- 置顶按钮 - 移动端使用 -->
   <div class="sticky-header-{{ section.id }}" id="sticky-header-{{ section.id }}">
     <h3 class="sticky-title"></h3>
-    <button class="back-button" onclick="backToMenuList()">返回列表</button>
+  <button class="back-button" onclick="backToMenuList()">Back to List</button>
   </div>
 
   <!-- 左侧菜单面板 -->
@@ -590,8 +590,8 @@
                   </li>
                 {% endfor %}
               </ul>
-            {% else %}
-              <p class="empty-state-{{ section.id }}">未关联任何产品系列</p>
+    {% else %}
+      <p class="empty-state-{{ section.id }}">No collections linked</p>
             {% endif %}
           </div>
         </div>
@@ -600,8 +600,8 @@
     
     {% if section.blocks.size == 0 %}
       <div class="empty-state-{{ section.id }}">
-        <h3>请添加菜单分类</h3>
-        <p>在主题编辑器中点击"添加内容"来创建菜单分类</p>
+        <h3>Please add menu categories</h3>
+        <p>Click "Add content" in the theme editor to create menu categories</p>
       </div>
     {% endif %}
   </div>
@@ -609,8 +609,8 @@
   <!-- 右侧产品展示面板 -->
   <div class="products-panel-{{ section.id }}">
     <div class="empty-state-{{ section.id }}">
-      <h3>请点击左侧菜单查看产品</h3>
-      <p>点击菜单分类显示所有产品，点击具体系列显示该系列产品</p>
+      <h3>Please click on the left menu to view products</h3>
+      <p>Click menu categories to show all products, click specific collections to show collection products</p>
     </div>
   </div>
 </div>
@@ -663,7 +663,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const stickyTitle = stickyHeader.querySelector('.sticky-title');
             
             // 设置置顶按钮标题
-            stickyTitle.textContent = categoryTitle || '产品列表';
+            stickyTitle.textContent = categoryTitle || 'Product List';
             
             // 立即显示置顶按钮（不等待滚动）
             stickyHeader.style.display = 'flex';
@@ -717,7 +717,7 @@ document.addEventListener('DOMContentLoaded', function() {
     productsPanel.innerHTML = `
       <div class="loading-${sectionId}">
         <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
-        <p>正在加载所有产品...</p>
+        <p>Loading all products...</p>
       </div>
     `;
 
@@ -765,7 +765,7 @@ document.addEventListener('DOMContentLoaded', function() {
     productsPanel.innerHTML = `
       <div class="loading-${sectionId}">
         <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
-        <p>正在加载系列产品...</p>
+        <p>Loading collection products...</p>
       </div>
     `;
 
@@ -789,8 +789,8 @@ document.addEventListener('DOMContentLoaded', function() {
     productsPanel.innerHTML = `
       <div class="empty-state-${sectionId}">
         <div style="font-size: 24px; margin-bottom: 10px;">❌</div>
-        <h3>加载失败</h3>
-        <p>无法加载产品数据，请稍后重试</p>
+        <h3>Load Failed</h3>
+        <p>Unable to load product data, please try again later</p>
       </div>
     `;
   }
@@ -800,8 +800,8 @@ document.addEventListener('DOMContentLoaded', function() {
     productsPanel.innerHTML = `
       <div class="empty-state-${sectionId}">
         <div style="font-size: 24px; margin-bottom: 10px;">📦</div>
-        <h3>暂无产品</h3>
-        <p>请先配置产品系列</p>
+        <h3>No Products</h3>
+        <p>Please configure product collections first</p>
       </div>
     `;
   }
