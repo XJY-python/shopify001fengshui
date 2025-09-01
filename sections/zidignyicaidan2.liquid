@@ -883,10 +883,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const newProductGrid = document.createElement('div');
     newProductGrid.className = 'product-grid-{{ section.id }}';
     
-    // 处理每个产品卡片 - 使用更精确的选择器
-    const productCards = productGrid.querySelectorAll('.grid__item:not(.grid__item--no-result), .card:not(.card--no-result), .product-card, .card-wrapper, [data-product-handle]');
+    // 使用更精确的产品选择器 - 只选择真正的产品卡片
+    // 优先选择具有产品数据属性的元素，避免选择重复的卡片
+    let productCards = productGrid.querySelectorAll('[data-product-id], [data-product-handle], [data-product-url]');
     
-    console.log('Found', productCards.length, 'product cards');
+    // 如果没有找到，尝试其他常见的选择器
+    if (productCards.length === 0) {
+      productCards = productGrid.querySelectorAll('.grid__item:not(.grid__item--no-result), .card:not(.card--no-result), .product-card, .card-wrapper');
+    }
+    
+    console.log('Found', productCards.length, 'potential product cards');
     
     if (productCards.length === 0) {
       showEmptyState();
@@ -895,27 +901,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 使用Set来跟踪已处理的产品，避免重复
     const processedProducts = new Set();
+    const uniqueProductCards = [];
     
-    productCards.forEach((card, index) => {
+    // 首先过滤出唯一的产品卡片
+    productCards.forEach((card) => {
       // 获取产品的唯一标识 - 优先使用data-product-handle
       const productHandle = card.getAttribute('data-product-handle') || 
                            card.querySelector('[data-product-handle]')?.getAttribute('data-product-handle');
       const productId = card.getAttribute('data-product-id') || 
                         card.querySelector('[data-product-id]')?.getAttribute('data-product-id');
-      const productUrl = card.querySelector('a')?.href;
+      const productUrl = card.querySelector('a[href*="/products/"]')?.href;
       
-      // 使用产品handle作为唯一标识，如果没有则使用ID，最后使用URL
-      const uniqueId = productHandle || productId || productUrl || card.textContent.trim();
+      // 使用产品handle作为主要唯一标识
+      const uniqueId = productHandle || productId || productUrl;
       
-      console.log('Processing product', index, 'uniqueId:', uniqueId);
+      if (!uniqueId) {
+        console.log('Skipping card without unique identifier:', card);
+        return;
+      }
       
       // 如果这个产品已经处理过，跳过
       if (processedProducts.has(uniqueId)) {
         console.log('Skipping duplicate product:', uniqueId);
         return;
       }
-      processedProducts.add(uniqueId);
       
+      processedProducts.add(uniqueId);
+      uniqueProductCards.push(card);
+    });
+
+    console.log('After deduplication:', uniqueProductCards.length, 'unique products');
+    
+    // 处理每个唯一的产品卡片
+    uniqueProductCards.forEach((card, index) => {
       const newCard = document.createElement('div');
       newCard.className = 'product-card-{{ section.id }}';
       
@@ -962,7 +980,7 @@ document.addEventListener('DOMContentLoaded', function() {
       newProductGrid.appendChild(newCard);
     });
 
-    console.log('Displaying', processedProducts.size, 'unique products');
+    console.log('Displaying', uniqueProductCards.length, 'unique products');
     
     // 使用requestAnimationFrame提高性能
     requestAnimationFrame(() => {
