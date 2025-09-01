@@ -377,15 +377,6 @@
     margin: 0;
   }
 
-  .product-card-{{ section.id }} {
-    border: 1px solid #f0f0f0;
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    transition: all 0.3s ease;
-    background: white;
-  }
-
   .product-card-{{ section.id }}:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -621,190 +612,37 @@
 </div>
 
 <script>
+// 性能优化版本 - 减少DOM操作，优化AJAX请求，简化产品显示逻辑
 document.addEventListener('DOMContentLoaded', function() {
   const sectionId = '{{ section.id }}';
-  const menuCategories = document.querySelectorAll(`.menu-category-${sectionId}`);
   const productsPanel = document.querySelector(`.products-panel-${sectionId}`);
   let allProductsData = null;
-  let hoverTimeout = null;
+  let isProcessing = false;
+  let activeRequest = null;
 
-  // 确保桌面端隐藏置顶按钮 - 使用主题标准断点
-  function ensureDesktopHidden() {
-    const stickyHeader = document.getElementById(`sticky-header-${sectionId}`);
-    if (window.innerWidth > 749) {
-      stickyHeader.style.display = 'none';
-      stickyHeader.style.visibility = 'hidden';
-      stickyHeader.style.opacity = '0';
-      stickyHeader.style.height = '0';
-      stickyHeader.style.overflow = 'hidden';
+  // 缓存DOM元素引用
+  const cachedElements = {
+    stickyHeader: document.getElementById(`sticky-header-${sectionId}`),
+    menuCategories: document.querySelectorAll(`.menu-category-${sectionId}`),
+    collectionItems: document.querySelectorAll(`.collection-item-${sectionId}`)
+  };
+
+  // 取消当前正在进行的请求
+  function cancelActiveRequest() {
+    if (activeRequest) {
+      activeRequest.abort();
+      activeRequest = null;
     }
   }
 
-  // 初始化菜单交互
-  function initMenuInteractions() {
-    // 确保桌面端隐藏置顶按钮
-    ensureDesktopHidden();
-    
-    // 监听窗口大小变化
-    window.addEventListener('resize', ensureDesktopHidden);
-    
-    // 菜单分类点击事件 - 显示所有系列产品
-    menuCategories.forEach(category => {
-      category.addEventListener('click', function() {
-        clearTimeout(hoverTimeout);
-        loadAllProducts();
-        
-        // 移除所有激活状态
-        document.querySelectorAll(`.collection-item-${sectionId}`).forEach(i => 
-          i.classList.remove('active')
-        );
-        
-        // 移除所有菜单分类的激活状态
-        menuCategories.forEach(cat => cat.classList.remove('active'));
-        // 设置当前菜单分类为激活状态
-        this.classList.add('active');
-      });
-    });
-
-    // 系列项点击事件 - 显示单个系列产品
-    menuCategories.forEach(category => {
-      const collectionItems = category.querySelectorAll(`.collection-item-${sectionId}`);
-      collectionItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-          e.stopPropagation(); // 阻止事件冒泡到父元素
-          clearTimeout(hoverTimeout);
-          const collectionId = this.getAttribute('data-collection-id');
-          const collectionHandle = this.getAttribute('data-collection-handle');
-          const categoryTitle = this.getAttribute('data-category-title');
-          
-          // 检查是否是移动设备 - 使用主题标准断点749px
-          const isMobile = window.innerWidth <= 749;
-          
-          if (isMobile) {
-            // 移动端：显示置顶按钮并滚动到产品面板
-            const stickyHeader = document.getElementById(`sticky-header-${sectionId}`);
-            const stickyTitle = stickyHeader.querySelector('.sticky-title');
-            
-            // 设置置顶按钮标题
-            stickyTitle.textContent = categoryTitle || 'Product List';
-            
-            // 立即显示置顶按钮（不等待滚动）
-            stickyHeader.style.display = 'flex';
-            
-            // 滚动到产品面板
-            const productsPanel = document.querySelector(`.products-panel-${sectionId}`);
-            if (productsPanel) {
-              productsPanel.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }
-            // 加载系列产品
-            loadSingleCollection(collectionId, collectionHandle);
-          } else {
-            // 桌面端：在当前页面加载系列产品
-            loadSingleCollection(collectionId, collectionHandle);
-            
-            // 设置激活状态
-            document.querySelectorAll(`.collection-item-${sectionId}`).forEach(i => 
-              i.classList.remove('active')
-            );
-            this.classList.add('active');
-            
-            // 设置父菜单分类为激活状态
-            menuCategories.forEach(cat => cat.classList.remove('active'));
-            category.classList.add('active');
-          }
-        });
-      });
-    });
-
-    // 默认加载所有产品
-    setTimeout(() => {
-      loadAllProducts();
-      // 默认激活第一个菜单分类
-      if (menuCategories.length > 0) {
-        menuCategories[0].classList.add('active');
-      }
-    }, 500);
-  }
-
-  // 加载所有系列的产品
-  function loadAllProducts() {
-    if (allProductsData) {
-      displayProducts(allProductsData);
-      return;
-    }
-
-    // 显示加载状态
+  // 显示加载状态
+  function showLoadingState(message = 'Loading products...') {
     productsPanel.innerHTML = `
       <div class="loading-${sectionId}">
         <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
-        <p>Loading all products...</p>
+        <p>${message}</p>
       </div>
     `;
-
-    // 收集所有系列的产品
-    const allCollections = [];
-    menuCategories.forEach(category => {
-      const collectionItems = category.querySelectorAll(`.collection-item-${sectionId}`);
-      collectionItems.forEach(item => {
-        const collectionHandle = item.getAttribute('data-collection-handle');
-        if (collectionHandle) {
-          allCollections.push(collectionHandle);
-        }
-      });
-    });
-
-    if (allCollections.length === 0) {
-      showEmptyState();
-      return;
-    }
-
-    // 并行加载所有系列的产品
-    const promises = allCollections.map(handle => 
-      fetch(`/collections/${handle}?view=ajax-products`)
-        .then(response => response.ok ? response.text() : '')
-        .catch(() => '')
-    );
-
-    Promise.all(promises)
-      .then(results => {
-        const combinedHtml = results.filter(html => html.trim()).join('');
-        allProductsData = combinedHtml;
-        displayProducts(combinedHtml);
-      })
-      .catch(error => {
-        console.error('加载所有产品错误:', error);
-        showErrorState();
-      });
-  }
-
-  // 加载单个系列的产品
-  function loadSingleCollection(collectionId, collectionHandle) {
-    if (!collectionHandle) return;
-    
-    // 显示加载状态
-    productsPanel.innerHTML = `
-      <div class="loading-${sectionId}">
-        <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
-        <p>Loading collection products...</p>
-      </div>
-    `;
-
-    // 使用Shopify AJAX API获取产品数据
-    fetch(`/collections/${collectionHandle}?view=ajax-products`)
-      .then(response => {
-        if (!response.ok) throw new Error('网络响应错误');
-        return response.text();
-      })
-      .then(html => {
-        displayProducts(html);
-      })
-      .catch(error => {
-        console.error('加载系列产品错误:', error);
-        showErrorState();
-      });
   }
 
   // 显示错误状态
@@ -829,208 +667,238 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
   }
 
-  // 显示产品 - 优化版本
+  // 性能优化：使用事件委托
+  function setupEventDelegation() {
+    const menuPanel = document.querySelector(`.menu-panel-${sectionId}`);
+    if (!menuPanel) return;
+
+    menuPanel.addEventListener('click', function(e) {
+      if (isProcessing) return;
+      
+      const target = e.target;
+      const category = target.closest(`.menu-category-${sectionId}`);
+      const collectionItem = target.closest(`.collection-item-${sectionId}`);
+      
+      if (category) {
+        e.preventDefault();
+        handleCategoryClick(category);
+      } else if (collectionItem) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleCollectionClick(collectionItem);
+      }
+    });
+  }
+
+  // 处理分类点击
+  function handleCategoryClick(category) {
+    cancelActiveRequest();
+    isProcessing = true;
+    
+    // 更新激活状态
+    cachedElements.menuCategories.forEach(cat => cat.classList.remove('active'));
+    category.classList.add('active');
+    
+    // 移除所有系列项的激活状态
+    cachedElements.collectionItems.forEach(item => item.classList.remove('active'));
+    
+    loadAllProducts();
+  }
+
+  // 处理系列点击
+  function handleCollectionClick(collectionItem) {
+    cancelActiveRequest();
+    isProcessing = true;
+    
+    const collectionHandle = collectionItem.getAttribute('data-collection-handle');
+    const categoryTitle = collectionItem.getAttribute('data-category-title');
+    
+    if (!collectionHandle) {
+      showEmptyState();
+      isProcessing = false;
+      return;
+    }
+
+    // 更新激活状态
+    cachedElements.collectionItems.forEach(item => item.classList.remove('active'));
+    collectionItem.classList.add('active');
+    
+    // 设置父分类为激活状态
+    const parentCategory = collectionItem.closest(`.menu-category-${sectionId}`);
+    if (parentCategory) {
+      cachedElements.menuCategories.forEach(cat => cat.classList.remove('active'));
+      parentCategory.classList.add('active');
+    }
+
+    // 检查是否是移动设备
+    const isMobile = window.innerWidth <= 749;
+    
+    if (isMobile) {
+      // 移动端：显示置顶按钮
+      const stickyTitle = cachedElements.stickyHeader.querySelector('.sticky-title');
+      stickyTitle.textContent = categoryTitle || 'Product List';
+      cachedElements.stickyHeader.style.display = 'flex';
+      
+      // 滚动到产品面板
+      productsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    
+    loadSingleCollection(collectionHandle);
+  }
+
+  // 加载所有系列的产品（优化版本）
+  function loadAllProducts() {
+    if (allProductsData) {
+      displayProducts(allProductsData);
+      isProcessing = false;
+      return;
+    }
+
+    showLoadingState('Loading all products...');
+
+    // 收集所有系列句柄
+    const collectionHandles = [];
+    cachedElements.collectionItems.forEach(item => {
+      const handle = item.getAttribute('data-collection-handle');
+      if (handle) collectionHandles.push(handle);
+    });
+
+    if (collectionHandles.length === 0) {
+      showEmptyState();
+      isProcessing = false;
+      return;
+    }
+
+    // 限制并发请求数量（最多3个）
+    const MAX_CONCURRENT_REQUESTS = 3;
+    const results = new Array(collectionHandles.length).fill('');
+    let completed = 0;
+
+    function processBatch(startIndex) {
+      const batch = collectionHandles.slice(startIndex, startIndex + MAX_CONCURRENT_REQUESTS);
+      const promises = batch.map((handle, index) => 
+        fetch(`/collections/${handle}?view=ajax-products`)
+          .then(response => response.ok ? response.text() : '')
+          .then(html => {
+            results[startIndex + index] = html;
+            completed++;
+            
+            // 更新进度
+            if (completed % 2 === 0) { // 每完成2个请求更新一次进度
+              const progress = Math.round((completed / collectionHandles.length) * 100);
+              showLoadingState(`Loading all products... ${progress}%`);
+            }
+          })
+          .catch(() => '')
+      );
+
+      return Promise.all(promises);
+    }
+
+    // 分批处理请求
+    (async function() {
+      try {
+        for (let i = 0; i < collectionHandles.length; i += MAX_CONCURRENT_REQUESTS) {
+          await processBatch(i);
+        }
+        
+        const combinedHtml = results.filter(html => html.trim()).join('');
+        allProductsData = combinedHtml;
+        displayProducts(combinedHtml);
+        isProcessing = false;
+      } catch (error) {
+        console.error('加载所有产品错误:', error);
+        showErrorState();
+        isProcessing = false;
+      }
+    })();
+  }
+
+  // 加载单个系列的产品
+  function loadSingleCollection(collectionHandle) {
+    showLoadingState('Loading collection products...');
+
+    // 使用AbortController控制请求
+    const controller = new AbortController();
+    activeRequest = controller;
+
+    fetch(`/collections/${collectionHandle}?view=ajax-products`, {
+      signal: controller.signal
+    })
+      .then(response => {
+        if (!response.ok) throw new Error('Network response error');
+        return response.text();
+      })
+      .then(html => {
+        displayProducts(html);
+        isProcessing = false;
+        activeRequest = null;
+      })
+      .catch(error => {
+        if (error.name === 'AbortError') {
+          console.log('请求被取消');
+        } else {
+          console.error('加载系列产品错误:', error);
+          showErrorState();
+        }
+        isProcessing = false;
+        activeRequest = null;
+      });
+  }
+
+  // 简化的产品显示逻辑
   function displayProducts(html) {
-    // 输入验证和空状态处理
     if (!html || typeof html !== 'string' || html.trim() === '') {
       showEmptyState();
       return;
     }
 
-    try {
-      // 使用更现代的DOM解析方法
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
+    // 使用更简单的方法：直接插入HTML到网格容器
+    const finalHtml = `
+      <div class="product-grid-{{ section.id }}">
+        ${html}
+      </div>
+    `;
+
+    // 使用requestAnimationFrame提高性能
+    requestAnimationFrame(() => {
+      productsPanel.innerHTML = finalHtml;
       
-      // 更精确和高效的选择器 - 避免重复匹配
-      // 使用层级选择器确保只选择最外层的产品容器
-      let productCards = [];
-      
-      // 首先尝试选择最外层的产品容器
-      const cardWrappers = doc.querySelectorAll('.card-wrapper:not(.card-wrapper .card-wrapper)');
-      if (cardWrappers.length > 0) {
-        productCards = Array.from(cardWrappers);
-      } else {
-        // 如果没有找到card-wrapper，尝试其他选择器但避免重复
-        const allPossibleCards = doc.querySelectorAll(`
-          .product-card:not(.card-wrapper *),
-          .grid__item > .card:not(.card-wrapper *),
-          [data-product-handle]:not(.card-wrapper *),
-          [data-product-id]:not(.card-wrapper *),
-          .card:not(.card-wrapper *):not(.product-card *):not([data-product-handle] *):not([data-product-id] *)
-        `);
-        
-        // 使用更简单的方法去重 - 基于元素在DOM中的位置
-        const uniqueCards = [];
-        const seenElements = new Set();
-        
-        Array.from(allPossibleCards).forEach(card => {
-          // 检查这个元素是否已经是另一个选中元素的子元素
-          let isChildOfSelected = false;
-          for (const selectedCard of uniqueCards) {
-            if (selectedCard.contains(card)) {
-              isChildOfSelected = true;
-              break;
-            }
-          }
-          
-          // 检查这个元素是否包含其他已选中的元素
-          let containsSelected = false;
-          for (const selectedCard of uniqueCards) {
-            if (card.contains(selectedCard) && card !== selectedCard) {
-              containsSelected = true;
-              // 如果这个元素包含已选中的元素，移除已选中的元素
-              const index = uniqueCards.indexOf(selectedCard);
-              if (index > -1) {
-                uniqueCards.splice(index, 1);
-              }
-              break;
-            }
-          }
-          
-          if (!isChildOfSelected && !seenElements.has(card)) {
-            uniqueCards.push(card);
-            seenElements.add(card);
-          }
-        });
-        
-        productCards = uniqueCards;
-      }
-      
-      // 最终过滤：确保没有重复的产品
-      const finalProductCards = [];
-      const productIds = new Set();
-      
+      // 为所有产品卡片添加统一的类名和样式
+      const productCards = productsPanel.querySelectorAll('.card, .product-card, .grid__item, .card__inner, .card-wrapper');
       productCards.forEach(card => {
-        // 尝试获取产品ID
-        const productId = card.getAttribute('data-product-id') || 
-                         card.getAttribute('data-product-handle') ||
-                         card.querySelector('[data-product-id]')?.getAttribute('data-product-id') ||
-                         card.querySelector('[data-product-handle]')?.getAttribute('data-product-handle');
-        
-        if (!productId || !productIds.has(productId)) {
-          if (productId) productIds.add(productId);
-          finalProductCards.push(card);
-        }
+        card.classList.add('product-card-{{ section.id }}');
+        card.style.animationDelay = '0.1s';
       });
-      
-      productCards = finalProductCards;
-      
-      let finalHtml = '';
-      
-      // 如果找到产品卡片，处理它们
-      if (productCards.length > 0) {
-        finalHtml = `
-          <div class="product-grid-{{ section.id }}">
-            ${Array.from(productCards).map((card, index) => {
-              // 标准化产品卡片
-              const cleanCard = card.cloneNode(true);
-              // 清理内联样式但保留原有类名
-              cleanCard.style.cssText = '';
-              // 添加新的类名而不覆盖原有类名
-              cleanCard.classList.add('product-card-{{ section.id }}');
-              // 移除可能冲突的属性
-              cleanCard.removeAttribute('id');
-              cleanCard.removeAttribute('style');
-              // 添加数据属性用于交互
-              cleanCard.setAttribute('data-product-index', index);
-              // 添加动画延迟
-              cleanCard.style.animationDelay = `${index * 0.1}s`;
-              
-              return cleanCard.outerHTML;
-            }).join('')}
-          </div>
-        `;
-      } else {
-        // 如果没有找到特定卡片，直接使用原始HTML但确保有网格容器
-        finalHtml = `
-          <div class="product-grid-{{ section.id }}">
-            ${html}
-          </div>
-        `;
-      }
-
-      // 使用requestAnimationFrame提高性能
-      requestAnimationFrame(() => {
-        productsPanel.innerHTML = finalHtml;
-        // 添加产品卡片交互效果
-        addProductCardInteractions();
-      });
-      
-    } catch (error) {
-      console.warn('产品显示处理失败，使用回退方案:', error);
-      // 回退到原始方法
-      fallbackDisplay(html);
-    }
-  }
-
-  // 添加产品卡片交互效果
-  function addProductCardInteractions() {
-    const cards = productsPanel.querySelectorAll('.product-card-{{ section.id }}');
-    
-    // 使用事件委托提高性能
-    cards.forEach(card => {
-      card.addEventListener('mouseenter', handleCardHover);
-      card.addEventListener('mouseleave', handleCardLeave);
     });
   }
 
-  // 处理悬停效果
-  function handleCardHover(e) {
-    const card = e.currentTarget;
-    card.style.transform = 'translateY(-4px)';
-    card.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
-    card.style.transition = 'all 0.3s ease';
-  }
-
-  // 处理离开效果
-  function handleCardLeave(e) {
-    const card = e.currentTarget;
-    card.style.transform = 'translateY(0)';
-    card.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-  }
-
-  // 回退显示方法
-  function fallbackDisplay(html) {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
-    
-    const productCards = tempDiv.querySelectorAll('.card, .product-card, .grid__item, .card__inner');
-    
-    let finalHtml = '';
-    
-    if (productCards.length > 0) {
-      finalHtml = `
-        <div class="product-grid-{{ section.id }}">
-          ${Array.from(productCards).map(card => {
-            const cleanCard = card.cloneNode(true);
-            cleanCard.style.cssText = '';
-            // 保留原有类名，只添加新类名
-            cleanCard.classList.add('product-card-{{ section.id }}');
-            return cleanCard.outerHTML;
-          }).join('')}
-        </div>
-      `;
-    } else {
-      finalHtml = `
-        <div class="product-grid-{{ section.id }}">
-          ${html}
-        </div>
-      `;
-    }
-    
-    productsPanel.innerHTML = finalHtml;
-    addProductCardInteractions();
-  }
-
   // 初始化
-  initMenuInteractions();
+  function init() {
+    setupEventDelegation();
+    
+    // 默认加载所有产品（延迟执行以避免阻塞主线程）
+    setTimeout(() => {
+      if (!isProcessing) {
+        loadAllProducts();
+        // 默认激活第一个菜单分类
+        if (cachedElements.menuCategories.length > 0) {
+          cachedElements.menuCategories[0].classList.add('active');
+        }
+      }
+    }, 100);
+  }
+
+  // 启动初始化
+  init();
 });
 
 // 返回菜单列表函数
 function backToMenuList() {
   const stickyHeader = document.getElementById(`sticky-header-{{ section.id }}`);
-  stickyHeader.style.display = 'none';
+  if (stickyHeader) {
+    stickyHeader.style.display = 'none';
+  }
   
   // 滚动回顶部
   window.scrollTo({
@@ -1039,39 +907,22 @@ function backToMenuList() {
   });
 }
 
-// 添加CSS动画
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .product-card-{{ section.id }} {
-    animation: fadeIn 0.5s ease forwards;
-  }
-  
-  .product-card-{{ section.id }}:nth-child(1) { animation-delay: 0.1s; }
-  .product-card-{{ section.id }}:nth-child(2) { animation-delay: 0.2s; }
-  .product-card-{{ section.id }}:nth-child(3) { animation-delay: 0.3s; }
-  .product-card-{{ section.id }}:nth-child(4) { animation-delay: 0.4s; }
-  .product-card-{{ section.id }}:nth-child(5) { animation-delay: 0.5s; }
-  .product-card-{{ section.id }}:nth-child(6) { animation-delay: 0.6s; }
-  
-  /* 悬停效果增强 */
-  .collection-item-{{ section.id }}:hover {
-    background-color: #f8f8f8;
-    transform: translateY(-2px);
-    transition: all 0.2s ease;
-  }
-  
-  .collection-item-{{ section.id }}.active {
-    background-color: #e3f2fd;
-    color: {{ section.settings.primary_color }};
-    font-weight: 600;
-  }
-`;
-document.head.appendChild(style);
+// 预加载CSS动画（避免动态创建style标签）
+if (!document.getElementById('custom-menu-animations')) {
+  const style = document.createElement('style');
+  style.id = 'custom-menu-animations';
+  style.textContent = `
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .product-card-{{ section.id }} {
+      animation: fadeIn 0.3s ease forwards;
+    }
+  `;
+  document.head.appendChild(style);
+}
 </script>
 
 {% comment %}
