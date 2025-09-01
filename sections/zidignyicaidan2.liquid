@@ -858,20 +858,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const tempContainer = document.createElement('div');
     tempContainer.innerHTML = html;
     
-    // 获取产品网格元素
-    const productGrid = tempContainer.querySelector('.grid, .product-grid, .grid--2-col, .grid--3-col, .grid--4-col');
+    // 调试：记录HTML内容以查看实际返回了什么
+    console.log('Received HTML content length:', html.length);
+    console.log('HTML contains collection title:', html.includes('collection-title') || html.includes('collection__title'));
+    
+    // 获取产品网格元素 - 使用更精确的选择器
+    const productGrid = tempContainer.querySelector('.grid.product-grid, .grid--2-col, .grid--3-col, .grid--4-col, [data-section-type="collection-template"] .grid, .collection .grid');
     
     if (!productGrid) {
+      console.log('No product grid found in HTML. Available elements:');
+      const allElements = tempContainer.querySelectorAll('*');
+      allElements.forEach(el => {
+        if (el.className && el.className.includes('grid')) {
+          console.log('Found grid element:', el.className);
+        }
+      });
       showEmptyState();
       return;
     }
 
+    console.log('Found product grid with class:', productGrid.className);
+    
     // 创建新的产品网格容器
     const newProductGrid = document.createElement('div');
     newProductGrid.className = 'product-grid-{{ section.id }}';
     
-    // 处理每个产品卡片 - 使用更精确的选择器避免重复
-    const productCards = productGrid.querySelectorAll('.grid__item:not(.grid__item--no-result), .card:not(.card--no-result), .product-card, .card-wrapper');
+    // 处理每个产品卡片 - 使用更精确的选择器
+    const productCards = productGrid.querySelectorAll('.grid__item:not(.grid__item--no-result), .card:not(.card--no-result), .product-card, .card-wrapper, [data-product-handle]');
+    
+    console.log('Found', productCards.length, 'product cards');
     
     if (productCards.length === 0) {
       showEmptyState();
@@ -882,17 +897,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const processedProducts = new Set();
     
     productCards.forEach((card, index) => {
-      // 获取产品的唯一标识（使用数据属性或内容）
+      // 获取产品的唯一标识 - 优先使用data-product-handle
+      const productHandle = card.getAttribute('data-product-handle') || 
+                           card.querySelector('[data-product-handle]')?.getAttribute('data-product-handle');
       const productId = card.getAttribute('data-product-id') || 
-                        card.querySelector('[data-product-id]')?.getAttribute('data-product-id') ||
-                        card.querySelector('a')?.href ||
-                        card.textContent.trim();
+                        card.querySelector('[data-product-id]')?.getAttribute('data-product-id');
+      const productUrl = card.querySelector('a')?.href;
+      
+      // 使用产品handle作为唯一标识，如果没有则使用ID，最后使用URL
+      const uniqueId = productHandle || productId || productUrl || card.textContent.trim();
+      
+      console.log('Processing product', index, 'uniqueId:', uniqueId);
       
       // 如果这个产品已经处理过，跳过
-      if (processedProducts.has(productId)) {
+      if (processedProducts.has(uniqueId)) {
+        console.log('Skipping duplicate product:', uniqueId);
         return;
       }
-      processedProducts.add(productId);
+      processedProducts.add(uniqueId);
       
       const newCard = document.createElement('div');
       newCard.className = 'product-card-{{ section.id }}';
@@ -915,7 +937,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       
       // 确保标题样式
-      const title = newCard.querySelector('.card__heading, .card-information__text, .product-title');
+      const title = newCard.querySelector('.card__heading, .card-information__text, .product-title, [data-product-title]');
       if (title) {
         title.className = 'product-title-{{ section.id }}';
         title.style.margin = '0 0 8px 0';
@@ -925,7 +947,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       // 确保价格样式
-      const price = newCard.querySelector('.price, .price-item, .product-price');
+      const price = newCard.querySelector('.price, .price-item, .product-price, [data-product-price]');
       if (price) {
         price.className = 'product-price-{{ section.id }}';
         price.style.margin = '0';
@@ -940,6 +962,8 @@ document.addEventListener('DOMContentLoaded', function() {
       newProductGrid.appendChild(newCard);
     });
 
+    console.log('Displaying', processedProducts.size, 'unique products');
+    
     // 使用requestAnimationFrame提高性能
     requestAnimationFrame(() => {
       productsPanel.innerHTML = '';
