@@ -639,7 +639,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function showLoadingState(message = 'Loading products...') {
     productsPanel.innerHTML = `
       <div class="loading-${sectionId}">
-        <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
         <p>${message}</p>
       </div>
     `;
@@ -777,7 +776,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function processBatch(startIndex) {
       const batch = collectionHandles.slice(startIndex, startIndex + MAX_CONCURRENT_REQUESTS);
       const promises = batch.map((handle, index) => 
-        fetch(`/collections/${handle}?view=ajax-products`)
+        fetch(`/collections/${handle}`)
           .then(response => response.ok ? response.text() : '')
           .then(html => {
             results[startIndex + index] = html;
@@ -822,7 +821,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const controller = new AbortController();
     activeRequest = controller;
 
-    fetch(`/collections/${collectionHandle}?view=ajax-products`, {
+    // 直接加载系列页面，不使用ajax-products视图参数
+    // 这样可以确保加载特定系列的正确产品
+    fetch(`/collections/${collectionHandle}`, {
       signal: controller.signal
     })
       .then(response => {
