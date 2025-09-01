@@ -12,20 +12,6 @@
     "zidignyicaidan2_mc99Tz": {
       "type": "zidignyicaidan2",
       "blocks": {
-        "menu_category_YCPgbd": {
-          "type": "menu_category",
-          "settings": {
-            "category_title": "产品分类",
-            "category_description": "分类描述内容",
-            "image_width": 60,
-            "image_height": 60,
-            "linked_collections": [
-              "手链",
-              "项链",
-              "吊坠"
-            ]
-          }
-        },
         "menu_category_iENaHc": {
           "type": "menu_category",
           "settings": {
@@ -101,7 +87,6 @@
         }
       },
       "block_order": [
-        "menu_category_YCPgbd",
         "menu_category_iENaHc",
         "menu_category_NiyUnp",
         "menu_category_NzrTme",
