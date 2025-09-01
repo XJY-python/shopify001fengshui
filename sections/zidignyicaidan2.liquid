@@ -846,30 +846,88 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
-  // 简化的产品显示逻辑
+  // 详细的产品显示逻辑 - 保持原有格式
   function displayProducts(html) {
     if (!html || typeof html !== 'string' || html.trim() === '') {
       showEmptyState();
       return;
     }
 
-    // 使用更简单的方法：直接插入HTML到网格容器
-    const finalHtml = `
-      <div class="product-grid-{{ section.id }}">
-        ${html}
-      </div>
-    `;
+    // 创建临时容器来解析HTML
+    const tempContainer = document.createElement('div');
+    tempContainer.innerHTML = html;
+    
+    // 获取产品网格元素
+    const productGrid = tempContainer.querySelector('.grid, .product-grid, .grid--2-col, .grid--3-col, .grid--4-col');
+    
+    if (!productGrid) {
+      showEmptyState();
+      return;
+    }
+
+    // 创建新的产品网格容器
+    const newProductGrid = document.createElement('div');
+    newProductGrid.className = 'product-grid-{{ section.id }}';
+    
+    // 处理每个产品卡片
+    const productCards = productGrid.querySelectorAll('.grid__item, .card, .product-card, .card-wrapper');
+    
+    if (productCards.length === 0) {
+      showEmptyState();
+      return;
+    }
+
+    productCards.forEach((card, index) => {
+      const newCard = document.createElement('div');
+      newCard.className = 'product-card-{{ section.id }}';
+      
+      // 复制原始卡片内容
+      newCard.innerHTML = card.innerHTML;
+      
+      // 确保图片正确显示
+      const images = newCard.querySelectorAll('img');
+      images.forEach(img => {
+        if (img.src && !img.src.includes('http')) {
+          // 修复相对路径图片
+          img.src = img.src.replace(/^\/\//, 'https://');
+        }
+        img.style.width = '100%';
+        img.style.height = '200px';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '6px';
+        img.style.marginBottom = '12px';
+      });
+      
+      // 确保标题样式
+      const title = newCard.querySelector('.card__heading, .card-information__text, .product-title');
+      if (title) {
+        title.className = 'product-title-{{ section.id }}';
+        title.style.margin = '0 0 8px 0';
+        title.style.fontSize = '16px';
+        title.style.fontWeight = '600';
+        title.style.color = '#333';
+      }
+      
+      // 确保价格样式
+      const price = newCard.querySelector('.price, .price-item, .product-price');
+      if (price) {
+        price.className = 'product-price-{{ section.id }}';
+        price.style.margin = '0';
+        price.style.fontSize = '18px';
+        price.style.fontWeight = 'bold';
+        price.style.color = '{{ section.settings.primary_color }}';
+      }
+      
+      // 添加动画延迟
+      newCard.style.animationDelay = `${index * 0.05}s`;
+      
+      newProductGrid.appendChild(newCard);
+    });
 
     // 使用requestAnimationFrame提高性能
     requestAnimationFrame(() => {
-      productsPanel.innerHTML = finalHtml;
-      
-      // 为所有产品卡片添加统一的类名和样式
-      const productCards = productsPanel.querySelectorAll('.card, .product-card, .grid__item, .card__inner, .card-wrapper');
-      productCards.forEach(card => {
-        card.classList.add('product-card-{{ section.id }}');
-        card.style.animationDelay = '0.1s';
-      });
+      productsPanel.innerHTML = '';
+      productsPanel.appendChild(newProductGrid);
     });
   }
 
