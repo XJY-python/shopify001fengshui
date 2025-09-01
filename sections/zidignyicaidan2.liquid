@@ -443,8 +443,8 @@
     font-size: 14px;
   }
 
-  /* 响应式设计 */
-  @media (max-width: 768px) {
+  /* 响应式设计 - 使用主题标准断点 */
+  @media screen and (max-width: 749px) {
     .custom-menu-section-{{ section.id }} {
       flex-direction: column;
       padding: 20px 15px;
@@ -504,6 +504,7 @@
       background-color: #f8f8f8;
       color: {{ section.settings.primary_color }};
     }
+  }
 
   /* 置顶按钮样式 - 只在移动端显示 */
   .sticky-header-{{ section.id }} {
@@ -538,8 +539,8 @@
     font-size: 14px;
   }
 
-  /* 桌面端置顶按钮宽度设为1px */
-  @media (min-width: 769px) {
+  /* 桌面端置顶按钮完全隐藏 - 使用主题标准断点 */
+  @media screen and (min-width: 750px) {
     .sticky-header-{{ section.id }} {
       width: 1px !important;
       display: none !important;
@@ -548,7 +549,6 @@
       height: 0 !important;
       overflow: hidden !important;
     }
-  }
   }
 {%- endstyle -%}
 
@@ -628,10 +628,10 @@ document.addEventListener('DOMContentLoaded', function() {
   let allProductsData = null;
   let hoverTimeout = null;
 
-  // 确保桌面端隐藏置顶按钮
+  // 确保桌面端隐藏置顶按钮 - 使用主题标准断点
   function ensureDesktopHidden() {
     const stickyHeader = document.getElementById(`sticky-header-${sectionId}`);
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > 749) {
       stickyHeader.style.display = 'none';
       stickyHeader.style.visibility = 'hidden';
       stickyHeader.style.opacity = '0';
@@ -677,8 +677,8 @@ document.addEventListener('DOMContentLoaded', function() {
           const collectionHandle = this.getAttribute('data-collection-handle');
           const categoryTitle = this.getAttribute('data-category-title');
           
-          // 检查是否是移动设备
-          const isMobile = window.innerWidth <= 768;
+          // 检查是否是移动设备 - 使用主题标准断点749px
+          const isMobile = window.innerWidth <= 749;
           
           if (isMobile) {
             // 移动端：显示置顶按钮并滚动到产品面板
