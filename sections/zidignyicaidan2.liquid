@@ -846,7 +846,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
-  // 详细的产品显示逻辑 - 保持原有格式
+  // 详细的产品显示逻辑 - 修复重复显示问题
   function displayProducts(html) {
     if (!html || typeof html !== 'string' || html.trim() === '') {
       showEmptyState();
@@ -869,15 +869,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const newProductGrid = document.createElement('div');
     newProductGrid.className = 'product-grid-{{ section.id }}';
     
-    // 处理每个产品卡片
-    const productCards = productGrid.querySelectorAll('.grid__item, .card, .product-card, .card-wrapper');
+    // 处理每个产品卡片 - 使用更精确的选择器避免重复
+    const productCards = productGrid.querySelectorAll('.grid__item:not(.grid__item--no-result), .card:not(.card--no-result), .product-card, .card-wrapper');
     
     if (productCards.length === 0) {
       showEmptyState();
       return;
     }
 
+    // 使用Set来跟踪已处理的产品，避免重复
+    const processedProducts = new Set();
+    
     productCards.forEach((card, index) => {
+      // 获取产品的唯一标识（使用数据属性或内容）
+      const productId = card.getAttribute('data-product-id') || 
+                        card.querySelector('[data-product-id]')?.getAttribute('data-product-id') ||
+                        card.querySelector('a')?.href ||
+                        card.textContent.trim();
+      
+      // 如果这个产品已经处理过，跳过
+      if (processedProducts.has(productId)) {
+        return;
+      }
+      processedProducts.add(productId);
+      
       const newCard = document.createElement('div');
       newCard.className = 'product-card-{{ section.id }}';
       
