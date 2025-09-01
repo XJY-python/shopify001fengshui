@@ -538,9 +538,10 @@
     font-size: 14px;
   }
 
-  /* 桌面端完全隐藏置顶按钮 */
+  /* 桌面端置顶按钮宽度设为1px */
   @media (min-width: 769px) {
     .sticky-header-{{ section.id }} {
+      width: 1px !important;
       display: none !important;
       visibility: hidden !important;
       opacity: 0 !important;
